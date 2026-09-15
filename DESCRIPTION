@@ -1,0 +1,45 @@
+Package: dv.reportrate
+Type: Package
+Title: Reporting Rates Module
+Version: 0.0.0-9000
+Authors@R:
+    c(person("Boehringer-Ingelheim Pharma GmbH & Co.KG", role = c("cph", "fnd")),
+      person(given = "Tom",
+             family = "Fiederer",
+             role = c("aut"),
+             email =  "tom.fiederer@boehringer-ingelheim.com"),
+      person(given = "Methodios",
+             family = "Typou",
+             role = c("aut", "cre"),
+             email =  "methodios.typou.ext@boehringer-ingelheim.com")
+  )
+Description: DaVinci's dv.reportrate package provides a module for computing and visualising adverse‑event‑derived
+   reporting rates over time. It supports SDTM‑conformant datasets (DM, DS, AE) as well as similarly structured
+   study‑specific data. The module offers cumulative and interval‑based metrics, flexible time alignment options
+   (by study date or study day), and categorical grouping with user‑selectable levels. The module includes hover‑enabled
+   interactive plots and uses colour‑blind‑friendly palettes where possible.
+License: Apache License (>= 2)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Suggests:
+    pharmaversesdtm,
+    purrr,
+    shinytest2,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Imports:
+    checkmate,
+    dplyr,
+    shinyWidgets,
+    dv.manager (>= 3.1.0),
+    ggiraph,
+    ggplot2,
+    lubridate,
+    rlang,
+    shiny,
+    tibble,
+    tidyr,
+    viridis
+Depends: R (>= 4.1.0)
+Remotes: Boehringer-Ingelheim/dv.manager
