@@ -2,6 +2,7 @@
 #'
 #' Launches an example app that shows a Reporting Rates module. The displayed
 #' data is from the \pkg{pharmaversesdtm} package.
+#' @keywords mock
 #' @export
 mock_report_rates_app <- function() {
 

@@ -98,6 +98,7 @@ create_plot <- function(dm, ds, ae, subjid_var, grouping_var, selected_levels, m
 #' should be displayed in the plot.
 #' @returns A `[ggiraph::girafe]` object. An interactive ggplot-based visualization showing calculated rates over time
 #' based on the selected grouping variable and levels, metric, and time unit.
+#' @keywords internal
 convert_to_girafe <- function(ggplot_obj, selected_levels) {
    #specifying the options
    plt <- ggiraph::girafe(ggobj = ggplot_obj,

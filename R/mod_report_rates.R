@@ -106,6 +106,9 @@ REPORT_RATES <- poc(
 #' A unique ID string to create a namespace. Must match the ID provided to \code{report_rates_server()}
 #'
 #' @return A shiny UI.
+#'
+#' @keywords developers
+#'
 #' @export
 report_rates_ui <- function(module_id) {
   checkmate::assert_string(module_id, min.chars = 1)
@@ -313,6 +316,8 @@ report_rates_ui <- function(module_id) {
 #' A reactive list of named datasets. Usually obtained from module manager.
 #'
 #' @inheritParams mod_report_rates
+#'
+#' @keywords developers
 #'
 #' @export
 report_rates_server <- function(module_id,
@@ -862,6 +867,8 @@ report_rates_server <- function(module_id,
 #'    x_step_size_list = list(days = 50L,
 #'                            weeks = 2L,
 #'                            months = 1L))
+#'
+#' @keywords main
 #'
 #' @export
 mod_report_rates <- function(module_id,

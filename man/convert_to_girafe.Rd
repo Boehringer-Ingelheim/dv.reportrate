@@ -21,3 +21,4 @@ based on the selected grouping variable and levels, metric, and time unit.
 Internal helper function to convert the ggplot object into an interactive girafe object. Applies all interactive
 settings such as tooltip behaviour, hover effects, selection styling, zoom options, and toolbar configuration.
 }
+\keyword{internal}

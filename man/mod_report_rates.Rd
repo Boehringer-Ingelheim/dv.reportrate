@@ -130,3 +130,4 @@ overall event frequency relative to cumulative exposure.
 The interval can be adjusted by selecting this rate type and specifying a bin size.
 }
 }
+\keyword{main}

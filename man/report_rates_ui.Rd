@@ -17,3 +17,4 @@ A shiny UI.
 \description{
 Create User interface for \pkg{dv.reportrates} module
 }
+\keyword{developers}

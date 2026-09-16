@@ -10,3 +10,4 @@ mock_report_rates_app()
 Launches an example app that shows a Reporting Rates module. The displayed
 data is from the \pkg{pharmaversesdtm} package.
 }
+\keyword{mock}

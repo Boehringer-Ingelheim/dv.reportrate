@@ -96,3 +96,4 @@ defaults to a step size of 1L.
 \description{
 Create server for \pkg{dv.reportrate} module
 }
+\keyword{developers}
