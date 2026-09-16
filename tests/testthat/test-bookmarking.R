@@ -1,9 +1,9 @@
 # Initialize test app
-app_dir <- testthat::test_path("apps/bookmarking_app")
+app_dir <- test_path("apps/bookmarking_app")
 
 
 
-testthat::test_that("The app's state is restored correctly after bookmarking" %>%
+test_that("The app's state is restored correctly after bookmarking" |>
                        vdoc[["add_spec"]](specs$framework_specs$bookmarking), {
    app_bmk <- shinytest2::AppDriver$new(
       app_dir = app_dir,
@@ -13,7 +13,7 @@ testthat::test_that("The app's state is restored correctly after bookmarking" %>
    app_bmk$wait_for_idle()
 
    # setting the inputs
-   app_bmk$set_inputs(`reportrate-metric_id` = "Reporting rate per active patients")
+   app_bmk$set_inputs(`reportrate-metric_id` = "Interval rate per active patient")
    app_bmk$set_inputs(`reportrate-type_id` = "By study day")
    app_bmk$set_inputs(`reportrate-unit_id` = "Month")
    app_bmk$set_inputs(`reportrate-grouping-group_var` = "SEX")
@@ -38,7 +38,7 @@ testthat::test_that("The app's state is restored correctly after bookmarking" %>
    expected <- list(
       input = list(
          `reportrate-grouping-group_var` = "SEX",
-         `reportrate-metric_id` = "Reporting rate per active patients",
+         `reportrate-metric_id` = "Interval rate per active patient",
          `reportrate-selected_levels` = c("F"),
          `reportrate-type_id` = "By study day",
          `reportrate-ungrouped` = TRUE,
@@ -46,7 +46,7 @@ testthat::test_that("The app's state is restored correctly after bookmarking" %>
       )
    )
 
-   testthat::expect_identical(actual, expected)
+   expect_identical(actual, expected)
    app_bmk$stop()
    app_rst$stop()
 })

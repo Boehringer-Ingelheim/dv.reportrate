@@ -20,7 +20,7 @@ ae_prepared <- data.frame(USUBJID = c("01", "02"), m = c(0, 0), n = c(1, 1))
 
 
 # Function "merge_event_data_with_grouping()"
-test_that("merge_event_data_with_grouping() returns correct dataframe depending on the inputs for grouping_var"  %>%
+test_that("merge_event_data_with_grouping() returns correct dataframe depending on the inputs for grouping_var"  |>
              vdoc[["add_spec"]](
                 c(
                    specs$plot_creation$grouping_and_levels$grouped,
@@ -50,7 +50,7 @@ test_that("merge_event_data_with_grouping() returns correct dataframe depending 
    expect_equal(res_4$ARM, factor(c("A", "B", "A", "B")))
 })
 
-test_that("merge_event_data_with_grouping returns dataset with correct amount of rows" %>%
+test_that("merge_event_data_with_grouping returns dataset with correct amount of rows" |>
             vdoc[["add_spec"]](specs$plot_creation$grouping_and_levels$grouped), {
    res <- merge_event_data_with_grouping(dm, ds_prepared, ae_prepared, "USUBJID", "ARM")
    expect_equal(nrow(res), 4)
@@ -76,7 +76,7 @@ test_that("merge_event_data_with_grouping returns dataset with correct amount of
 
 
 # Function "prepare_ds_data()"
-test_that("prepare_ds_data() assigns correct m and n values for entry and exit events" %>%
+test_that("prepare_ds_data() assigns correct m and n values for entry and exit events" |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$rate_per_active_patients,
@@ -96,7 +96,7 @@ test_that("prepare_ds_data() assigns correct m and n values for entry and exit e
    expect_equal(unique(res$n), 0)
 })
 
-test_that("prepare_ds_data() returns the correct columns."  %>%
+test_that("prepare_ds_data() returns the correct columns."  |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$rate_per_active_patients,
@@ -115,7 +115,7 @@ test_that("prepare_ds_data() returns the correct columns."  %>%
    expect_setequal(colnames(res), c("USUBJID", "date", "day", "n", "m"))
 })
 
-test_that("prepare_ds_data() assigns m = 0 when entry_terms and exit_terms are empty" %>%
+test_that("prepare_ds_data() assigns m = 0 when entry_terms and exit_terms are empty" |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$rate_per_active_patients,
@@ -134,7 +134,7 @@ test_that("prepare_ds_data() assigns m = 0 when entry_terms and exit_terms are e
    expect_equal(unique(res$m), 0)
 })
 
-test_that("prepare_ds_data() returns empty dataset if the input dataset was empty" %>%
+test_that("prepare_ds_data() returns empty dataset if the input dataset was empty" |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$rate_per_active_patients,
@@ -160,7 +160,7 @@ test_that("prepare_ds_data() returns empty dataset if the input dataset was empt
 
 
 # Function prepare_ae_data()
-test_that("prepare_ae_data() assigns correct m and n values" %>%
+test_that("prepare_ae_data() assigns correct m and n values" |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$rate_per_active_patients,
@@ -178,7 +178,7 @@ test_that("prepare_ae_data() assigns correct m and n values" %>%
    expect_equal(unique(res$n), 1)
 })
 
-test_that("prepare_ae_data() returns the correct columns" %>%
+test_that("prepare_ae_data() returns the correct columns" |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$rate_per_active_patients,
@@ -195,7 +195,7 @@ test_that("prepare_ae_data() returns the correct columns" %>%
    expect_setequal(colnames(res), c("USUBJID", "date", "day", "n", "m"))
 })
 
-test_that("prepare_ae_data() returns empty dataset if the input dataset was empty" %>%
+test_that("prepare_ae_data() returns empty dataset if the input dataset was empty" |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$rate_per_active_patients,
@@ -228,7 +228,7 @@ df_rr <- data.frame(
    ARM = as.factor(c("b", "b", "c", "c", "a", "b", "c", "c", "a"))
 )
 
-test_that("rates_per_active_patients() removes rows with NA values in the selected time column (date or day)" %>%
+test_that("rates_per_active_patients() removes rows with NA values in the selected time column (date or day)" |>
              vdoc[["add_spec"]](specs$metric_calculation$rate_per_active_patients), {
    df_rr_na <- df_rr
    df_rr_na$date[2] <- NA # was 2024-12-21 before which led to the creation of the week interval starting on 2024-12-16
@@ -289,7 +289,7 @@ test_that("rates_per_active_patients() removes rows with NA values in the select
    expect_true(1 %in% res$time)
 })
 
-test_that("rates_per_active_patient() groups the events into the right intervals" %>%
+test_that("rates_per_active_patient() groups the events into the right intervals" |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$rate_per_active_patients,
@@ -382,7 +382,7 @@ test_that("rates_per_active_patient() groups the events into the right intervals
    expect_equal(res$time, c(-3, -1, 1, 3))
 })
 
-test_that("Grouping doesn't influence the binning into time intervals in rates_per_active_patient()." %>%
+test_that("Grouping doesn't influence the binning into time intervals in rates_per_active_patient()." |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$rate_per_active_patients,
@@ -407,7 +407,7 @@ test_that("Grouping doesn't influence the binning into time intervals in rates_p
    })
 })
 
-test_that("rates_per_active_patient() calculates the m_cumsum correctly." %>%
+test_that("rates_per_active_patient() calculates the m_cumsum correctly." |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$rate_per_active_patients,
@@ -444,7 +444,7 @@ test_that("rates_per_active_patient() calculates the m_cumsum correctly." %>%
    expect_equal(res$m_cumsum, c(1, 1, 2, 2, 3))
 })
 
-test_that("rates_per_active_patient() calculates m_cumsum globally and not per time interval" %>%
+test_that("rates_per_active_patient() calculates m_cumsum globally and not per time interval" |>
          vdoc[["add_spec"]](specs$metric_calculation$rate_per_active_patients), {
    dates <- seq.Date(from = as.Date("2010-01-01"), by = "month", length.out = 100)
    days_neg <- seq(from = -1200, by = 30, length.out = 40)
@@ -482,7 +482,7 @@ test_that("rates_per_active_patient() calculates m_cumsum globally and not per t
    expect_equal(res_date_month$m_cumsum, res_day_month$m_cumsum)
 })
 
-test_that("rates_per_active_patient() keeps one time interval per group if > 1 groups appear in the same interval" %>%
+test_that("rates_per_active_patient() keeps one time interval per group if > 1 groups appear in the same interval" |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$rate_per_active_patients,
@@ -542,7 +542,7 @@ test_that("rates_per_active_patient() keeps one time interval per group if > 1 g
 })
 
 test_that("rate_per_active_patient() calculates the n_cumsum correctly and grouped after time without a
-          grouping variable" %>%
+          grouping variable" |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$rate_per_active_patients,
@@ -582,7 +582,7 @@ test_that("rate_per_active_patient() calculates the n_cumsum correctly and group
 })
 
 test_that("rate_per_active_patient() calculates the n_cumsum correclty and grouped after time also when there is a
-          valid grouping variable" %>%
+          valid grouping variable" |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$rate_per_active_patients,
@@ -626,7 +626,7 @@ test_that("rate_per_active_patient() calculates the n_cumsum correclty and group
 })
 
 test_that("rates_per_active_patient() behaves the same when theres no grouping and when theres grouping with only one
-          level" %>%
+          level" |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$rate_per_active_patients,
@@ -652,7 +652,7 @@ test_that("rates_per_active_patient() behaves the same when theres no grouping a
    })
 })
 
-test_that("rates_per_active_patient() sets ratio = 0 for m_cumsum = 0" %>%
+test_that("rates_per_active_patient() sets ratio = 0 for m_cumsum = 0" |>
          vdoc[["add_spec"]](specs$metric_calculation$rate_per_active_patients), {
    #ungrouped
    df_ratio_0_ungrouped <- df_rr |> dplyr::mutate(m = 0, # so that m_cumsum will be 0 in every row
@@ -684,7 +684,7 @@ test_that("rates_per_active_patient() sets ratio = 0 for m_cumsum = 0" %>%
    expect_true(any(res_grouped$ratio != 0))
 })
 
-test_that("rates_per_active_patient() calculates the correct ratio." %>%
+test_that("rates_per_active_patient() calculates the correct ratio." |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$rate_per_active_patients,
@@ -724,7 +724,7 @@ combinations_interval <- list(
    list(time_type = "day", time_unit = "month", time_col = "days"),
    list(time_type = "day", time_unit = "week", time_col = "days")
 )
-test_that("fill_missing_intervals() fills in all missing intervals with ratio = 0 without grouping" %>%
+test_that("fill_missing_intervals() fills in all missing intervals with ratio = 0 without grouping" |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$rate_per_active_patients,
@@ -761,7 +761,7 @@ test_that("fill_missing_intervals() fills in all missing intervals with ratio = 
    })
 })
 
-test_that("fill_missing_intervals() fills in all missing intervals with ratio = 0 with grouping" %>%
+test_that("fill_missing_intervals() fills in all missing intervals with ratio = 0 with grouping" |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$rate_per_active_patients,
@@ -808,7 +808,7 @@ test_that("fill_missing_intervals() fills in all missing intervals with ratio = 
    })
 })
 
-test_that("fill_missing_intervals() doesn't fill in intervals with time = 0" %>%
+test_that("fill_missing_intervals() doesn't fill in intervals with time = 0" |>
              vdoc[["add_spec"]](
                 c(
                    specs$metric_calculation$rate_per_active_patients,
@@ -843,7 +843,7 @@ test_that("fill_missing_intervals() doesn't fill in intervals with time = 0" %>%
    expect_false(0 %in% res_group$time)
 })
 
-test_that("fill_missing_intervals() behaves same for time_unit = week and time_unit = month if the time_type = day." %>%
+test_that("fill_missing_intervals() behaves same for time_unit = week and time_unit = month if the time_type = day." |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$rate_per_active_patients,
@@ -864,7 +864,7 @@ test_that("fill_missing_intervals() behaves same for time_unit = week and time_u
 })
 
 test_that("fill_missing_intervals() behaves same for grouping with only one level and no grouping and invalid grouping
-          (except for the values in the ARM column)" %>%
+          (except for the values in the ARM column)" |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$rate_per_active_patients,
@@ -902,7 +902,7 @@ test_that("fill_missing_intervals() behaves same for grouping with only one leve
 
 })
 
-test_that("fill_missing_intervals() works correctly when there's only 1 time value (-> one row) in the df" %>%
+test_that("fill_missing_intervals() works correctly when there's only 1 time value (-> one row) in the df" |>
          vdoc[["add_spec"]](specs$metric_calculation$rate_per_active_patients), {
    df_one <- data.frame(
       date_month = as.Date(c("2024-07-01")), # this date is a monday --> can be used for both binsizes
@@ -944,7 +944,7 @@ df_dummy_group <- data.frame(
    ratio = c(0.9, 0.7, 0.8, 0.4),
    ARM = as.factor(c("a", "a", "c", "b"))
 )
-test_that("add_latest_dummy_point() creates correct dummy row without grouping" %>%
+test_that("add_latest_dummy_point() creates correct dummy row without grouping" |>
              vdoc[["add_spec"]](
                 c(
                    specs$metric_calculation$rate_per_active_patients,
@@ -976,7 +976,7 @@ test_that("add_latest_dummy_point() creates correct dummy row without grouping" 
    expect_equal(res_day$time, c(-1, 1, 2))
 })
 
-test_that("add_latest_dummy_point() creates correct dummy rows with grouping" %>%
+test_that("add_latest_dummy_point() creates correct dummy rows with grouping" |>
              vdoc[["add_spec"]](
                 c(
                    specs$metric_calculation$rate_per_active_patients,
@@ -1026,7 +1026,7 @@ test_that("add_latest_dummy_point() creates correct dummy rows with grouping" %>
    df
 })
 
-test_that("add_latest_dummy_point() behaves the same for grouping with only one level and no / invalid grouping" %>%
+test_that("add_latest_dummy_point() behaves the same for grouping with only one level and no / invalid grouping" |>
              vdoc[["add_spec"]](
                 c(
                    specs$metric_calculation$rate_per_active_patients,
@@ -1051,7 +1051,7 @@ test_that("add_latest_dummy_point() behaves the same for grouping with only one 
    expect_equal(res_no_group, res_invalid_group)
 })
 
-test_that("add_latest_dummy_point() behaves the same for both binsizes if time_type = day" %>%
+test_that("add_latest_dummy_point() behaves the same for both binsizes if time_type = day" |>
              vdoc[["add_spec"]](
                 c(
                    specs$metric_calculation$rate_per_active_patients,
@@ -1082,7 +1082,7 @@ test_that("add_latest_dummy_point() behaves the same for both binsizes if time_t
    expect_equal(res_week, res_month)
 })
 
-test_that("add_latest_dummy_point() doesn't create dummy rows with time = 0" %>%
+test_that("add_latest_dummy_point() doesn't create dummy rows with time = 0" |>
              vdoc[["add_spec"]](
                 c(
                    specs$metric_calculation$rate_per_active_patients,
@@ -1118,7 +1118,7 @@ df_cum_rate <- data.frame(
    ARM = as.factor(c("a", "b", "c", "c", "a"))
 )
 
-test_that("cum_rate_per_total_exp_time() calculates the cumulative sum of m and total_exp correctly" %>%
+test_that("cum_rate_per_total_exp_time() calculates the cumulative sum of m and total_exp correctly" |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$cum_rate_per_total_exp_time,
@@ -1165,7 +1165,7 @@ test_that("cum_rate_per_total_exp_time() calculates the cumulative sum of m and 
 })
 
 test_that("cum_rate_per_total_exp_time() only keeps the last row when there are multiple rows for a date/day in a
-          group" %>%
+          group" |>
              vdoc[["add_spec"]](
                 c(
                    specs$metric_calculation$cum_rate_per_total_exp_time,
@@ -1196,7 +1196,7 @@ test_that("cum_rate_per_total_exp_time() only keeps the last row when there are 
 })
 
 test_that("cum_rate_per_total_exp_time() filters out rows where the value of the selected time (either day or date)
-          is NA" %>%
+          is NA" |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$cum_rate_per_total_exp_time,
@@ -1226,7 +1226,7 @@ test_that("cum_rate_per_total_exp_time() filters out rows where the value of the
    expect_true("02" %in% res$USUBJID)
 })
 
-test_that("cum_rate_per_total_exp_time() fills missing dates / days correctly" %>%
+test_that("cum_rate_per_total_exp_time() fills missing dates / days correctly" |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$cum_rate_per_total_exp_time,
@@ -1283,8 +1283,8 @@ test_that("cum_rate_per_total_exp_time() fills missing dates / days correctly" %
                                       REPORT_RATES$CHOICES$GROUP_NO_SELECTION))
 
    ## validate that there is an error if the n or m value of a filled in row isnt NA
-   res_day_m_error <- res_day %>% dplyr::mutate(m = ifelse(day == 13, 99, m))
-   res_date_n_error <- res_date %>% dplyr::mutate(n = ifelse(date == "2024-05-14", 99, n))
+   res_day_m_error <- res_day |> dplyr::mutate(m = ifelse(day == 13, 99, m))
+   res_date_n_error <- res_date |> dplyr::mutate(n = ifelse(date == "2024-05-14", 99, n))
    expect_error(compare_with_prev_row(df_time_fill, res_day_m_error, "day", REPORT_RATES$CHOICES$GROUP_NO_SELECTION))
    expect_error(compare_with_prev_row(df_time_fill, res_date_n_error, "date", REPORT_RATES$CHOICES$GROUP_NO_SELECTION))
 
@@ -1316,7 +1316,7 @@ test_that("cum_rate_per_total_exp_time() fills missing dates / days correctly" %
    expect_equal(row$n_cumsum, prev_real_row$n_cumsum)
 })
 
-test_that("cum_rate_per_total_exp() sets ratio = 0 for m_cumsum = 0" %>%
+test_that("cum_rate_per_total_exp() sets ratio = 0 for m_cumsum = 0" |>
          vdoc[["add_spec"]](specs$metric_calculation$cum_rate_per_total_exp_time), {
    #ungrouped
    df_ratio_0_ungrouped <- df_cum_rate |> dplyr::mutate(m = 0, # so that m_cumsum will be 0 in every row
@@ -1341,7 +1341,7 @@ test_that("cum_rate_per_total_exp() sets ratio = 0 for m_cumsum = 0" %>%
    expect_true(any(res_grouped$ratio != 0))
 })
 
-test_that("cum_rate_per_total_exp() calculates correct ratio" %>%
+test_that("cum_rate_per_total_exp() calculates correct ratio" |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$cum_rate_per_total_exp_time,
@@ -1365,7 +1365,7 @@ test_that("cum_rate_per_total_exp() calculates correct ratio" %>%
 
 
 # Function compute_plot_metrics()
-test_that("compute_plot_metrics() returns valid dataset for metric reporting rate per active patients" %>%
+test_that("compute_plot_metrics() returns valid dataset for metric reporting rate per active patients" |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$rate_per_active_patients,
@@ -1387,7 +1387,7 @@ test_that("compute_plot_metrics() returns valid dataset for metric reporting rat
    })
 })
 
-test_that("compute_plot_metrics() returns valid dataset for metric Cumulative rate per total exposure time" %>%
+test_that("compute_plot_metrics() returns valid dataset for metric Cumulative rate per total exposure time" |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$cum_rate_per_total_exp_time,

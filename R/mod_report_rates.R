@@ -16,7 +16,7 @@ REPORT_RATES <- poc(
     RESET_AXIS_LIMITS = "reset_axis_limits"
   ),
   LBL = poc(
-    METRIC_BUTTO083429NS = "Metric type:",
+    METRIC_BUTTONS = "Metric type:",
     GROUP_DROPDOWN = "Group by:",
     TIMETYPE_BUTTONS = "Time alignment:",
     BINSIZE_BUTTONS = "Bin size:",
@@ -51,8 +51,9 @@ REPORT_RATES <- poc(
       "cumulative exposure. \n"),
     METRIC_BUTTONS_OPT2 = paste(
       "Measures the number of reported events within a defined time interval (e.g., week or month), relative to the",
-      "number of patients actively under observation at the end of that interval. The interval can be adjusted by",
-      "selecting this rate type and specifying a bin size.\n"),
+      "number of patients actively under observation at the end of that interval. This metric reflects the event",
+      "frequency among active patients during the selected interval. The interval can be adjusted by selecting this",
+      "rate type and specifying a bin size.\n"),
     TIMETYPE_BUTTONS_OPT1 = paste(
       "This view is calendar based. It aligns all events by their actual calendar dates.\n It",
       "allows you to view trends and rates over real-world time, regardless of when each subject entered the study."),

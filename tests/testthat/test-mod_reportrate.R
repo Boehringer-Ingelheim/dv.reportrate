@@ -1,4 +1,4 @@
-source(testthat::test_path("dummy-data.R"))
+source(test_path("dummy-data.R"))
 test_that("report_rates_ui() fails when argument type mismatches", {
    expect_error(report_rates_ui(""))
    expect_error(report_rates_ui(4))
@@ -450,7 +450,7 @@ test_that("report_rates_server() fails when mandatory parameters aren't passed."
 })
 
 
-testthat::test_that("If one of the dm-, ds- or ae- dataframe has zero rows or no levels are selected while the 'show
+test_that("If one of the dm-, ds- or ae- dataframe has zero rows or no levels are selected while the 'show
                     ungrouped' checkbox is FALSE, the message 'No data available' will be displayed instead of the
                     plot", {
    datalist <- shiny::reactive({
@@ -597,9 +597,9 @@ testthat::test_that("If one of the dm-, ds- or ae- dataframe has zero rows or no
 
 
 # App tests
-testthat::test_that("The default values are correct at app launch", {
+test_that("The default values are correct at app launch", {
 
-   app_dir <- testthat::test_path("apps/reportrates_app")
+   app_dir <- test_path("apps/reportrates_app")
    app_defaults <- shinytest2::AppDriver$new(
       app_dir = app_dir,
       name = "reportrates_app",
@@ -637,11 +637,11 @@ testthat::test_that("The default values are correct at app launch", {
 
 
 
-testthat::test_that("The default values are correct at app launch with an argument passed to the
-                    grouping$default_choice parameter of the server function" %>%
+test_that("The default values are correct at app launch with an argument passed to the
+                    grouping$default_choice parameter of the server function" |>
                   vdoc[["add_spec"]](specs$app_creator_settings$grouping), {
 
-   app_dir <- testthat::test_path("apps/default_choice_app")
+   app_dir <- test_path("apps/default_choice_app")
    app <- shinytest2::AppDriver$new(
       app_dir = app_dir,
       name = "default_choice_app",
@@ -679,9 +679,9 @@ testthat::test_that("The default values are correct at app launch with an argume
 
 
 
-testthat::test_that("All available levels are selected by default after changing the grouping variable" %>%
+test_that("All available levels are selected by default after changing the grouping variable" |>
                        vdoc[["add_spec"]](specs$app_creator_settings$grouping), {
-   app_dir <- testthat::test_path("apps/reportrates_app")
+   app_dir <- test_path("apps/reportrates_app")
    app <- shinytest2::AppDriver$new(
       app_dir = app_dir,
       name = "reportrates_app",
@@ -709,10 +709,10 @@ testthat::test_that("All available levels are selected by default after changing
 
 
 
-testthat::test_that("The 'show ungrouped' checkbox is set to FALSE when changing the grouping variable to no
-                    grouping" %>%
+test_that("The 'show ungrouped' checkbox is set to FALSE when changing the grouping variable to no
+                    grouping" |>
                   vdoc[["add_spec"]](specs$plot_creation$grouping_and_levels$ungrouped), {
-   app_dir <- testthat::test_path("apps/reportrates_app")
+   app_dir <- test_path("apps/reportrates_app")
    app <- shinytest2::AppDriver$new(
       app_dir = app_dir,
       name = "reportrates_app",
@@ -735,9 +735,9 @@ testthat::test_that("The 'show ungrouped' checkbox is set to FALSE when changing
 
 
 
-testthat::test_that("The default choice for grouping is only used once when starting the app" %>%
+test_that("The default choice for grouping is only used once when starting the app" |>
                   vdoc[["add_spec"]](specs$app_creator_settings$grouping), {
-   app_dir <- testthat::test_path("apps/default_choice_app")
+   app_dir <- test_path("apps/default_choice_app")
    app <- shinytest2::AppDriver$new(
       app_dir = app_dir,
       name = "default_choice_app",
@@ -763,17 +763,17 @@ testthat::test_that("The default choice for grouping is only used once when star
    app$wait_for_idle()
    actual_grouping <- app$get_value(input = "reportrate-grouping-group_var")
    expected_grouping <- REPORT_RATES$CHOICES$GROUP_NO_SELECTION
-   testthat::expect_identical(actual_grouping, expected_grouping)
+   expect_identical(actual_grouping, expected_grouping)
 
    app$stop()
 })
 
 
 
-testthat::test_that("The selected grouping variable and the levels are correct also when the dataset selection in the
-                    module manager changes" %>%
+test_that("The selected grouping variable and the levels are correct also when the dataset selection in the
+                    module manager changes" |>
                   vdoc[["add_spec"]](specs$framework_specs$filter_and_datasets), {
-   app_dir <- testthat::test_path("apps/mm_app")
+   app_dir <- test_path("apps/mm_app")
    app <- shinytest2::AppDriver$new(
       app_dir = app_dir,
       name = "mm_app",
@@ -788,35 +788,35 @@ testthat::test_that("The selected grouping variable and the levels are correct a
    app$set_inputs(selector = "dummy_2")
    app$wait_for_idle()
    selected_df <- app$get_value(input = "selector")
-   testthat::expect_equal(selected_df, "dummy_2") # verifying that the switch in the dataset selection worked
+   expect_equal(selected_df, "dummy_2") # verifying that the switch in the dataset selection worked
 
    # ARM as the selected grouping variable is present in both datasets "dummy" and "dummy_2".
    #     --> should be kept as the selected grouping variable
    app$wait_for_idle()
    actual_group <- app$get_value(input = "reportrate-grouping-group_var")
    expected_group <- "ARM"
-   testthat::expect_identical(actual_group, expected_group)
+   expect_identical(actual_group, expected_group)
 
    # Drug 1 and Drug 2 as the selected levels are present in both datasets --> should be kept as the selected levels
    actual_levels <- app$get_value(input = "reportrate-selected_levels")
    expected_levels <- c("Drug 1", "Drug 2")
-   testthat::expect_setequal(actual_levels, expected_levels)
+   expect_setequal(actual_levels, expected_levels)
 
    # Column ARM is not in the dm dataset of dummy_3 --> grouping variable selection should be reset to no selection
    app$set_inputs(selector = "dummy_3")
    app$wait_for_idle()
    selected_df <- app$get_value(input = "selector")
-   testthat::expect_equal(selected_df, "dummy_3") # verifying that the switch in the dataset selection worked
+   expect_equal(selected_df, "dummy_3") # verifying that the switch in the dataset selection worked
 
    app$wait_for_value(input = "reportrate-grouping-group_var", ignore = list("ARM")) # waiting until it's loaded
    actual_group <- app$get_value(input = "reportrate-grouping-group_var")
    expected_group <- REPORT_RATES$CHOICES$GROUP_NO_SELECTION
-   testthat::expect_identical(actual_group, expected_group)
+   expect_identical(actual_group, expected_group)
 
    # grouping variable was set to -None- so the selected levels should be NULL
    actual_levels <- app$get_value(input = "reportrate-selected_levels")
    expected_levels <- NULL
-   testthat::expect_identical(actual_levels, expected_levels)
+   expect_identical(actual_levels, expected_levels)
 
    # in "dummy_3" SEX has the levels "M" and "F". In "dummy_2" SEX has only the level "F". So when switching the dataset
    # "M" should be deselected automatically
@@ -824,14 +824,14 @@ testthat::test_that("The selected grouping variable and the levels are correct a
    app$wait_for_idle()
    actual_levels <- app$get_value(input = "reportrate-selected_levels")
    expected_levels <- c("M", "F")
-   testthat::expect_setequal(actual_levels, expected_levels)
+   expect_setequal(actual_levels, expected_levels)
    app$set_inputs(selector = "dummy_2")
 
    app$wait_for_value(input = "reportrate-selected_levels",
                       ignore = list(c("F", "M"), c("M", "F"))) # waiting until it's loaded
    actual_levels <- app$get_value(input = "reportrate-selected_levels")
    expected_levels <- c("F")
-   testthat::expect_identical(actual_levels, expected_levels)
+   expect_identical(actual_levels, expected_levels)
 
    # When switching back to "dummy", selected grouping variable and levels should still be the same
    app$set_inputs(selector = "dummy")
@@ -841,8 +841,8 @@ testthat::test_that("The selected grouping variable and the levels are correct a
    expected_group <- "SEX"
    actual_levels <- app$get_value(input = "reportrate-selected_levels")
    expected_levels <- c("F")
-   testthat::expect_identical(actual_group, expected_group)
-   testthat::expect_identical(actual_levels, expected_levels)
+   expect_identical(actual_group, expected_group)
+   expect_identical(actual_levels, expected_levels)
 
    # SITEID is not a factor in "dummy_2" so switching the dataset selection should reset the grouping sel to -None-
    app$set_inputs(`reportrate-grouping-group_var` = "SITEID")
@@ -852,16 +852,16 @@ testthat::test_that("The selected grouping variable and the levels are correct a
    app$wait_for_value(input = "reportrate-grouping-group_var", ignore = list("SITEID")) # waiting until it's loaded
    actual_group <- app$get_value(input = "reportrate-grouping-group_var")
    expected_group <- REPORT_RATES$CHOICES$GROUP_NO_SELECTION
-   testthat::expect_identical(actual_group, expected_group)
+   expect_identical(actual_group, expected_group)
 
    app$stop()
 })
 
 
 
-testthat::test_that("The selected grouping variable and the levels are correct also when the global filter changes" %>%
+test_that("The selected grouping variable and the levels are correct also when the global filter changes" |>
                   vdoc[["add_spec"]](specs$framework_specs$filter_and_datasets), {
-   app_dir <- testthat::test_path("apps/mm_app")
+   app_dir <- test_path("apps/mm_app")
    app <- shinytest2::AppDriver$new(
       app_dir = app_dir,
       name = "mm_app",
@@ -872,7 +872,7 @@ testthat::test_that("The selected grouping variable and the levels are correct a
    app$wait_for_idle()
    actual_levels <- app$get_value(input = "reportrate-selected_levels")
    expected_levels <- c("Drug 1", "Drug 2", "Placebo")
-   testthat::expect_setequal(actual_levels, expected_levels)
+   expect_setequal(actual_levels, expected_levels)
 
    # Removing the level "Placebo" in the global filter should lead to the disappearing of "Placebo" as a selected level
    # in the module itself:
@@ -882,15 +882,15 @@ testthat::test_that("The selected grouping variable and the levels are correct a
    app$wait_for_idle(duration = 1000)
    actual_levels <- app$get_value(input = "reportrate-selected_levels")
    expected_levels <- c("Drug 1", "Drug 2")
-   testthat::expect_setequal(actual_levels, expected_levels)
+   expect_setequal(actual_levels, expected_levels)
 
    # resetting the global filter. The selected levels should stay the same even if "Placebo" is available as an level
    app$set_inputs(!!"global_filter-clear_filters" := "click")
    app$wait_for_idle(duration = 1000)
    available_levels <- app$get_value(export = "reportrate-available_lvls")
-   testthat::expect_setequal(available_levels, c("Drug 1", "Drug 2", "Placebo"))
+   expect_setequal(available_levels, c("Drug 1", "Drug 2", "Placebo"))
    sel_levels <- app$get_value(input = "reportrate-selected_levels")
-   testthat::expect_setequal(sel_levels, c("Drug 1", "Drug 2"))
+   expect_setequal(sel_levels, c("Drug 1", "Drug 2"))
 
    colors <- app$get_value(export = "reportrate-color_palette")
    app$stop()

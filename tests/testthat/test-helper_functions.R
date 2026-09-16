@@ -1,9 +1,9 @@
-source(testthat::test_path("dummy-data.R"))
+source(test_path("dummy-data.R"))
 
 # Function validate_and_fill()
 # the validation logic of the function is tested in "test-mod_reportrate.R" with the tests for report_rates_server()
 test_that("validate_and_fill() fills in the default values for the step sizes (days, weeks, months) if they are not
-          supplied." %>%
+          supplied." |>
              vdoc[["add_spec"]](specs$app_creator_settings$step_size), {
    input_args <- list(module_id = "test",
                       dataset_list = shiny::reactive({
@@ -97,7 +97,7 @@ df_validate_dm <- data.frame(
    AGE = c(56, 63, 25) # not a factor
 )
 grouping_choices <- c("ARM", "SEX")
-test_that("validate_dm_dataset() throws no error if valid arguments are passed to the function" %>%
+test_that("validate_dm_dataset() throws no error if valid arguments are passed to the function" |>
              vdoc[["add_spec"]](specs$app_creator_settings$grouping), {
    expect_no_error(
       validate_dm_dataset(dataset = df_validate_dm,
@@ -107,7 +107,7 @@ test_that("validate_dm_dataset() throws no error if valid arguments are passed t
    )
 })
 
-test_that("validate_dm_dataset() throws no error if the grouping list is NULL" %>%
+test_that("validate_dm_dataset() throws no error if the grouping list is NULL" |>
              vdoc[["add_spec"]](specs$app_creator_settings$grouping), {
    expect_no_error(
       validate_dm_dataset(dataset = df_validate_dm,
@@ -117,7 +117,7 @@ test_that("validate_dm_dataset() throws no error if the grouping list is NULL" %
    )
 })
 
-test_that("validate_dm_dataset() throws no error if the dataset has 0 rows." %>%
+test_that("validate_dm_dataset() throws no error if the dataset has 0 rows." |>
              vdoc[["add_spec"]](specs$app_creator_settings$grouping), {
    df_zero <- df_validate_dm |> dplyr::slice(0)
    expect_no_error(
@@ -129,7 +129,7 @@ test_that("validate_dm_dataset() throws no error if the dataset has 0 rows." %>%
 })
 
 test_that("validate_dm_dataset() throws no error if there is only valid grouping_choices or only a valid default_choice
-          supplied" %>%
+          supplied" |>
              vdoc[["add_spec"]](specs$app_creator_settings$grouping), {
    expect_no_error(
       validate_dm_dataset(dataset = df_validate_dm,
@@ -146,7 +146,7 @@ test_that("validate_dm_dataset() throws no error if there is only valid grouping
 })
 
 test_that("validate_dm_dataset() throws no error but outputs an infomessage, if a choice out of grouping_choices or the
-           default_choice isn't in the colnames of the dataset" %>%
+           default_choice isn't in the colnames of the dataset" |>
              vdoc[["add_spec"]](specs$app_creator_settings$grouping), {
     # case for choices
     expect_message(
@@ -212,7 +212,7 @@ test_that("validate_dm_dataset() throws error if the subjid_var is not a column 
 })
 
 test_that("validate_dm_dataset() throws no error but outputs an infomessage, if a choice out of grouping_choices or the
-           default_choice is in the columnnames of the dataset but the column is not of type factor." %>%
+           default_choice is in the columnnames of the dataset but the column is not of type factor." |>
              vdoc[["add_spec"]](specs$app_creator_settings$grouping), {
    # case for grouping_choices
    expect_message(
@@ -258,7 +258,7 @@ test_that("validate_dm_dataset() throws no error but outputs an infomessage, if 
                                 "in the selected demographics dataset."))
 })
 
-test_that("validate_dm_dataset() throws error if the default_choice is not in the grouping_choices" %>%
+test_that("validate_dm_dataset() throws error if the default_choice is not in the grouping_choices" |>
              vdoc[["add_spec"]](specs$app_creator_settings$grouping), {
    expect_error(
       validate_dm_dataset(dataset = df_validate_dm,
@@ -524,7 +524,7 @@ test_that("validate_df_rows() raises silent validation error when one of the dat
 df <- data.frame(m = as.numeric(c(1, 0)),
                  ARM = factor(c("a", "b")))
 # Function is_valid_grouping_var()
-test_that("is_valid_grouping_var() returns the correct logical." %>%
+test_that("is_valid_grouping_var() returns the correct logical." |>
              vdoc[["add_spec"]](
                 c(
                    specs$plot_creation$grouping_and_levels$grouped,
@@ -542,7 +542,7 @@ test_that("is_valid_grouping_var() returns the correct logical." %>%
 
 # Function validate_grouping_selection()
 test_that("validate_grouping_selection() returns REPORT_RATES$CHOICES$GROUP_NO_SELECTION if the selected group was
-           REPORT_RATES$CHOICES$GROUP_NO_SELECTION" %>%
+           REPORT_RATES$CHOICES$GROUP_NO_SELECTION" |>
              vdoc[["add_spec"]](
                 c(
                    specs$plot_creation$grouping_and_levels$ungrouped,
@@ -554,7 +554,7 @@ test_that("validate_grouping_selection() returns REPORT_RATES$CHOICES$GROUP_NO_S
 })
 
 test_that("validate_grouping_selection() returns REPORT_RATES$CHOICES$GROUP_NO_SELECTION if the selected grouping
-           variable is not in the dataset or not a factor anymore" %>%
+           variable is not in the dataset or not a factor anymore" |>
              vdoc[["add_spec"]](specs$framework_specs$filter_and_datasets), {
    res_not_in_df <- suppressMessages(validate_grouping_selection(dm = df, selected_group = "SITEID"))
    expect_equal(res_not_in_df, REPORT_RATES$CHOICES$GROUP_NO_SELECTION)
@@ -564,7 +564,7 @@ test_that("validate_grouping_selection() returns REPORT_RATES$CHOICES$GROUP_NO_S
 })
 
 test_that("validate_grouping_selection() returns the selected grouping variable if it's in the dataset and of
-          type factor" %>%
+          type factor" |>
              vdoc[["add_spec"]](
                 c(
                    specs$plot_creation$grouping_and_levels$grouped,
@@ -575,7 +575,7 @@ test_that("validate_grouping_selection() returns the selected grouping variable 
    expect_equal(res, "ARM")
 })
 
-test_that("validate_grouping_selection() outputs the correct message." %>%
+test_that("validate_grouping_selection() outputs the correct message." |>
              vdoc[["add_spec"]](specs$framework_specs$filter_and_datasets), {
    expect_message(
       validate_grouping_selection(dm = df, selected_group = "SITEID"),
@@ -589,7 +589,7 @@ test_that("validate_grouping_selection() outputs the correct message." %>%
    expect_silent(validate_grouping_selection(dm = df, selected_group = "ARM"))
 })
 
-test_that("validate_grouping_selection() behaves as usual when the df has no rows" %>%
+test_that("validate_grouping_selection() behaves as usual when the df has no rows" |>
              vdoc[["add_spec"]](specs$framework_specs$filter_and_datasets), {
    df_empty <- df |> dplyr::slice(0)
 

@@ -2,7 +2,7 @@
 source("dummy-data.R")
 
 # Function create_plot()
-test_that("create_plot() returns a ggplot2 object with the right mapping" %>%
+test_that("create_plot() returns a ggplot2 object with the right mapping" |>
              vdoc[["add_spec"]](
                 c(
                    specs$plot_creation$axis_handling$adaptive_x_text_size,
@@ -57,7 +57,6 @@ test_that("create_plot() returns a ggplot2 object with the right mapping" %>%
                       show_ungrouped = TRUE)
 
    expect_s3_class(plt, "ggplot")
-   expect_true(is.list(plt))
    expect_s3_class(plt$scales$scales[[1]], class(scale)[1])
    expect_identical(plt$scales$scales[[1]]$breaks, scale$breaks)
    expect_identical(plt$scales$scales[[1]]$labels, scale$labels)
@@ -69,7 +68,7 @@ test_that("create_plot() returns a ggplot2 object with the right mapping" %>%
    expect_identical(rlang::expr_text(plt$layers[[2]]$mapping$colour), '~.data[["ARM"]]') # Line layer of grouped data
 })
 
-test_that("create_plot() appends the point layers after the line layers." %>%
+test_that("create_plot() appends the point layers after the line layers." |>
              vdoc[["add_spec"]](specs$plot_creation$hovering), {
    plt <- create_plot(dm = dm_dummy,
                       ds = ds_prepared_dummy,
@@ -94,7 +93,7 @@ test_that("create_plot() appends the point layers after the line layers." %>%
 
 
 # Function convert_to_girafe()
-test_that("convert_to_girafe() appends the point layers after the line layers." %>%
+test_that("convert_to_girafe() appends the point layers after the line layers." |>
              vdoc[["add_spec"]](
                 c(
                    specs$plot_creation$hovering,
@@ -151,7 +150,7 @@ test_that("prepare_plot_data() returns data frame with correct columns", {
 
 
 # Function get_plot_datasets()
-test_that("get_plot_datasets() returns correct structure for no grouping" %>%
+test_that("get_plot_datasets() returns correct structure for no grouping" |>
          vdoc[["add_spec"]](specs$plot_creation$grouping_and_levels$ungrouped), {
    res <- get_plot_datasets(dm = dm_dummy,
                             ae = ae_prepared_dummy,
@@ -169,7 +168,7 @@ test_that("get_plot_datasets() returns correct structure for no grouping" %>%
    expect_equal(res$ungrouped, res$axis_df)
 })
 
-test_that("get_plot_datasets() returns correct structure for grouping with show_ungrouped = TRUE" %>%
+test_that("get_plot_datasets() returns correct structure for grouping with show_ungrouped = TRUE" |>
              vdoc[["add_spec"]](
                 c(
                    specs$plot_creation$grouping_and_levels$grouped,
@@ -192,7 +191,7 @@ test_that("get_plot_datasets() returns correct structure for grouping with show_
    expect_identical(res$ungrouped, res$axis_df) #if both datasets arent null, the ungrouped df should be used as axis_df
 })
 
-test_that("get_plot_datasets() returns correct structure for grouping with show_ungrouped = FALSE" %>%
+test_that("get_plot_datasets() returns correct structure for grouping with show_ungrouped = FALSE" |>
          vdoc[["add_spec"]](specs$plot_creation$grouping_and_levels$grouped), {
    res <- get_plot_datasets(dm = dm_dummy,
                             ae = ae_prepared_dummy,
@@ -211,7 +210,7 @@ test_that("get_plot_datasets() returns correct structure for grouping with show_
 })
 
 # Function select_geom()
-test_that("select_geom() returns the correct ggiraph::geom_..._interactive object" %>%
+test_that("select_geom() returns the correct ggiraph::geom_..._interactive object" |>
          vdoc[["add_spec"]](specs$plot_creation$function_type), {
    res <- select_geom(REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1)
    expect_equal(res, ggiraph::geom_line_interactive)
@@ -234,7 +233,7 @@ df_grouped <- data.frame(
    hovertext = c("a", "xy", "z", "w"),
    ARM = as.factor(c("a", "b", "a", "b"))
 )
-test_that("create_line_layers() returns exactly one layer with the right mapping for ungrouped data only" %>%
+test_that("create_line_layers() returns exactly one layer with the right mapping for ungrouped data only" |>
              vdoc[["add_spec"]](
                 c(
                    specs$plot_creation$grouping_and_levels$ungrouped,
@@ -256,7 +255,7 @@ test_that("create_line_layers() returns exactly one layer with the right mapping
    expect_equal(as.character(rlang::expr_text(res[[1]]$mapping$y)), "~.data[[\"ratio\"]]")
 })
 
-test_that("create_line_layers() returns exactly one layer with the right mapping for grouped data only" %>%
+test_that("create_line_layers() returns exactly one layer with the right mapping for grouped data only" |>
              vdoc[["add_spec"]](
                 c(
                    specs$plot_creation$grouping_and_levels$grouped,
@@ -285,7 +284,7 @@ test_that("create_line_layers() returns exactly one layer with the right mapping
    expect_s3_class(res[[1]], "LayerInstance")
 })
 
-test_that("create_line_layers() returns two layers when both datasets exist" %>%
+test_that("create_line_layers() returns two layers when both datasets exist" |>
           vdoc[["add_spec"]](
              c(
                 specs$plot_creation$grouping_and_levels$ungrouped,
@@ -302,7 +301,7 @@ test_that("create_line_layers() returns two layers when both datasets exist" %>%
    expect_s3_class(res[[2]], "LayerInstance")
 })
 
-test_that("create_line_layers() filters the dataset to the selected levels" %>%
+test_that("create_line_layers() filters the dataset to the selected levels" |>
          vdoc[["add_spec"]](specs$plot_creation$grouping_and_levels$grouped), {
    df_list <- list(ungrouped = NULL, grouped = df_grouped, axis_df = df_grouped)
    res <- create_line_layers(df_list = df_list,
@@ -317,7 +316,7 @@ test_that("create_line_layers() filters the dataset to the selected levels" %>%
 
 
 # Function create_point_layers()
-test_that("create_point_layers() returns exactly one layer with the right mapping for ungrouped data only" %>%
+test_that("create_point_layers() returns exactly one layer with the right mapping for ungrouped data only" |>
              vdoc[["add_spec"]](
                 c(
                    specs$plot_creation$grouping_and_levels$ungrouped,
@@ -335,7 +334,7 @@ test_that("create_point_layers() returns exactly one layer with the right mappin
    expect_equal(as.character(rlang::expr_text(res[[1]]$mapping$tooltip)), "~.data[[\"hovertext\"]]")
 })
 
-test_that("create_point_layers() returns exactly one layer with the right mapping for grouped data only" %>%
+test_that("create_point_layers() returns exactly one layer with the right mapping for grouped data only" |>
              vdoc[["add_spec"]](
                 c(
                    specs$plot_creation$grouping_and_levels$grouped,
@@ -359,7 +358,7 @@ test_that("create_point_layers() returns exactly one layer with the right mappin
    expect_s3_class(res[[1]], "LayerInstance")
 })
 
-test_that("create_point_layers() returns two layers when both datasets exist" %>%
+test_that("create_point_layers() returns two layers when both datasets exist" |>
           vdoc[["add_spec"]](
              c(
                 specs$plot_creation$grouping_and_levels$ungrouped,
@@ -375,7 +374,7 @@ test_that("create_point_layers() returns two layers when both datasets exist" %>
    expect_s3_class(res[[2]], "LayerInstance")
 })
 
-test_that("create_point_layers() filters the dataset to the selected levels" %>%
+test_that("create_point_layers() filters the dataset to the selected levels" |>
          vdoc[["add_spec"]](specs$plot_creation$grouping_and_levels$grouped), {
    df_list <- list(ungrouped = NULL, grouped = df_grouped, axis_df = df_grouped)
    res <- create_point_layers(df_list = df_list,
@@ -395,7 +394,7 @@ x_axis_date <- list(breaks = as.Date(c("2020-01-01", "2020-07-01", "2021-01-01",
 x_axis_day <- list(breaks = c(-250, -200, -150, -100, -50, 0, 49, 99, 149, 199, 249, 299, 349),
                    ticktext = c(-250, -200, -150, -100,  -50, 1, 50, 100, 150, 200, 250, 300, 350),
                    title = "Days")
-test_that("get_x_scale() returns a ggplot2::scale_x_... object of the correct class" %>%
+test_that("get_x_scale() returns a ggplot2::scale_x_... object of the correct class" |>
          vdoc[["add_spec"]](specs$metric_calculation$timetype_selection), {
    res <- get_x_scale(REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT1, x_axis_date)
    expect_equal(class(res), class(ggplot2::scale_x_date(breaks = x_axis_date$breaks)))
@@ -405,7 +404,7 @@ test_that("get_x_scale() returns a ggplot2::scale_x_... object of the correct cl
                                                                 labels = x_axis_day$ticktext)))
 })
 
-test_that("get_x_scale() returns a ggplot2::scale_x_... object with the correct breaks and labels" %>%
+test_that("get_x_scale() returns a ggplot2::scale_x_... object with the correct breaks and labels" |>
           vdoc[["add_spec"]](
              c(
                 specs$plot_creation$axis_handling$no_zero,
@@ -424,7 +423,7 @@ test_that("get_x_scale() returns a ggplot2::scale_x_... object with the correct 
 
 
 # Function get_geom_point()
-test_that("get_geom_point() always returns a ggiraph::geom_point_interactive object." %>%
+test_that("get_geom_point() always returns a ggiraph::geom_point_interactive object." |>
              vdoc[["add_spec"]](
                 c(
                    specs$plot_creation$hovering,
@@ -445,7 +444,7 @@ test_that("get_geom_point() always returns a ggiraph::geom_point_interactive obj
    expect_equal(class(res_grouped), class(ggiraph::geom_point_interactive()))
 })
 
-test_that("get_geom_point() returns the ggiraph::geom_point_interactive with the right mapping" %>%
+test_that("get_geom_point() returns the ggiraph::geom_point_interactive with the right mapping" |>
              vdoc[["add_spec"]](
                 c(
                    specs$plot_creation$hovering,
@@ -483,7 +482,7 @@ levels_extended <- letters[1:14]
 levels_viridis <- letters[1:15]
 levels_zero <- character(0)
 
-test_that("generate_palette() returns correct length and names" %>%
+test_that("generate_palette() returns correct length and names" |>
              vdoc[["add_spec"]](specs$plot_creation$colors), {
    palette <- generate_palette(levels_okabe)
    expect_equal(length(palette), 9) # 8 levels + "ungrouped"
@@ -503,7 +502,7 @@ test_that("generate_palette() returns correct length and names" %>%
    expect_equal(names(palette), c("ungrouped"))
 })
 
-test_that("generate_palette() uses the right color palette depending on the number of levels" %>%
+test_that("generate_palette() uses the right color palette depending on the number of levels" |>
          vdoc[["add_spec"]](specs$plot_creation$colors), {
    palette_okabe <- generate_palette(levels_okabe)
    expected <- grDevices::palette.colors(length(palette_okabe), palette = "Okabe-Ito", recycle = FALSE)
@@ -529,14 +528,14 @@ test_that("generate_palette() uses the right color palette depending on the numb
    expect_equal(unname(palette_many), expected)
 })
 
-test_that("generate_palette() returns the names sorted (except of ungrouped as the first element)" %>%
+test_that("generate_palette() returns the names sorted (except of ungrouped as the first element)" |>
              vdoc[["add_spec"]](specs$plot_creation$colors), {
    levels_unsorted <- c("b", "a", "d", "x", "f", "y")
    palette <- generate_palette(levels_unsorted)
    expect_equal(names(palette), c("ungrouped", "a", "b", "d", "f", "x", "y"))
 })
 
-test_that("generate_palette() always returns a palette with black assigned to ungrouped." %>%
+test_that("generate_palette() always returns a palette with black assigned to ungrouped." |>
           vdoc[["add_spec"]](specs$plot_creation$colors), {
    palette_okabe <- generate_palette(levels_okabe)
    expect_equal(palette_okabe[["ungrouped"]], "#000000")
@@ -556,7 +555,7 @@ test_that("generate_palette() always returns a palette with black assigned to un
 })
 
 # Function palette_refresh_check()
-test_that("palette_refresh_check() returns the correct logical" %>%
+test_that("palette_refresh_check() returns the correct logical" |>
          vdoc[["add_spec"]](specs$plot_creation$colors), {
    res_null <- palette_refresh_check(current_palette = NULL, all_levels = levels_okabe)
    expect_true(res_null)
@@ -598,7 +597,7 @@ test_that("palette_refresh_check() returns the correct logical" %>%
 
 # Function "get_x_axis()"
 test_that("get_x_axis() returns a list with just the elements 'title' and 'breaks' if 'By study date' is selected as
-          the time type" %>%
+          the time type" |>
           vdoc[["add_spec"]](
              c(
                 specs$plot_creation$axis_handling$adaptive_titles,
@@ -648,7 +647,7 @@ test_that("get_x_axis() returns a res$breaks with two dates, even if the dates a
    expect_equal(res_2$breaks, as.Date(c("2025-01-01", "2025-07-01")))
 })
 
-test_that("get_x_axis() returns the correct interval for the breaks for the time selection 'By study date'" %>%
+test_that("get_x_axis() returns the correct interval for the breaks for the time selection 'By study date'" |>
              vdoc[["add_spec"]](specs$metric_calculation$timetype_selection), {
    df <- data.frame(time = as.Date(c("2020-06-02", "2020-09-03", "2020-09-15", "2023-01-05")),
                     time_for_plot = as.Date(c("2020-06-02", "2020-09-03", "2020-09-15", "2023-01-05")))
@@ -694,7 +693,7 @@ test_that("get_x_axis() returns the correct interval for the breaks for the time
 })
 
 test_that("get_x_axis() returns a list with the elements 'title', 'breaks' and 'ticktext' if 'By study day' is
-           selected as the time type" %>%
+           selected as the time type" |>
           vdoc[["add_spec"]](
              c(
                 specs$plot_creation$axis_handling$adaptive_titles,
@@ -716,7 +715,7 @@ test_that("get_x_axis() returns a list with the elements 'title', 'breaks' and '
    expect_equal(names(res), c("title", "breaks", "ticktext"))
 })
 
-test_that("The breaks and ticktext in the list that is returned by get_x_axis() are of the same length" %>%
+test_that("The breaks and ticktext in the list that is returned by get_x_axis() are of the same length" |>
           vdoc[["add_spec"]](
              c(
                 specs$plot_creation$axis_handling$no_zero,
@@ -736,7 +735,7 @@ test_that("The breaks and ticktext in the list that is returned by get_x_axis() 
    expect_equal(length(res$breaks), length(res$ticktext))
 })
 
-test_that("The ticktext in the list that is returned by get_x_axis() should not contain a 0" %>%
+test_that("The ticktext in the list that is returned by get_x_axis() should not contain a 0" |>
          vdoc[["add_spec"]](specs$plot_creation$axis_handling$no_zero), {
    df <- data.frame(time = c(-2, -1, 1, 2), time_for_plot = c(-2, -1, 0, 1))
 
@@ -751,7 +750,7 @@ test_that("The ticktext in the list that is returned by get_x_axis() should not 
    expect_true(!any(res$ticktext == 0))
 })
 
-test_that("get_x_axis() returns the correct values for the ticktext if 'By study date' is selected" %>%
+test_that("get_x_axis() returns the correct values for the ticktext if 'By study date' is selected" |>
          vdoc[["add_spec"]](specs$app_creator_settings$step_size), {
    df <- data.frame(time = c(-108:-1, 1:112), time_for_plot = -108:111)
    # metric = cumulative rate --> step_size_days will be used. Checking even stepsize
@@ -786,7 +785,7 @@ test_that("get_x_axis() returns the correct values for the ticktext if 'By study
    expect_equal(res_3$breaks, df$time_for_plot)
 })
 
-test_that("get_x_axis() uses the right call of get_indices_for_tickval() depending on the metric & unit selection." %>%
+test_that("get_x_axis() uses the right call of get_indices_for_tickval() depending on the metric & unit selection." |>
           vdoc[["add_spec"]](
              c(
                 specs$app_creator_settings$step_size,
@@ -864,7 +863,7 @@ test_that("get_x_axis() returns empty breaks and ticktext if the input dataset w
 
 
 # Function "get_x_axis_label()"
-test_that("get_x_axis_label() returns the correct Time label for the x-Axis" %>%
+test_that("get_x_axis_label() returns the correct Time label for the x-Axis" |>
          vdoc[["add_spec"]](specs$plot_creation$axis_handling$adaptive_titles), {
    expect_equal(get_x_axis_label("Cumulative rate per total exposure time", "By study date", "Week"), "Date")
    expect_equal(get_x_axis_label("Cumulative rate per total exposure time", "By study date", "Month"), "Date")
@@ -881,7 +880,7 @@ test_that("get_x_axis_label() returns the correct Time label for the x-Axis" %>%
 
 
 # Function "get_indices_for_tickvals()"
-test_that("get_indices_for_tickval() returns the correct indices when a step size is passed to the function" %>%
+test_that("get_indices_for_tickval() returns the correct indices when a step size is passed to the function" |>
              vdoc[["add_spec"]](
                 c(
                    specs$plot_creation$axis_handling$no_zero,
@@ -928,14 +927,14 @@ test_that("get_indices_for_tickval() throws an error if the passed step size is 
 
 # Function "get_time_for_plot()"
 test_that("get_time_for_plot() creates original time column as time_for_plot column when 'By study date' is
-          selected" %>%
+          selected" |>
          vdoc[["add_spec"]](specs$metric_calculation$timetype_selection), {
    df <- data.frame(time = as.Date(c("2025-01-01", "2025-01-02")))
    res <- get_time_for_plot(dataset = df, time_selection = "By study date")
    expect_equal(res$time_for_plot, df$time)
 })
 
-test_that("get_time_for_plot() adjusts time correctly when 'By study day' is selected" %>%
+test_that("get_time_for_plot() adjusts time correctly when 'By study day' is selected" |>
           vdoc[["add_spec"]](
              c(
                 specs$plot_creation$axis_handling$no_zero,
@@ -948,21 +947,21 @@ test_that("get_time_for_plot() adjusts time correctly when 'By study day' is sel
    expect_equal(res$time, c(-2, -1, 1, 2))
 })
 
-test_that("get_time_for_plot() adjusts time correctly when 'By study day' is selected for negative values only" %>%
+test_that("get_time_for_plot() adjusts time correctly when 'By study day' is selected for negative values only" |>
          vdoc[["add_spec"]](specs$plot_creation$axis_handling$no_zero), {
    df <- data.frame(time = as.Date(c(-5, -4, -3, -2, -1)))
    res <- get_time_for_plot(dataset = df, time_selection = "By study day")
    expect_equal(res$time_for_plot, df$time)
 })
 
-test_that("get_time_for_plot() is filtering out the rows with time = 0 correctly." %>%
+test_that("get_time_for_plot() is filtering out the rows with time = 0 correctly." |>
          vdoc[["add_spec"]](specs$plot_creation$axis_handling$no_zero), {
    df <- data.frame(time = c(0, 0, 0))
    res <- get_time_for_plot(dataset = df, time_selection = "By study day")
    expect_equal(nrow(res), 0)
 })
 
-test_that("get_time_for_plot() doesn't return the column 'time' with a 0 included." %>%
+test_that("get_time_for_plot() doesn't return the column 'time' with a 0 included." |>
          vdoc[["add_spec"]](specs$plot_creation$axis_handling$no_zero), {
    df <- data.frame(time = c(-1, 0, 1))
    res <- get_time_for_plot(df, "By study day")
@@ -985,7 +984,7 @@ test_that("get_time_for_plot() doesn't return the column 'time' with a 0 include
 
 
 # function get_x_axis_text_size()
-test_that("get_x_axis_text_size() returns the correct numeric" %>%
+test_that("get_x_axis_text_size() returns the correct numeric" |>
          vdoc[["add_spec"]](specs$plot_creation$axis_handling$adaptive_x_text_size), {
    breaks <- 1:14
    res <- get_x_axis_text_size(breaks)
@@ -1009,17 +1008,17 @@ test_that("get_x_axis_text_size() returns the correct numeric" %>%
 
 
 # function get_opacity()
-test_that("get_opacity() returns 1 when amount_levels is 0" %>%
+test_that("get_opacity() returns 1 when amount_levels is 0" |>
          vdoc[["add_spec"]](specs$plot_creation$highlight), {
    expect_equal(get_opacity(0), 1)
 })
 
-test_that("get_opacity() returns 0.5 when amount_levels is 1" %>%
+test_that("get_opacity() returns 0.5 when amount_levels is 1" |>
          vdoc[["add_spec"]](specs$plot_creation$highlight), {
    expect_equal(get_opacity(1), 0.5)
 })
 
-test_that("get_opacity() returns correct fractional value for level amount > 1" %>%
+test_that("get_opacity() returns correct fractional value for level amount > 1" |>
          vdoc[["add_spec"]](specs$plot_creation$highlight), {
    expect_equal(get_opacity(2), 0.5)
    expect_equal(get_opacity(3), 1 / 3)
@@ -1038,7 +1037,7 @@ df_legend <- data.frame(
 attr(df_legend[["ARM"]], "label") <- "Description of planned Arm"
 attr(df_legend[["COUNTRY"]], "label") <- 10
 
-test_that("get_legend_text() returns the label of the grouping_var if there is one" %>%
+test_that("get_legend_text() returns the label of the grouping_var if there is one" |>
          vdoc[["add_spec"]](specs$plot_creation$legend), {
    res <- get_legend_text(df_legend, "ARM")
    expect_equal(res, "Description of planned Arm")
@@ -1049,7 +1048,7 @@ test_that("get_legend_text() returns the label of the grouping_var if there is o
 })
 
 
-test_that("get_legend_text() returns the name of the grouping variable itself it there is no label" %>%
+test_that("get_legend_text() returns the name of the grouping variable itself it there is no label" |>
          vdoc[["add_spec"]](specs$plot_creation$legend), {
    # no label was assigned to the column SITEID
    res <- get_legend_text(df_legend, "SITEID")
@@ -1074,7 +1073,7 @@ test_that("get_legend_text() returns the name of the grouping variable itself it
 
 
 # Function get_columns_with_labels()
-test_that("get_columns_with_labels returns column names with and without labels correctly" %>%
+test_that("get_columns_with_labels returns column names with and without labels correctly" |>
              vdoc[["add_spec"]](specs$plot_creation$legend), {
    dataset <- data.frame(
       age = 1:3,

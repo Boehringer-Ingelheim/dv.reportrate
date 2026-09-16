@@ -55,7 +55,7 @@ mock_rr_app_with_mm <- function() {
   # Launching the DaVinci app
   dv.manager::run_app(
     data = data_list,
-    module_list = list("Reporting Rates" = reporting_rates),
+    module_list = list("AE Reporting Rates" = reporting_rates),
     filter_data = "dm",
     filter_key = "USUBJID"
   )

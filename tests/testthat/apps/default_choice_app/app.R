@@ -51,6 +51,5 @@ dv.manager::run_app(
       "Reporting Rates" = reporting_rates
    ),
    filter_data = "dm",
-   filter_key = "USUBJID",
-   filter_type = "datasets"
+   filter_key = "USUBJID"
 )

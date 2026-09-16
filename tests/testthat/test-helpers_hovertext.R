@@ -21,7 +21,7 @@ remove_dummy_rows <- function(dataset, grouping_var) {
 }
 
 # Function get_hovertext()
-test_that("get_hovertext() works correct for the metric cumulative rate" %>%
+test_that("get_hovertext() works correct for the metric cumulative rate" |>
          vdoc[["add_spec"]](specs$plot_creation$hovering), {
    # with "By study date":
    res_date <- get_hovertext(dataset = df_date,
@@ -52,7 +52,7 @@ test_that("get_hovertext() works correct for the metric cumulative rate" %>%
    expect_true(all(grepl("<br>", res_day$hovertext)))
 })
 
-test_that("get_hovertext() works correct for the metric reporting rate per active patients" %>%
+test_that("get_hovertext() works correct for the metric reporting rate per active patients" |>
          vdoc[["add_spec"]](specs$plot_creation$hovering), {
    # with "By study date":
    res_date <- get_hovertext(dataset = df_date,
@@ -130,7 +130,7 @@ test_that("get_hovertext() returns dataset only containing the correct columns",
 
 
 # Function get_hovertext_time_base()
-test_that("get_hovertext_time_base() works correct for the metric cumulative rate" %>%
+test_that("get_hovertext_time_base() works correct for the metric cumulative rate" |>
           vdoc[["add_spec"]](
              c(
                 specs$metric_calculation$timetype_selection,
@@ -163,7 +163,7 @@ test_that("get_hovertext_time_base() works correct for the metric cumulative rat
 })
 
 test_that("get_hovertext_time_base() works correct for the metric reporting rate per active patients and the time
-          selection 'By study date'" %>%
+          selection 'By study date'" |>
           vdoc[["add_spec"]](
              c(
                 specs$plot_creation$hovering,
@@ -212,7 +212,7 @@ test_that("get_hovertext_time_base() works correct for the metric reporting rate
 })
 
 test_that("get_hovertext_time_base() creates the correct ht_time_base for the metric reporting rate per active patients
-           and the time selection 'By study day'" %>%
+           and the time selection 'By study day'" |>
           vdoc[["add_spec"]](
              c(
                 specs$plot_creation$hovering,
@@ -253,7 +253,7 @@ test_that("get_hovertext_time_base() creates the correct ht_time_base for the me
 })
 
 test_that("get_hovertext_time_base() calculates the correct interval end and start for the metric reporting rate per
-          active patients and the time selection 'By study day'" %>%
+          active patients and the time selection 'By study day'" |>
           vdoc[["add_spec"]](
              c(
                 specs$plot_creation$hovering,
@@ -297,7 +297,7 @@ test_that("get_hovertext_time_base() calculates the correct interval end and sta
    expect_equal(res_month$interval_end, expected_end)
 })
 
-test_that("get_hovertext_time_base() removes hovertext from dummy rows" %>%
+test_that("get_hovertext_time_base() removes hovertext from dummy rows" |>
          vdoc[["add_spec"]](specs$plot_creation$hovering), {
    # by study date
    res_date <- get_hovertext_time_base(dataset = df_date,
@@ -337,7 +337,7 @@ df_time_base <- data.frame(
    ht_time_base = c("Day: -1", "Day: 1", "Day: 2", "Day: 3"),
    ARM = factor(c("a", "a", "b", "b"))
 )
-test_that("remove_ht_from_dummy_rows() replaces ht_time_base in last row of each group with END" %>%
+test_that("remove_ht_from_dummy_rows() replaces ht_time_base in last row of each group with END" |>
              vdoc[["add_spec"]](specs$plot_creation$hovering), {
    res <- remove_ht_from_dummy_rows(df_time_base, "ARM")
 
@@ -347,7 +347,7 @@ test_that("remove_ht_from_dummy_rows() replaces ht_time_base in last row of each
 })
 
 test_that("remove_ht_from_dummy_rows() only replaces the ht_time_base in last row with END when there is no
-          grouping" %>%
+          grouping" |>
              vdoc[["add_spec"]](specs$plot_creation$hovering), {
    res <- remove_ht_from_dummy_rows(df_time_base, REPORT_RATES$CHOICES$GROUP_NO_SELECTION)
    expect_true("ht_time_base" %in% colnames(res))
@@ -355,7 +355,7 @@ test_that("remove_ht_from_dummy_rows() only replaces the ht_time_base in last ro
 })
 
 test_that("remove_ht_from_dummy_rows() only replaces the ht_time_base in last row with END when there is only 1 level
-          in the grouping variable" %>%
+          in the grouping variable" |>
              vdoc[["add_spec"]](specs$plot_creation$hovering), {
    df <- df_time_base |> dplyr::mutate(ARM = factor("a"))
    res <- remove_ht_from_dummy_rows(df, "ARM")
@@ -363,7 +363,7 @@ test_that("remove_ht_from_dummy_rows() only replaces the ht_time_base in last ro
    expect_equal(res$ht_time_base, c(c("Day: -1", "Day: 1", "Day: 2", "END")))
 })
 
-test_that("remove_ht_from_dummy_rows() works when groups only have 1 row" %>%
+test_that("remove_ht_from_dummy_rows() works when groups only have 1 row" |>
              vdoc[["add_spec"]](specs$plot_creation$hovering), {
     df <- df_time_base
     df$ARM <- factor(c("a", "a", "c", "d"))
@@ -379,7 +379,7 @@ test_that("remove_ht_from_dummy_rows() works when groups only have 1 row" %>%
 
 
 # Function get_hovertext_levels_display()
-test_that("get_hovertext_levels_display() works correct with valid grouping" %>%
+test_that("get_hovertext_levels_display() works correct with valid grouping" |>
          vdoc[["add_spec"]](specs$plot_creation$hovering), {
    res <- get_hovertext_levels_display(df_day, "ARM")
    expect_true("ht_lvls_display" %in% colnames(res))
@@ -390,7 +390,7 @@ test_that("get_hovertext_levels_display() works correct with valid grouping" %>%
    expect_false(any(grepl("Ungrouped", res$ht_lvls_display)))
 })
 
-test_that("get_hovertext_levels_display() works correct without grouping" %>%
+test_that("get_hovertext_levels_display() works correct without grouping" |>
          vdoc[["add_spec"]](specs$plot_creation$hovering), {
    res <- get_hovertext_levels_display(df_day, REPORT_RATES$CHOICES$GROUP_NO_SELECTION)
    expect_true("ht_lvls_display" %in% colnames(res))
@@ -410,7 +410,7 @@ df_ae_info <- data.frame(
    ratio = c(0.1234, 2.9999, 3.3735),
    n_cumsum = c(10, 62, 85)
 )
-test_that("get_hovertext_ae_info() returns dataset with ht_ae_info column containing the correct elements" %>%
+test_that("get_hovertext_ae_info() returns dataset with ht_ae_info column containing the correct elements" |>
          vdoc[["add_spec"]](specs$plot_creation$hovering), {
    res <- get_hovertext_ae_info(df_ae_info, 3L)
    expect_true("ht_ae_info" %in% colnames(res))
@@ -431,7 +431,7 @@ test_that("get_hovertext_ae_info() returns dataset with ht_ae_info column contai
    expect_true(all(grepl("<br>Number of AEs: 0", res_zero$ht_ae_info)))
 })
 
-test_that("get_hovertext_ae_info() rounds the ratio correctly" %>%
+test_that("get_hovertext_ae_info() rounds the ratio correctly" |>
           vdoc[["add_spec"]](
              c(
                 specs$plot_creation$hovering,

@@ -4,7 +4,7 @@
 \alias{generate_palette}
 \title{Internal helper function for generating a color palette, so that the color of the plots of the different levels stay
 consistent when selecting or deselecting levels. For <= 9 levels (including the ungrouped data as an own level) the
-"Okabe-Ito" palette is used. For <= 15 levels (including the ungrouped data as an own level) the "paletteMartin" is
+"Okabe-Ito" palette is used. For <= 15 levels (including the ungrouped data as an own level) the EXTENDED palette is
 used. Those palettes are colorblind-friendly. For > 15 levels  (including the ungrouped data as an own level) the
 "viridis" palette is used.}
 \usage{
@@ -21,7 +21,7 @@ A named character vector of color values, where the names correspond to the leve
 \description{
 Internal helper function for generating a color palette, so that the color of the plots of the different levels stay
 consistent when selecting or deselecting levels. For <= 9 levels (including the ungrouped data as an own level) the
-"Okabe-Ito" palette is used. For <= 15 levels (including the ungrouped data as an own level) the "paletteMartin" is
+"Okabe-Ito" palette is used. For <= 15 levels (including the ungrouped data as an own level) the EXTENDED palette is
 used. Those palettes are colorblind-friendly. For > 15 levels  (including the ungrouped data as an own level) the
 "viridis" palette is used.
 }

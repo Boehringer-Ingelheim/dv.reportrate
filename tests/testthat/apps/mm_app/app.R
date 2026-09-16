@@ -57,5 +57,4 @@ dv.manager::run_app(
    ),
    filter_data = "dm",
    filter_key = "USUBJID"
-   , filter_type = "datasets"
 )
