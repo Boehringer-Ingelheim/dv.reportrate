@@ -167,42 +167,42 @@ report_rates_ui <- function(module_id) {
       ),
       shiny::tags$hr(style = "border-top: 1px solid #aaa; margin: 15px 0;"),
       shiny::tags$h4(REPORT_RATES$HEADLINE$TIME_SETTINGS),
-      shiny::fluidRow(
+
+
+      shiny::radioButtons(
+        inputId = ns(REPORT_RATES$ID$TIMETYPE_BUTTONS),
+        label = REPORT_RATES$LBL$TIMETYPE_BUTTONS,
+        choiceNames = list(
+          shiny::tagList(REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT1,
+                         shiny::icon("circle-info",
+                                     title = REPORT_RATES$INFO$TIMETYPE_BUTTONS_OPT1,
+                                     style = "color: grey")),
+          shiny::tagList(REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT2,
+                         shiny::icon("circle-info",
+                                     title = REPORT_RATES$INFO$TIMETYPE_BUTTONS_OPT2,
+                                     style = "color: grey"))
+        ),
+        choiceValues = c(REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT1,
+                         REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT2)
+      )
+      ,
+      shiny::conditionalPanel(
+        condition = sprintf(
+          "input['%s'] == '%s'",
+          ns(REPORT_RATES$ID$METRIC_BUTTONS),
+          REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT2
+        ),
         shiny::column(
           width = 6,
           shiny::radioButtons(
-            inputId = ns(REPORT_RATES$ID$TIMETYPE_BUTTONS),
-            label = REPORT_RATES$LBL$TIMETYPE_BUTTONS,
-            choiceNames = list(
-              shiny::tagList(REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT1,
-                             shiny::icon("circle-info",
-                                         title = REPORT_RATES$INFO$TIMETYPE_BUTTONS_OPT1,
-                                         style = "color: grey")),
-              shiny::tagList(REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT2,
-                             shiny::icon("circle-info",
-                                         title = REPORT_RATES$INFO$TIMETYPE_BUTTONS_OPT2,
-                                         style = "color: grey"))
-            ),
-            choiceValues = c(REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT1,
-                             REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT2)
-          )
-        ),
-        shiny::conditionalPanel(
-          condition = sprintf(
-            "input['%s'] == '%s'",
-            ns(REPORT_RATES$ID$METRIC_BUTTONS),
-            REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT2
-          ),
-          shiny::column(
-            width = 6,
-            shiny::radioButtons(
-              inputId = ns(REPORT_RATES$ID$BINSIZE_BUTTONS),
-              label = REPORT_RATES$LBL$BINSIZE_BUTTONS,
-              choices = c(REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT1, REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT2)
-            )
+            inputId = ns(REPORT_RATES$ID$BINSIZE_BUTTONS),
+            label = REPORT_RATES$LBL$BINSIZE_BUTTONS,
+            choices = c(REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT1, REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT2)
           )
         )
-      ),
+      )
+
+      ,
 
       shiny::tags$hr(style = "border-top: 1px solid #aaa; margin: 15px 0;"),
       shiny::tags$h4(REPORT_RATES$HEADLINE$AXIS_LIMITS),
@@ -288,9 +288,6 @@ report_rates_ui <- function(module_id) {
         icon = shiny::icon("rotate-left"),
         width = "100%"
       )
-
-
-
 
     ),
     shiny::mainPanel(

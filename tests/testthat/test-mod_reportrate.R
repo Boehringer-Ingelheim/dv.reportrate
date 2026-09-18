@@ -1,4 +1,5 @@
 source(test_path("dummy-data.R"))
+
 test_that("report_rates_ui() fails when argument type mismatches", {
    expect_error(report_rates_ui(""))
    expect_error(report_rates_ui(4))
@@ -854,44 +855,5 @@ test_that("The selected grouping variable and the levels are correct also when t
    expected_group <- REPORT_RATES$CHOICES$GROUP_NO_SELECTION
    expect_identical(actual_group, expected_group)
 
-   app$stop()
-})
-
-
-
-test_that("The selected grouping variable and the levels are correct also when the global filter changes" |>
-                  vdoc[["add_spec"]](specs$framework_specs$filter_and_datasets), {
-   app_dir <- test_path("apps/mm_app")
-   app <- shinytest2::AppDriver$new(
-      app_dir = app_dir,
-      name = "mm_app",
-      options = list(shiny.trace = TRUE, chromote.headless = FALSE)
-   )
-   app$wait_for_idle()
-   app$set_inputs(`reportrate-grouping-group_var` = "ARM")
-   app$wait_for_idle()
-   actual_levels <- app$get_value(input = "reportrate-selected_levels")
-   expected_levels <- c("Drug 1", "Drug 2", "Placebo")
-   expect_setequal(actual_levels, expected_levels)
-
-   # Removing the level "Placebo" in the global filter should lead to the disappearing of "Placebo" as a selected level
-   # in the module itself:
-   app$set_inputs(`global_filter-vars` = "ARM")
-   app$wait_for_idle()
-   app$set_inputs(`global_filter-ARM` = c("Drug 1", "Drug 2"))
-   app$wait_for_idle(duration = 1000)
-   actual_levels <- app$get_value(input = "reportrate-selected_levels")
-   expected_levels <- c("Drug 1", "Drug 2")
-   expect_setequal(actual_levels, expected_levels)
-
-   # resetting the global filter. The selected levels should stay the same even if "Placebo" is available as an level
-   app$set_inputs(!!"global_filter-clear_filters" := "click")
-   app$wait_for_idle(duration = 1000)
-   available_levels <- app$get_value(export = "reportrate-available_lvls")
-   expect_setequal(available_levels, c("Drug 1", "Drug 2", "Placebo"))
-   sel_levels <- app$get_value(input = "reportrate-selected_levels")
-   expect_setequal(sel_levels, c("Drug 1", "Drug 2"))
-
-   colors <- app$get_value(export = "reportrate-color_palette")
    app$stop()
 })
