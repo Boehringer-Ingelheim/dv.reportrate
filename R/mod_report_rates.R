@@ -545,7 +545,7 @@ report_rates_server <- function(module_id,
     })
 
 
-
+    trigger_levels <- shiny::reactiveVal(0)
     # observe for updating the levels dropdown and keeping the available choices for selection valid
     old_group <- shiny::reactiveVal(character(0)) # to check if the grouping variable has changed.
     current_sel_lvls <- shiny::reactiveVal(NULL)
@@ -591,8 +591,6 @@ report_rates_server <- function(module_id,
     }) |> shiny::bindEvent(available_lvls())
 
 
-
-    trigger_levels <- shiny::reactiveVal(0L)
     sel_levels <- shiny::reactive({
       trigger_levels()
 
