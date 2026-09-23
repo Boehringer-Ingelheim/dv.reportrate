@@ -488,7 +488,7 @@ report_rates_server <- function(module_id,
 
 
     # observe for updating the grouping dropdown
-    trigger_grouping <- shiny::reactiveVal(0L)
+    trigger_grouping <- shiny::reactiveVal(0)
     current_sel_grouping_var <- shiny::reactiveVal(NULL)
     shiny::observe({
       shiny::req(available_grouping_choices())
@@ -510,7 +510,7 @@ report_rates_server <- function(module_id,
         # ... trigger the selected_grouping_var reactive anyways so that the plot is redrawn. This is important for
         # the case when the dm / available choices get updated but it doesnt lead to a change of the grouping var.
         # With the trigger_grouping the reactive chain is still being continued anyways in such cases.
-        trigger_grouping(shiny::isolate(trigger_grouping() + 1L))
+        trigger_grouping(shiny::isolate(trigger_grouping() + 1))
       }
 
       shiny::updateSelectInput(
