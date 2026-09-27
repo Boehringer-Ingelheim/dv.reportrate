@@ -5,24 +5,22 @@
 \title{Combining UI and server within DaVinci module}
 \usage{
 mod_report_rates(
-   module_id,
-   dm_dataset_name = "dm",
-   ds_dataset_name = "ds",
-   ae_dataset_name = "ae",
-   subjid_var = "USUBJID",
-   tooltip_decimal_places = 3L,
-   disposition_events = list(event_var = "DSDECOD",
-                             date_var = "DSSTDTC",
-                             day_var = "DSSTDY",
-                             entry_vals = c("RANDOMIZED"),
-                             exit_vals = c("COMPLETED", "WITHDRAWAL BY SUBJECT", "DEATH")),
-   adverse_events = list(date_var = "AESTDTC",
-                         day_var = "AESTDY"),
-   grouping_vars = list(choices = c("ARM", "ACTARM", "SEX", "SITEID"),
-                        default_choice = NULL),
-   x_step_size_list = list(days = 50L,
-                           weeks = 2L,
-                           months = 1L))
+  module_id,
+  dm_dataset_name = "dm",
+  ds_dataset_name = "ds",
+  ae_dataset_name = "ae",
+  subjid_var = REPORT_RATES$DEFAULTS$SUBJID,
+  tooltip_decimal_places = REPORT_RATES$DEFAULTS$TT_DECIMAL_PLACES,
+  disposition_events = list(event_var = REPORT_RATES$DEFAULTS$DISPO_VAR, date_var =
+    REPORT_RATES$DEFAULTS$DISPO_DATE_VAR, day_var = REPORT_RATES$DEFAULTS$DISPO_DAY_VAR,
+    entry_vals = REPORT_RATES$DEFAULTS$DISPO_ENTRY_VALS, exit_vals =
+    REPORT_RATES$DEFAULTS$DISPO_EXIT_VALS),
+  adverse_events = list(date_var = REPORT_RATES$DEFAULTS$AE_DATE_VAR, day_var =
+    REPORT_RATES$DEFAULTS$AE_DAY_VAR),
+  grouping_vars = list(choices = NULL, default_choice = NULL),
+  x_step_size_list = list(days = REPORT_RATES$DEFAULTS$STEPSIZE_DAYS, weeks =
+    REPORT_RATES$DEFAULTS$STEPSIZE_WEEKS, months = REPORT_RATES$DEFAULTS$STEPSIZE_MONTHS)
+)
 }
 \arguments{
 \item{module_id}{\verb{[character(1)]}

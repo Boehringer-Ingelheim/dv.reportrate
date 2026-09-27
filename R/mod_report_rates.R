@@ -742,20 +742,33 @@ report_rates_server <- function(module_id,
       )
 
 
-
     # export for app tests
     shiny::exportTestValues(
-      dm = { dm() },
-      available_grouping_choices = { available_grouping_choices() },
-      selected_group = { selected_grouping_var() },
-      available_lvls = { available_lvls() },
-      sel_levels = { sel_levels() },
-      ungrouped_checkbox = { ungrouped_checkbox() },
-      color_palette = { color_palette() },
-      group_default_choice = { group_default_choice() }
+      dm = {
+        dm()
+      },
+      available_grouping_choices = {
+        available_grouping_choices()
+      },
+      selected_group = {
+        selected_grouping_var()
+      },
+      available_lvls = {
+        available_lvls()
+      },
+      sel_levels = {
+        sel_levels()
+      },
+      ungrouped_checkbox = {
+        ungrouped_checkbox()
+      },
+      color_palette = {
+        color_palette()
+      },
+      group_default_choice = {
+        group_default_choice()
+      }
     )
-
-
   })
 }
 
@@ -843,25 +856,6 @@ report_rates_server <- function(module_id,
 #' * \code{server}: A server function of the \pkg{dv.reportrate} module.
 #' * \code{module_id}: A unique identifier.
 #' * \code{meta}: metadata.
-#' @usage mod_report_rates(
-#'    module_id,
-#'    dm_dataset_name = "dm",
-#'    ds_dataset_name = "ds",
-#'    ae_dataset_name = "ae",
-#'    subjid_var = "USUBJID",
-#'    tooltip_decimal_places = 3L,
-#'    disposition_events = list(event_var = "DSDECOD",
-#'                              date_var = "DSSTDTC",
-#'                              day_var = "DSSTDY",
-#'                              entry_vals = c("RANDOMIZED"),
-#'                              exit_vals = c("COMPLETED", "WITHDRAWAL BY SUBJECT", "DEATH")),
-#'    adverse_events = list(date_var = "AESTDTC",
-#'                          day_var = "AESTDY"),
-#'    grouping_vars = list(choices = c("ARM", "ACTARM", "SEX", "SITEID"),
-#'                         default_choice = NULL),
-#'    x_step_size_list = list(days = 50L,
-#'                            weeks = 2L,
-#'                            months = 1L))
 #'
 #' @keywords main
 #'
