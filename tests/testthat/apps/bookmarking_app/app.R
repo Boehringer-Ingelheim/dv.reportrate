@@ -1,7 +1,15 @@
-library(dv.reportrate)
+#library(dv.reportrate)
 
 # Load dummy data for testing purpose
 source("../../dummy-data.R")
+
+
+
+ae_prepared_dummy <- dv.reportrate:::prepare_ae_data(dataset = ae_dummy,
+                                                     subjid_var = "USUBJID",
+                                                     date_var = "AESTDTC",
+                                                     day_var = "AESTDY")
+
 
 test_ui <- function(request) {
    shiny::fluidPage(
