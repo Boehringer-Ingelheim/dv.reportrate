@@ -9,5 +9,14 @@ vdoc <- local({
    source(utils_file_path, local = TRUE)[["value"]]
 })
 specs <- vdoc[["specs"]]
-source(testthat::test_path("dummy-data.R"))
+
+#source(testthat::test_path("dummy-data.R"))
+
+dummy_tp <- testthat::test_path("dummy-data.R")
+message (dummy_tp)
+check_path <- getwd()
+message(check_path)
+
+source("dummy-data.R")
+
 message("----------------------SETUP END")
