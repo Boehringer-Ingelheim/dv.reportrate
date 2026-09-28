@@ -179,10 +179,10 @@ ae_dummy <- ae_dummy |> dplyr::mutate(AESTDTC = as.Date(.data[["AESTDTC"]]))
 ##################################
 # Prepared Adverse Event dataset #
 ##################################
-# ae_prepared_dummy <- dv.reportrate:::prepare_ae_data(dataset = ae_dummy,
-#                                                      subjid_var = "USUBJID",
-#                                                      date_var = "AESTDTC",
-#                                                      day_var = "AESTDY")
+ae_prepared_dummy <- dv.reportrate:::prepare_ae_data(dataset = ae_dummy,
+                                                     subjid_var = "USUBJID",
+                                                     date_var = "AESTDTC",
+                                                     day_var = "AESTDY")
 
 ######################################
 # Prepared Disposition Event dataset #
