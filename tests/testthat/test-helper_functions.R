@@ -1,4 +1,4 @@
-source(test_path("dummy-data.R"))
+source(testthat::test_path("dummy-data.R"))
 
 # Function validate_and_fill()
 # the validation logic of the function is tested in "test-mod_reportrate.R" with the tests for report_rates_server()

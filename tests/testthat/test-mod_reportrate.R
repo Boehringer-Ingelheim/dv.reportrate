@@ -1,5 +1,4 @@
-source(test_path("dummy-data.R"))
-
+source(testthat::test_path("dummy-data.R"))
 test_that("report_rates_ui() fails when argument type mismatches", {
    expect_error(report_rates_ui(""))
    expect_error(report_rates_ui(4))

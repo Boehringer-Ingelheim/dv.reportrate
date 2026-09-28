@@ -1,9 +1,8 @@
 # Initialize test app
-app_dir <- test_path("apps/bookmarking_app")
+app_dir <- testthat::test_path("apps/bookmarking_app")
 
 
-
-test_that("The app's state is restored correctly after bookmarking" |>
+testthat::test_that("The app's state is restored correctly after bookmarking" |>
                        vdoc[["add_spec"]](specs$framework_specs$bookmarking), {
    app_bmk <- shinytest2::AppDriver$new(
       app_dir = app_dir,
