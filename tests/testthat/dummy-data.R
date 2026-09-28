@@ -1,4 +1,4 @@
-message("DUMMY DATA")
+message("----------------------DUMMY DATA")
 ########################
 # Demographics dataset #
 ########################
@@ -194,3 +194,4 @@ ds_prepared_dummy <- dv.reportrate:::prepare_ds_data(dataset = ds_dummy,
                                exit_terms =  c("COMPLETED", "WITHDRAWAL BY SUBJECT", "DEATH"),
                                date_var = "DSSTDTC",
                                day_var = "DSSTDY")
+message("----------------------DUMMY DATA END")
