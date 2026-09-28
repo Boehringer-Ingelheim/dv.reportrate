@@ -45,7 +45,7 @@ testthat::test_that("The app's state is restored correctly after bookmarking" |>
       )
    )
 
-   expect_identical(actual, expected)
+   testthat::expect_identical(actual, expected)
    app_bmk$stop()
    app_rst$stop()
 })
