@@ -20,6 +20,7 @@ Description: DaVinci's dv.reportrate package provides a module for computing and
    interactive plots and uses colour‑blind‑friendly palettes where possible.
 License: Apache License (>= 2)
 Encoding: UTF-8
+LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Suggests:

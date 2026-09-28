@@ -32,8 +32,8 @@ prepare_ds_data <- function(dataset, subjid_var, event_var, entry_terms, exit_te
 
 
 
-#'  Internal helper function for preparing the ae dataframe by adding a column that indicates the occurrence of
-#'  adverse events.
+#' Internal helper function for preparing the ae dataframe by adding a column that indicates the occurrence of
+#' adverse events.
 #'
 #' @param dataset `[data.frame]` The Adverse Event dataframe.
 #' @param subjid_var `[character(1)]` Character name of the unique subject identifier column in all datasets.
