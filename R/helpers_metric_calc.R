@@ -174,8 +174,8 @@ rates_per_active_patient <- function(time_type, group_dataset, grouping_var, uni
       dplyr::arrange(.data[["day"]]) |>
       dplyr::mutate(
         time = dplyr::case_when( # grouping study days into bins
-          day > 0 ~ ceiling(.data[["day"]] / .env$binsize),
-          day < 0 ~ floor(.data[["day"]] / .env$binsize) # use floor for negative days
+          day > 0 ~ ceiling(.data[["day"]] / binsize),
+          day < 0 ~ floor(.data[["day"]] / binsize) # use floor for negative days
         )
       )
   }
