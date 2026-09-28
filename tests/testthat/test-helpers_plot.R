@@ -1,5 +1,5 @@
 # Functions create_plot() and prepare_plot_data() still need tests
-source("dummy-data.R")
+#source("dummy-data.R")
 
 # Function create_plot()
 test_that("create_plot() returns a ggplot2 object with the right mapping" |>
