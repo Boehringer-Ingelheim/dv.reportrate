@@ -1,4 +1,5 @@
 message("----------------------SETUP")
+
 options(shiny.testmode = FALSE)
 vdoc <- local({
    #                      ##########
@@ -10,13 +11,5 @@ vdoc <- local({
 })
 specs <- vdoc[["specs"]]
 
-#source(testthat::test_path("dummy-data.R"))
-
-dummy_tp <- testthat::test_path("dummy-data.R")
-message (dummy_tp)
-check_path <- getwd()
-message(check_path)
-
-source("dummy-data.R")
 
 message("----------------------SETUP END")

@@ -1,11 +1,10 @@
-library(dv.reportrate)
+#library(dv.reportrate)
 
-# Load dummy data for testing purpose
-source("../../dummy-data.R")
-
-dm <- dm_dummy
-ds <- ds_dummy
-ae <- ae_dummy
+# Load test data
+data <- test_data()
+dm_test <- data$dm
+ae_test <- data$ae
+ds_test <- data$ds
 
 # important for testing the behaviour when switching the dataset
 dm_2 <- dm[1:30, ] |> dplyr::mutate(SEX = as.factor("F"), # removed level "M"

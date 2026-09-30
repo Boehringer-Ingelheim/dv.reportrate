@@ -1,92 +1,96 @@
-#source(testthat::test_path("dummy-data.R"))
 
 # Function validate_and_fill()
 # the validation logic of the function is tested in "test-mod_reportrate.R" with the tests for report_rates_server()
 test_that("validate_and_fill() fills in the default values for the step sizes (days, weeks, months) if they are not
           supplied." |>
              vdoc[["add_spec"]](specs$app_creator_settings$step_size), {
-   input_args <- list(module_id = "test",
-                      dataset_list = shiny::reactive({
-                         list("dm" = dm_dummy, "ae" = ae_dummy, "ds" = ds_dummy)
-                      }),
-                      subjid_var = "USBUJID",
-                      tooltip_decimal_places = 4L,
-                      disposition_events = list(event_var = "DSDECOD",
-                                                date_var = "DSSTDTC",
-                                                day_var = "DSSTDY",
-                                                entry_vals = c("RANDOMIZED"),
-                                                exit_vals = c("COMPLETED", "WITHDRAWAL BY SUBJECT")),
-                      adverse_events = list(date_var = "AESTDTC", day_var = "AESTDY"),
-                      grouping_vars = list(choices = c("ARM", "SEX", "SITEID"), default_choice = "SITEID"),
-                      x_step_size_list = list(days = 40L, weeks = 10L, months = 3L))
+  data <- test_data()
+  dm_test <- data$dm
+  ae_test <- data$ae
+  ds_test <- data$ds
+  ae_prepared_test <- data$ae_prepared
+  ds_prepared_test <- data$ds_prepared
 
-   days_default <- REPORT_RATES$DEFAULTS$STEPSIZE_DAYS
-   weeks_default <- REPORT_RATES$DEFAULTS$STEPSIZE_WEEKS
-   months_default <- REPORT_RATES$DEFAULTS$STEPSIZE_MONTHS
+  input_args <- list(module_id = "test",
+                     dataset_list = shiny::reactive({
+                       list("dm" = dm_test, "ae" = ae_test, "ds" = ds_test)
+                     }),
+                     subjid_var = "USBUJID",
+                     tooltip_decimal_places = 4L,
+                     disposition_events = list(event_var = "DSDECOD",
+                                               date_var = "DSSTDTC",
+                                               day_var = "DSSTDY",
+                                               entry_vals = c("RANDOMIZED"),
+                                               exit_vals = c("COMPLETED", "WITHDRAWAL BY SUBJECT")),
+                     adverse_events = list(date_var = "AESTDTC", day_var = "AESTDY"),
+                     grouping_vars = list(choices = c("ARM", "SEX", "SITEID"), default_choice = "SITEID"),
+                     x_step_size_list = list(days = 40L, weeks = 10L, months = 3L))
 
-   # valid x_step_size_list shouldn't be changed
-   res <- validate_and_fill(input_args)
-   actual <- res$x_step_size_list
-   expected <- list(days = 40L, weeks = 10L, months = 3L)
-   expect_identical(actual, expected)
+  days_default <- REPORT_RATES$DEFAULTS$STEPSIZE_DAYS
+  weeks_default <- REPORT_RATES$DEFAULTS$STEPSIZE_WEEKS
+  months_default <- REPORT_RATES$DEFAULTS$STEPSIZE_MONTHS
 
-   # testing the filling with defaults for days:
-   input_args$x_step_size_list$days <- NULL
-   res <- validate_and_fill(input_args)
-   actual_days <- res$x_step_size_list$days
-   expect_identical(actual_days, days_default)
-   # the other values should not be set to their defauts, because they were supplied
-   actual_weeks <- res$x_step_size_list$weeks
-   expect_identical(actual_weeks, 10L)
-   actual_months <- res$x_step_size_list$months
-   expect_identical(actual_months, 3L)
-   input_args$x_step_size_list$days <- 40L # resetting the days to the passed value at the beginning
+  # valid x_step_size_list shouldn't be changed
+  res <- validate_and_fill(input_args)
+  actual <- res$x_step_size_list
+  expected <- list(days = 40L, weeks = 10L, months = 3L)
+  expect_identical(actual, expected)
 
-   # testing the filling with defaults for weeks:
-   input_args$x_step_size_list$weeks <- NULL
-   res <- validate_and_fill(input_args)
-   actual_weeks <- res$x_step_size_list$weeks
-   expect_identical(actual_weeks, weeks_default)
-   # the other values should not be set to their defauts, because they were supplied
-   actual_days <- res$x_step_size_list$days
-   expect_identical(actual_days, 40L)
-   actual_months <- res$x_step_size_list$months
-   expect_identical(actual_months, 3L)
-   input_args$x_step_size_list$weeks <- 10L # resetting the days to the passed value at the beginning
+  # testing the filling with defaults for days:
+  input_args$x_step_size_list$days <- NULL
+  res <- validate_and_fill(input_args)
+  actual_days <- res$x_step_size_list$days
+  expect_identical(actual_days, days_default)
+  # the other values should not be set to their defauts, because they were supplied
+  actual_weeks <- res$x_step_size_list$weeks
+  expect_identical(actual_weeks, 10L)
+  actual_months <- res$x_step_size_list$months
+  expect_identical(actual_months, 3L)
+  input_args$x_step_size_list$days <- 40L # resetting the days to the passed value at the beginning
 
-   # testing the filling with defaults for months:
-   input_args$x_step_size_list$months <- NULL
-   res <- validate_and_fill(input_args)
-   actual_months <- res$x_step_size_list$months
-   expect_identical(actual_months, months_default)
-   # the other values should not be set to their defauts, because they were supplied
-   actual_days <- res$x_step_size_list$days
-   expect_identical(actual_days, 40L)
-   actual_weeks <- res$x_step_size_list$weeks
-   expect_identical(actual_weeks, 10L)
-   input_args$x_step_size_list$months <- 3L # resetting the days to the passed value at the beginning
+  # testing the filling with defaults for weeks:
+  input_args$x_step_size_list$weeks <- NULL
+  res <- validate_and_fill(input_args)
+  actual_weeks <- res$x_step_size_list$weeks
+  expect_identical(actual_weeks, weeks_default)
+  # the other values should not be set to their defauts, because they were supplied
+  actual_days <- res$x_step_size_list$days
+  expect_identical(actual_days, 40L)
+  actual_months <- res$x_step_size_list$months
+  expect_identical(actual_months, 3L)
+  input_args$x_step_size_list$weeks <- 10L # resetting the days to the passed value at the beginning
 
-   # testing the filling with the defaults for 2 elements at once:
-   input_args$x_step_size_list$days <- NULL
-   input_args$x_step_size_list$months <- NULL
-   res <- validate_and_fill(input_args)
-   actual_days <- res$x_step_size_list$days
-   expect_identical(actual_days, days_default)
-   actual_months <- res$x_step_size_list$months
-   expect_identical(actual_months, months_default)
-   # the other value should still have its original value:
-   actual_weeks <- res$x_step_size_list$weeks
-   expect_identical(actual_weeks, 10L)
+  # testing the filling with defaults for months:
+  input_args$x_step_size_list$months <- NULL
+  res <- validate_and_fill(input_args)
+  actual_months <- res$x_step_size_list$months
+  expect_identical(actual_months, months_default)
+  # the other values should not be set to their defauts, because they were supplied
+  actual_days <- res$x_step_size_list$days
+  expect_identical(actual_days, 40L)
+  actual_weeks <- res$x_step_size_list$weeks
+  expect_identical(actual_weeks, 10L)
+  input_args$x_step_size_list$months <- 3L # resetting the days to the passed value at the beginning
 
-   # testing the filling with defaults for all 3 elements at once:
-   input_args$x_step_size_list$weeks <- NULL
-   res <- validate_and_fill(input_args)
-   actual <- res$x_step_size_list
-   expected <- list(days = days_default, weeks = weeks_default, months = months_default)
-   expect_identical(actual, expected)
+  # testing the filling with the defaults for 2 elements at once:
+  input_args$x_step_size_list$days <- NULL
+  input_args$x_step_size_list$months <- NULL
+  res <- validate_and_fill(input_args)
+  actual_days <- res$x_step_size_list$days
+  expect_identical(actual_days, days_default)
+  actual_months <- res$x_step_size_list$months
+  expect_identical(actual_months, months_default)
+  # the other value should still have its original value:
+  actual_weeks <- res$x_step_size_list$weeks
+  expect_identical(actual_weeks, 10L)
+
+  # testing the filling with defaults for all 3 elements at once:
+  input_args$x_step_size_list$weeks <- NULL
+  res <- validate_and_fill(input_args)
+  actual <- res$x_step_size_list
+  expected <- list(days = days_default, weeks = weeks_default, months = months_default)
+  expect_identical(actual, expected)
 })
-
-
 
 # Function validate_dm_dataset
 df_validate_dm <- data.frame(

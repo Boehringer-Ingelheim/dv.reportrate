@@ -1,5 +1,4 @@
 # Functions create_plot() and prepare_plot_data() still need tests
-#source("dummy-data.R")
 
 # Function create_plot()
 test_that("create_plot() returns a ggplot2 object with the right mapping" |>
@@ -15,82 +14,94 @@ test_that("create_plot() returns a ggplot2 object with the right mapping" |>
                    specs$app_creator_settings$step_size
                 )
              ), {
-   df_list <- get_plot_datasets(
-      dm = dm_dummy,
-      ae = ae_prepared_dummy,
-      ds = ds_prepared_dummy,
-      subjid_var = "USUBJID",
-      grouping_var = "ARM",
-      metric_selection = REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1,
-      time_selection = REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT2,
-      unit_selection = REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT1,
-      tooltip_decimal_places = 4L,
-      show_ungrouped = TRUE
-   )
-   x_axis <- get_x_axis(
-         dataset = df_list$axis_df,
-         metric_selection = REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1,
-         time_selection = REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT2,
-         unit_selection = REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT1,
-         step_size_days = 50L, step_size_weeks = 2L, step_size_months = 1L
-   )
-   scale <- get_x_scale(
-         time_selection = REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT2,
-         x_axis = x_axis
-      )
+  data <- test_data()
+  dm_test <- data$dm
+  ae_test <- data$ae
+  ds_test <- data$ds
+  ae_prepared_test <- data$ae_prepared
+  ds_prepared_test <- data$ds_prepared
 
-   legend <- get_legend_text(dataset = dm_dummy, grouping_var = "ARM")
+  df_list <- get_plot_datasets(
+    dm = dm_test,
+    ae = ae_prepared_test,
+    ds = ds_prepared_test,
+    subjid_var = "USUBJID",
+    grouping_var = "ARM",
+    metric_selection = REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1,
+    time_selection = REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT2,
+    unit_selection = REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT1,
+    tooltip_decimal_places = 4L,
+    show_ungrouped = TRUE
+  )
+  x_axis <- get_x_axis(
+    dataset = df_list$axis_df,
+    metric_selection = REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1,
+    time_selection = REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT2,
+    unit_selection = REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT1,
+    step_size_days = 50L, step_size_weeks = 2L, step_size_months = 1L
+  )
+  scale <- get_x_scale(
+    time_selection = REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT2,
+    x_axis = x_axis
+  )
+
+  legend <- get_legend_text(dataset = dm_test, grouping_var = "ARM")
 
 
-   plt <- create_plot(dm = dm_dummy,
-                      ds = ds_prepared_dummy,
-                      ae = ae_prepared_dummy,
-                      subjid_var = "USUBJID",
-                      grouping_var = "ARM",
-                      selected_levels = c("Drug 1", "Drug 2", "Placebo"),
-                      metric_selection = REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1,
-                      time_selection = REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT2,
-                      unit_selection = REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT1,
-                      tooltip_decimal_places = 4L,
-                      x_step_size_list = list(days = 50L, weeks = 2L, months = 1),
-                      color_palette = generate_palette(unique(dm_dummy$ARM)),
-                      show_ungrouped = TRUE)
+  plt <- create_plot(dm = dm_test,
+                     ds = ds_prepared_test,
+                     ae = ae_prepared_test,
+                     subjid_var = "USUBJID",
+                     grouping_var = "ARM",
+                     selected_levels = c("Drug 1", "Drug 2", "Placebo"),
+                     metric_selection = REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1,
+                     time_selection = REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT2,
+                     unit_selection = REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT1,
+                     tooltip_decimal_places = 4L,
+                     x_step_size_list = list(days = 50L, weeks = 2L, months = 1),
+                     color_palette = generate_palette(unique(dm_test$ARM)),
+                     show_ungrouped = TRUE)
 
-   expect_s3_class(plt, "ggplot")
-   expect_s3_class(plt$scales$scales[[1]], class(scale)[1])
-   expect_identical(plt$scales$scales[[1]]$breaks, scale$breaks)
-   expect_identical(plt$scales$scales[[1]]$labels, scale$labels)
-   expect_identical(plt$theme$axis.text.x$size, get_x_axis_text_size(x_axis$breaks))
-   expect_identical(plt$labels$y, REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1)
-   expect_identical(plt$labels$x, x_axis$title)
-   expect_identical(plt$labels$colour, legend)
-   expect_identical(plt$layers[[1]]$mapping$colour, "ungrouped") # Line layer of ungrouped data
-   expect_identical(rlang::expr_text(plt$layers[[2]]$mapping$colour), '~.data[["ARM"]]') # Line layer of grouped data
+  expect_s3_class(plt, "ggplot")
+  expect_s3_class(plt$scales$scales[[1]], class(scale)[1])
+  expect_identical(plt$scales$scales[[1]]$breaks, scale$breaks)
+  expect_identical(plt$scales$scales[[1]]$labels, scale$labels)
+  expect_identical(plt$theme$axis.text.x$size, get_x_axis_text_size(x_axis$breaks))
+  expect_identical(plt$labels$y, REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1)
+  expect_identical(plt$labels$x, x_axis$title)
+  expect_identical(plt$labels$colour, legend)
+  expect_identical(plt$layers[[1]]$mapping$colour, "ungrouped") # Line layer of ungrouped data
+  expect_identical(rlang::expr_text(plt$layers[[2]]$mapping$colour), '~.data[["ARM"]]') # Line layer of grouped data
 })
 
 test_that("create_plot() appends the point layers after the line layers." |>
              vdoc[["add_spec"]](specs$plot_creation$hovering), {
-   plt <- create_plot(dm = dm_dummy,
-                      ds = ds_prepared_dummy,
-                      ae = ae_prepared_dummy,
-                      subjid_var = "USUBJID",
-                      grouping_var = "ARM",
-                      selected_levels = c("Drug 1", "Drug 2", "Placebo"),
-                      metric_selection = REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1,
-                      time_selection = REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT2,
-                      unit_selection = REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT1,
-                      tooltip_decimal_places = 4L,
-                      x_step_size_list = list(days = 50L, weeks = 2L, months = 1),
-                      color_palette = generate_palette(unique(dm_dummy$ARM)),
-                      show_ungrouped = TRUE)
+  data <- test_data()
+  dm_test <- data$dm
+  ae_test <- data$ae
+  ds_test <- data$ds
+  ae_prepared_test <- data$ae_prepared
+  ds_prepared_test <- data$ds_prepared
 
-   expect_identical(class(plt$layers[[1]]$geom)[1], "GeomInteractiveLine") # ungrouped line
-   expect_identical(class(plt$layers[[2]]$geom)[1], "GeomInteractiveLine") # grouped line
-   expect_identical(class(plt$layers[[3]]$geom)[1], "GeomInteractivePoint") # ungrouped points
-   expect_identical(class(plt$layers[[4]]$geom)[1], "GeomInteractivePoint") # grouped points
+  plt <- create_plot(dm = dm_test,
+                     ds = ds_prepared_test,
+                     ae = ae_prepared_test,
+                     subjid_var = "USUBJID",
+                     grouping_var = "ARM",
+                     selected_levels = c("Drug 1", "Drug 2", "Placebo"),
+                     metric_selection = REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1,
+                     time_selection = REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT2,
+                     unit_selection = REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT1,
+                     tooltip_decimal_places = 4L,
+                     x_step_size_list = list(days = 50L, weeks = 2L, months = 1),
+                     color_palette = generate_palette(unique(dm_test$ARM)),
+                     show_ungrouped = TRUE)
+
+  expect_identical(class(plt$layers[[1]]$geom)[1], "GeomInteractiveLine") # ungrouped line
+  expect_identical(class(plt$layers[[2]]$geom)[1], "GeomInteractiveLine") # grouped line
+  expect_identical(class(plt$layers[[3]]$geom)[1], "GeomInteractivePoint") # ungrouped points
+  expect_identical(class(plt$layers[[4]]$geom)[1], "GeomInteractivePoint") # grouped points
 })
-
-
 
 # Function convert_to_girafe()
 test_that("convert_to_girafe() appends the point layers after the line layers." |>
@@ -101,71 +112,90 @@ test_that("convert_to_girafe() appends the point layers after the line layers." 
                    specs$plot_creation$colors
                 )
              ), {
-   plt <- create_plot(dm = dm_dummy,
-                      ds = ds_prepared_dummy,
-                      ae = ae_prepared_dummy,
-                      subjid_var = "USUBJID",
-                      grouping_var = "ARM",
-                      selected_levels = c("Drug 1", "Drug 2", "Placebo"),
-                      metric_selection = REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1,
-                      time_selection = REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT2,
-                      unit_selection = REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT1,
-                      tooltip_decimal_places = 4L,
-                      x_step_size_list = list(days = 50L, weeks = 2L, months = 1),
-                      color_palette = generate_palette(unique(dm_dummy$ARM)),
-                      show_ungrouped = TRUE)
+  data <- test_data()
+  dm_test <- data$dm
+  ae_test <- data$ae
+  ds_test <- data$ds
+  ae_prepared_test <- data$ae_prepared
+  ds_prepared_test <- data$ds_prepared
+  plt <- create_plot(dm = dm_test,
+                     ds = ds_prepared_test,
+                     ae = ae_prepared_test,
+                     subjid_var = "USUBJID",
+                     grouping_var = "ARM",
+                     selected_levels = c("Drug 1", "Drug 2", "Placebo"),
+                     metric_selection = REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1,
+                     time_selection = REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT2,
+                     unit_selection = REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT1,
+                     tooltip_decimal_places = 4L,
+                     x_step_size_list = list(days = 50L, weeks = 2L, months = 1),
+                     color_palette = generate_palette(unique(dm_test$ARM)),
+                     show_ungrouped = TRUE)
 
-   res <- convert_to_girafe(ggplot_obj = plt, selected_levels = c("Drug 1", "Drug 2", "Placebo"))
-   expect_s3_class(res, "girafe")
-   expect_true(res$x$settings$tooltip$use_fill)
-   expect_identical(res$x$settings$zoom$min, 1)
-   expect_identical(res$x$settings$select$type, "single")
+  res <- convert_to_girafe(ggplot_obj = plt, selected_levels = c("Drug 1", "Drug 2", "Placebo"))
+  expect_s3_class(res, "girafe")
+  expect_true(res$x$settings$tooltip$use_fill)
+  expect_identical(res$x$settings$zoom$min, 1)
+  expect_identical(res$x$settings$select$type, "single")
 
-   expected_css_select_inv <- paste0(
-      ".select_inv_SVGID_ { opacity:",
-      get_opacity(length(unique(dm_dummy$ARM))),
-      "; filter:saturate(40%); }"
-   )
-   expect_identical(res$x$settings$select_inv$css, expected_css_select_inv)
+  expected_css_select_inv <- paste0(
+    ".select_inv_SVGID_ { opacity:",
+    get_opacity(length(unique(dm_test$ARM))),
+    "; filter:saturate(40%); }"
+  )
+  expect_identical(res$x$settings$select_inv$css, expected_css_select_inv)
 })
-
 
 # Function prepare_plot_data()
 test_that("prepare_plot_data() returns data frame with correct columns", {
-   res <- prepare_plot_data(dm = dm_dummy,
-                            ds = ds_prepared_dummy,
-                            ae = ae_prepared_dummy,
-                            subjid_var = "USUBJID",
-                            grouping_var = REPORT_RATES$CHOICES$GROUP_NO_SELECTION,
-                            time_selection = REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT1,
-                            metric_selection = REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1,
-                            unit_selection = REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT1,
-                            tt_dec_places = 3L)
+  data <- test_data()
+  dm_test <- data$dm
+  ae_test <- data$ae
+  ds_test <- data$ds
+  ae_prepared_test <- data$ae_prepared
+  ds_prepared_test <- data$ds_prepared
 
-   expect_s3_class(res, "data.frame")
-   expect_true(
-      all(c("USUBJID", "m", "n", "m_cumsum", "n_cumsum", "ratio", "time", "time_for_plot", "hovertext") %in% names(res))
-   )
+  res <- prepare_plot_data(dm = dm_test,
+                           ds = ds_prepared_test,
+                           ae = ae_prepared_test,
+                           subjid_var = "USUBJID",
+                           grouping_var = REPORT_RATES$CHOICES$GROUP_NO_SELECTION,
+                           time_selection = REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT1,
+                           metric_selection = REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1,
+                           unit_selection = REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT1,
+                           tt_dec_places = 3L)
+
+  expect_s3_class(res, "data.frame")
+  expect_true(
+    all(c("USUBJID", "m", "n", "m_cumsum", "n_cumsum", "ratio", "time", "time_for_plot", "hovertext") %in% names(res))
+  )
 })
-
 
 # Function get_plot_datasets()
 test_that("get_plot_datasets() returns correct structure for no grouping" |>
          vdoc[["add_spec"]](specs$plot_creation$grouping_and_levels$ungrouped), {
-   res <- get_plot_datasets(dm = dm_dummy,
-                            ae = ae_prepared_dummy,
-                            ds = ds_prepared_dummy,
-                            subjid_var = "USUBJID",
-                            grouping_var = REPORT_RATES$CHOICES$GROUP_NO_SELECTION,
-                            time_selection = REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT1,
-                            metric_selection = REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1,
-                            unit_selection = REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT1,
-                            tooltip_decimal_places = 3L,
-                            show_ungrouped = FALSE)
-   expect_named(res, c("ungrouped", "grouped", "axis_df"))
-   expect_true(is.data.frame(res$ungrouped))
-   expect_null(res$grouped)
-   expect_equal(res$ungrouped, res$axis_df)
+  data <- test_data()
+  dm_test <- data$dm
+  ae_test <- data$ae
+  ds_test <- data$ds
+  ae_prepared_test <- data$ae_prepared
+  ds_prepared_test <- data$ds_prepared
+
+
+  res <- get_plot_datasets(dm = dm_test,
+                           ae = ae_prepared_test,
+                           ds = ds_prepared_test,
+                           subjid_var = "USUBJID",
+                           grouping_var = REPORT_RATES$CHOICES$GROUP_NO_SELECTION,
+                           time_selection = REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT1,
+                           metric_selection = REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1,
+                           unit_selection = REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT1,
+                           tooltip_decimal_places = 3L,
+                           show_ungrouped = FALSE)
+  expect_named(res, c("ungrouped", "grouped", "axis_df"))
+  expect_true(is.data.frame(res$ungrouped))
+  expect_null(res$grouped)
+  expect_equal(res$ungrouped, res$axis_df)
 })
 
 test_that("get_plot_datasets() returns correct structure for grouping with show_ungrouped = TRUE" |>
@@ -175,38 +205,57 @@ test_that("get_plot_datasets() returns correct structure for grouping with show_
                    specs$plot_creation$grouping_and_levels$ungrouped
                 )
              ), {
-   res <- get_plot_datasets(dm = dm_dummy,
-                            ae = ae_prepared_dummy,
-                            ds = ds_prepared_dummy,
-                            subjid_var = "USUBJID",
-                            grouping_var = "ARM",
-                            time_selection = REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT1,
-                            metric_selection = REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1,
-                            unit_selection = REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT1,
-                            tooltip_decimal_places = 3L,
-                            show_ungrouped = TRUE)
-   expect_named(res, c("ungrouped", "grouped", "axis_df"))
-   expect_true(is.data.frame(res$ungrouped))
-   expect_true(is.data.frame(res$grouped))
-   expect_identical(res$ungrouped, res$axis_df) #if both datasets arent null, the ungrouped df should be used as axis_df
+  data <- test_data()
+  dm_test <- data$dm
+  ae_test <- data$ae
+  ds_test <- data$ds
+  ae_prepared_test <- data$ae_prepared
+  ds_prepared_test <- data$ds_prepared
+
+  res <- get_plot_datasets(dm = dm_test,
+                           ae = ae_prepared_test,
+                           ds = ds_prepared_test,
+                           subjid_var = "USUBJID",
+                           grouping_var = "ARM",
+                           time_selection = REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT1,
+                           metric_selection = REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1,
+                           unit_selection = REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT1,
+                           tooltip_decimal_places = 3L,
+                           show_ungrouped = TRUE)
+  expect_named(res, c("ungrouped", "grouped", "axis_df"))
+  expect_true(is.data.frame(res$ungrouped))
+  expect_true(is.data.frame(res$grouped))
+  expect_identical(res$ungrouped, res$axis_df) #if both datasets arent null, the ungrouped df should be used as axis_df
 })
+
+
+
+
+
 
 test_that("get_plot_datasets() returns correct structure for grouping with show_ungrouped = FALSE" |>
          vdoc[["add_spec"]](specs$plot_creation$grouping_and_levels$grouped), {
-   res <- get_plot_datasets(dm = dm_dummy,
-                            ae = ae_prepared_dummy,
-                            ds = ds_prepared_dummy,
-                            subjid_var = "USUBJID",
-                            grouping_var = "ARM",
-                            time_selection = REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT1,
-                            metric_selection = REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1,
-                            unit_selection = REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT1,
-                            tooltip_decimal_places = 3L,
-                            show_ungrouped = FALSE)
-   expect_named(res, c("ungrouped", "grouped", "axis_df"))
-   expect_null(res$ungrouped)
-   expect_true(is.data.frame(res$grouped))
-   expect_identical(res$grouped, res$axis_df)
+  data <- test_data()
+  dm_test <- data$dm
+  ae_test <- data$ae
+  ds_test <- data$ds
+  ae_prepared_test <- data$ae_prepared
+  ds_prepared_test <- data$ds_prepared
+
+  res <- get_plot_datasets(dm = dm_test,
+                           ae = ae_prepared_test,
+                           ds = ds_prepared_test,
+                           subjid_var = "USUBJID",
+                           grouping_var = "ARM",
+                           time_selection = REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT1,
+                           metric_selection = REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1,
+                           unit_selection = REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT1,
+                           tooltip_decimal_places = 3L,
+                           show_ungrouped = FALSE)
+  expect_named(res, c("ungrouped", "grouped", "axis_df"))
+  expect_null(res$ungrouped)
+  expect_true(is.data.frame(res$grouped))
+  expect_identical(res$grouped, res$axis_df)
 })
 
 # Function select_geom()
