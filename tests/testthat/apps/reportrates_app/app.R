@@ -17,9 +17,9 @@ test_ui <- function(request) {
 }
 
 test_server <- function(input, output, session) {
-   dm <- dm_dummy
-   ds <- ds_dummy
-   ae <- ae_dummy
+   dm <- dm_test
+   ds <- ds_test
+   ae <- ae_test
    data <- list("dm" = dm, "ds" = ds, "ae" = ae)
 
    dv.reportrate::report_rates_server(module_id = "reportrate",
