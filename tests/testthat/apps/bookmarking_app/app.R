@@ -1,7 +1,7 @@
-#library(dv.reportrate)
+library(dv.reportrate)
 
 # Load test data
-data <- test_data()
+data <- dv.reportrate:::test_data()
 dm_test <- data$dm
 ae_test <- data$ae
 ds_test <- data$ds
