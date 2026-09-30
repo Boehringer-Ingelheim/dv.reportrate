@@ -40,6 +40,7 @@ test_server <- function(input, output, session) {
                                       grouping_vars = list(choices = NULL, default_choice = NULL),
                                       x_step_size_list = list(days = 50L, weeks = 2L, months = 1L)
    )
+
 }
 
 shiny::shinyApp(test_ui, test_server)

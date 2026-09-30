@@ -1,5 +1,3 @@
-message("----------------------TEST_DATA")
-
 test_data <- function() {
 
   ########################
@@ -202,4 +200,3 @@ test_data <- function() {
        ae_prepared = ae_prepared_test, ds_prepared = ds_prepared_test)
 
 }
-message("----------------------TEST_DATA END")
