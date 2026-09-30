@@ -4,9 +4,9 @@ if (!requireNamespace("dv.reportrate", quietly = TRUE)) {
 
 # Load test data
 data <- dv.reportrate:::test_data()
-dm_test <- data$dm
-ae_test <- data$ae
-ds_test <- data$ds
+dm <- data$dm
+ae <- data$ae
+ds <- data$ds
 
 # important for testing the behaviour when switching the dataset
 dm_2 <- dm[1:30, ] |> dplyr::mutate(SEX = as.factor("F"), # removed level "M"
