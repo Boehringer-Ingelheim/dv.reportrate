@@ -30,7 +30,7 @@ data_list <- list("dummy" = list("dm" = dm,
                                    "ae" = ae_3)
                   )
 
-reporting_rates <- mod_report_rates(module_id = "reportrate",
+reporting_rates <- dv.reportrate::mod_report_rates(module_id = "reportrate",
                                     ae_dataset_name = "ae",
                                     ds_dataset_name = "ds",
                                     dm_dataset_name = "dm",
