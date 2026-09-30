@@ -1,4 +1,6 @@
-library(dv.reportrate)
+if (!requireNamespace("dv.reportrate", quietly = TRUE)) {
+  stop("Package 'dv.reportrate' must be installed to run this test app.")
+}
 
 # Load test data
 data <- dv.reportrate:::test_data()
