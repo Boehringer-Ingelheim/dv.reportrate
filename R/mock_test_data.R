@@ -13,7 +13,7 @@ test_data <- function() {
   subjid <- as.character(1e3 + 1:n)
 
   random_site_country <- sample(x = 1:5, size = n, replace = TRUE)
-  siteid <- as.character(floor(runif(5, min = 100, max = 1000)))[random_site_country]
+  siteid <- as.character(floor(stats::runif(5, min = 100, max = 1000)))[random_site_country]
   country <- c("BEL", "NLD", "USA", "USA", "JPN")[random_site_country]
 
   usubjid_dm <- paste0(studyid_dm, "-", "1", siteid, subjid)
@@ -180,7 +180,7 @@ test_data <- function() {
   ##################################
   # Prepared Adverse Event dataset #
   ##################################
-  ae_prepared_test <- dv.reportrate:::prepare_ae_data(dataset = ae_test,
+  ae_prepared_test <- prepare_ae_data(dataset = ae_test,
                                                       subjid_var = "USUBJID",
                                                       date_var = "AESTDTC",
                                                       day_var = "AESTDY")
@@ -188,7 +188,7 @@ test_data <- function() {
   ######################################
   # Prepared Disposition Event dataset #
   ######################################
-  ds_prepared_test <- dv.reportrate:::prepare_ds_data(dataset = ds_test,
+  ds_prepared_test <- prepare_ds_data(dataset = ds_test,
                                                       subjid_var = "USUBJID",
                                                       event_var = "DSDECOD",
                                                       entry_terms =  c("RANDOMIZED"),

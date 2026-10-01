@@ -3,4 +3,4 @@ pkg_name <- "dv.reportrate"
 library(testthat)
 library(pkg_name, character.only = TRUE)
 
-test_check("pkg_name")
+test_check(pkg_name)

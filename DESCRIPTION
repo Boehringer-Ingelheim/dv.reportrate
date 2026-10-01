@@ -27,7 +27,11 @@ Suggests:
     pharmaversesdtm,
     purrr,
     shinytest2,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown,
+    DT,
+    devtools
 Config/testthat/edition: 3
 Config/testthat/parallel: false
 Imports:
@@ -44,4 +48,5 @@ Imports:
     tidyr,
     viridis
 Depends: R (>= 4.1.0)
+VignetteBuilder: knitr
 Remotes: Boehringer-Ingelheim/dv.manager
