@@ -116,6 +116,15 @@ REPORT_RATES <- poc(
 report_rates_ui <- function(module_id) {
   checkmate::assert_string(module_id, min.chars = 1)
 
+  date_addon_open <- list(
+    class = "btn btn-outline-secondary",
+    type = "button",
+    onclick = paste0(
+      "var inp = this.closest('.input-group').querySelector('input');",
+      "inp.focus(); inp.click();"
+    )
+  )
+
   ns <- shiny::NS(module_id)
   shiny::sidebarLayout(
     shiny::sidebarPanel(
@@ -225,7 +234,9 @@ report_rates_ui <- function(module_id) {
               label = REPORT_RATES$LBL$X_AXIS_MIN,
               value = NULL,
               dateFormat = "yyyy-MM-dd",
-              clearButton = TRUE
+              clearButton = TRUE,
+              addon = "right",
+              addonAttributes = date_addon_open
             )
           ),
           shiny::column(
@@ -235,7 +246,9 @@ report_rates_ui <- function(module_id) {
               label = REPORT_RATES$LBL$X_AXIS_MAX,
               value = NULL,
               dateFormat = "yyyy-MM-dd",
-              clearButton = TRUE
+              clearButton = TRUE,
+              addon = "right",
+              addonAttributes = date_addon_open
             )
           )
         )
@@ -253,7 +266,8 @@ report_rates_ui <- function(module_id) {
             shiny::numericInput(
               inputId = ns(REPORT_RATES$ID$X_AXIS_NUMERIC_MIN),
               label = REPORT_RATES$LBL$X_AXIS_MIN,
-              value = NULL
+              value = NULL,
+              step = 0.5
             )
           ),
           shiny::column(
@@ -261,7 +275,8 @@ report_rates_ui <- function(module_id) {
             shiny::numericInput(
               inputId = ns(REPORT_RATES$ID$X_AXIS_NUMERIC_MAX),
               label = REPORT_RATES$LBL$X_AXIS_MAX,
-              value = NULL
+              value = NULL,
+              step = 0.5
             )
           )
         )
