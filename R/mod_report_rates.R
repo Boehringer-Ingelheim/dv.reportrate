@@ -792,73 +792,114 @@ report_rates_server <- function(module_id,
 #' @param module_id `[character(1)]`
 #'
 #' A unique module ID to create a namespace.
+#'
 #' @param dm_dataset_name `[character(1)]`
 #'
 #' Name of the Demographics dataset. Defaults to "dm".
+#'
 #' @param ds_dataset_name `[character(1)]`
 #'
 #' Name of the Disposition dataset. Defaults to "ds".
+#'
 #' @param ae_dataset_name `[character(1)]`
 #'
 #' Name of the Adverse Event dataset. Defaults to "ae".
+#'
 #' @param subjid_var `[character(1)]`
 #'
 #' Character name of the unique subject identifier column in all datasets
 #' (default is USUBJID). Must be a single value.
+#'
 #' @param tooltip_decimal_places `[integer(1)]`
 #'
 #' Number of decimal places to round the value shown in the hovertext. Defaults to 3L.
+#'
 #' @param disposition_events `[list]`
 #'
 #' Named list specifying variables and values used to define entry and exit events in the disposition dataset.
 #' Composed of:
+#'
 #' * event_var `[character(1)]`
+#'
 #' Name of the variable that contains the description of the event. Defaults to "DSDECOD".
+#'
 #' * date_var `[character(1)]`
+#'
 #' Name of the variable containing the date of the event. Defaults to "DSSTDTC".
+#'
 #' * day_var `[character(1)]`
+#'
 #' Name of the variable containing the study day of the event. Defaults to "DSSTDY".
+#'
 #' * entry_vals `[character(1+)]`
+#'
 #' Character vector of values defining which values out of var should be entry events. Defaults to c("RANDOMIZED").
+#'
 #' * exit_vals `[character(1+)]`
+#'
 #' Character vector of values defining which values out of var should be exit events.
 #' Defaults to c("COMPLETED", "WITHDRAWAL BY SUBJECT", "DEATH").
+#'
 #' @param adverse_events `[list]`
 #'
 #' Named list specifying the variables that define the date and study day of adverse event occurence.
+#'
 #' Composed of:
+#'
 #' * date_var `[character(1)]`
+#'
 #' Name of the variable containing the date of the event. Defaults to "AESTDTC".
+#'
 #' * day_var `[character(1)]`
+#'
 #' Name of the variable containing the study day of the event. Defaults to "AESTDY".
+#'
 #' @param grouping_vars `[list]`
 #'
 #' Named list specifying grouping options for the plot.
+#'
 #' Composed of:
+#'
 #' * choices `[character(1+) | NULL]`
+#'
 #' Character vector of variable names out of the demographics dataset, specifying which variables are available for
 #' grouping. If provided, only these variables can be selected. Defaults to \code{NULL}, meaning all factor variables
 #' from the demographics dataset will be available for grouping.
+#'
 #' * default_choice `[character(1) | NULL]`
+#'
 #' Character specifying the default grouping variable to be used when starting the app. Defaults to \code{NULL}, meaning
 #' no variable is selected for grouping by default.
+#'
 #' @param x_step_size_list `[list]`
 #'
 #' Named list specifying the tick interval (step size) on the x-Axis depending on the time unit.
+#'
 #' Composed of:
+#'
 #' * days `[integer(1) | NULL]`
+#'
 #' Integer value specifying the tick interval in days when the x-axis is displayed in days. If \code{NULL} it defaults
 #' to a step size of 50L.
+#'
 #' * weeks `[integer(1) | NULL]`
+#'
 #' Integer value specifying the tick interval in weeks when the x-axis is displayed in weeks. If \code{NULL} it defaults
 #' to a step size of 2L.
+#'
 #' * months `[integer(1) | NULL]`
+#'
 #' Integer value specifying the tick interval in months when the x-axis is displayed in months. If \code{NULL} it
 #' defaults to a step size of 1L.
+#'
 #' @returns A list containing the following elements to be used by the \pkg{modulemanager}:
+#'
 #' * \code{ui}: A UI function of the \pkg{dv.reportrate} module.
+#'
 #' * \code{server}: A server function of the \pkg{dv.reportrate} module.
+#'
 #' * \code{module_id}: A unique identifier.
+#'
 #' * \code{meta}: metadata.
 #'
 #' @keywords main
