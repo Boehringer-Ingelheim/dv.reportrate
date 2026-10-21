@@ -54,58 +54,87 @@ Named list specifying variables and values used to define entry and exit events 
 Composed of:
 \itemize{
 \item event_var \verb{[character(1)]}
+}
+
 Name of the variable that contains the description of the event. Defaults to "DSDECOD".
+\itemize{
 \item date_var \verb{[character(1)]}
+}
+
 Name of the variable containing the date of the event. Defaults to "DSSTDTC".
+\itemize{
 \item day_var \verb{[character(1)]}
+}
+
 Name of the variable containing the study day of the event. Defaults to "DSSTDY".
+\itemize{
 \item entry_vals \verb{[character(1+)]}
+}
+
 Character vector of values defining which values out of var should be entry events. Defaults to c("RANDOMIZED").
+\itemize{
 \item exit_vals \verb{[character(1+)]}
+}
+
 Character vector of values defining which values out of var should be exit events.
-Defaults to c("COMPLETED", "WITHDRAWAL BY SUBJECT", "DEATH").
-}}
+Defaults to c("COMPLETED", "WITHDRAWAL BY SUBJECT", "DEATH").}
 
 \item{adverse_events}{\verb{[list]}
 
 Named list specifying the variables that define the date and study day of adverse event occurence.
+
 Composed of:
 \itemize{
 \item date_var \verb{[character(1)]}
+}
+
 Name of the variable containing the date of the event. Defaults to "AESTDTC".
+\itemize{
 \item day_var \verb{[character(1)]}
-Name of the variable containing the study day of the event. Defaults to "AESTDY".
-}}
+}
+
+Name of the variable containing the study day of the event. Defaults to "AESTDY".}
 
 \item{grouping_vars}{\verb{[list]}
 
 Named list specifying grouping options for the plot.
+
 Composed of:
 \itemize{
 \item choices \verb{[character(1+) | NULL]}
+}
+
 Character vector of variable names out of the demographics dataset, specifying which variables are available for
 grouping. If provided, only these variables can be selected. Defaults to \code{NULL}, meaning all factor variables
 from the demographics dataset will be available for grouping.
+\itemize{
 \item default_choice \verb{[character(1) | NULL]}
+}
+
 Character specifying the default grouping variable to be used when starting the app. Defaults to \code{NULL}, meaning
-no variable is selected for grouping by default.
-}}
+no variable is selected for grouping by default.}
 
 \item{x_step_size_list}{\verb{[list]}
 
-Named list specifying the tick interval (step size) on the x-Axis depending on the time unit.
+Controls the spacing of tick marks on the plot’s x-axis. This affects only the appearance of the axis
+it does not change the time intervals used to calculate rates, the bin size, or the visible x-axis range.
+
 Composed of:
 \itemize{
 \item days \verb{[integer(1) | NULL]}
-Integer value specifying the tick interval in days when the x-axis is displayed in days. If \code{NULL} it defaults
-to a step size of 50L.
+}
+
+Tick-mark interval, in study days, when \strong{Time alignment} is \emph{By study day}. Defaults to \code{50L}.
+\itemize{
 \item weeks \verb{[integer(1) | NULL]}
-Integer value specifying the tick interval in weeks when the x-axis is displayed in weeks. If \code{NULL} it defaults
-to a step size of 2L.
+}
+
+Tick-mark interval, in weeks, when \strong{Time alignment} is \emph{By study day} and \strong{Bin size} is \emph{Week}. Defaults to \code{2L}.
+\itemize{
 \item months \verb{[integer(1) | NULL]}
-Integer value specifying the tick interval in months when the x-axis is displayed in months. If \code{NULL} it
-defaults to a step size of 1L.
-}}
+}
+
+Tick-mark interval, in months, when \strong{Time alignment} is \emph{By study day} and \strong{Bin size} is \emph{Month}. Defaults to \code{1L}.}
 }
 \value{
 A list containing the following elements to be used by the \pkg{modulemanager}:

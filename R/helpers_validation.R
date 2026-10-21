@@ -7,44 +7,116 @@
 #' (..., x_step_size_list = list(weeks = 4), ...) the values of x_step_size_list$days and x_step_size_list$months was
 #' NULL instead of the desired defaults.
 #'
-#' @param input_args `[list]` A named list of the arguments, that were passed to mod_report_rates() function.
+#' @param input_args `[list]`
+#'
+#' A named list of the arguments, that were passed to mod_report_rates() function.
+#'
 #' Composed of:
-#' * @param module_id `[character(1)]` A unique ID string to create a namespace.
-#' * @param dm_dataset_name `[character(1)]` Name of the Demographics dataset.
-#' * @param ds_dataset_name `[character(1)]` Name of the Disposition dataset.
-#' * @param ae_dataset_name `[character(1)]` Name of the Adverse Event dataset.
-#' * @param subjid_var `[character(1)]` Character name of the unique subject identifier column in all datasets
+#'
+#' * @param module_id `[character(1)]`
+#'
+#' A unique ID string to create a namespace.
+#'
+#' * @param dm_dataset_name `[character(1)]`
+#'
+#' Name of the Demographics dataset.
+#'
+#' * @param ds_dataset_name `[character(1)]`
+#'
+#' Name of the Disposition dataset.
+#'
+#' * @param ae_dataset_name `[character(1)]`
+#'
+#' Name of the Adverse Event dataset.
+#'
+#' * @param subjid_var `[character(1)]`
+#'
+#' Character name of the unique subject identifier column in all datasets
 #' (default is USUBJID). Must be a single value.
-#' * @param tooltip_decimal_places `[integer(1)]` Number of decimal places to round the value shown in the hovertext.
-#' * @param disposition_events `[list]` Named list specifying variables and values used to define entry and exit events
+#'
+#' * @param tooltip_decimal_places `[integer(1)]`
+#'
+#' Number of decimal places to round the value shown in the hovertext.
+#'
+#' * @param disposition_events `[list]`
+#'
+#' Named list specifying variables and values used to define entry and exit events
 #' in the disposition dataset.
+#'
 #' Composed of:
-#' *  event_var `[character(1)]` Name of the variable that contains the description of the event.
-#' *  date_var `[character(1)]` Name of the variable containing the date of the event.
-#' *  day_var `[character(1)]` Name of the variable containing the study day of the event.
-#' *  entry_vals `[character(1+)]` Character vector of values defining which values out of var should be entry events.
-#' *  exit_vals `[character(1+)]` Character vector of values defining which values out of var should be exit events.
-#' * @param adverse_events `[list]` Named list specifying the variables that define the date and study day of adverse
-#' event occurence. Composed of:
-#' *  date_var `[character(1)]` Name of the variable containing the date of the event.
-#' *  day_var `[character(1)]` Name of the variable containing the study day of the event.
-#' * @param grouping_vars `[list]` Named list specifying grouping options for the plot. Composed of:
-#' *  choices `[character(1+) | NULL]` Character vector of variable names out of the demographics dataset, specifying
+#'
+#' *  event_var `[character(1)]`
+#'
+#' Name of the variable that contains the description of the event.
+#'
+#' *  date_var `[character(1)]`
+#'
+#' Name of the variable containing the date of the event.
+#'
+#' *  day_var `[character(1)]`
+#'
+#' Name of the variable containing the study day of the event.
+#'
+#' *  entry_vals `[character(1+)]`
+#'
+#' Character vector of values defining which values out of var should be entry events.
+#'
+#' *  exit_vals `[character(1+)]`
+#'
+#' Character vector of values defining which values out of var should be exit events.
+#'
+#' * @param adverse_events `[list]`
+#'
+#' Named list specifying the variables that define the date and study day of adverse
+#' event occurence.
+#'
+#' Composed of:
+#'
+#' *  date_var `[character(1)]`
+#'
+#' Name of the variable containing the date of the event.
+#'
+#' *  day_var `[character(1)]`
+#'
+#' Name of the variable containing the study day of the event.
+#'
+#' * @param grouping_vars `[list]`
+#' Named list specifying grouping options for the plot.
+#'
+#' Composed of:
+#'
+#' *  choices `[character(1+) | NULL]`
+#'
+#' Character vector of variable names out of the demographics dataset, specifying
 #' which variables are available for grouping. If provided, only these variables can be selected. If \code{NULL}, all
 #' categorical variables from the demographics dataset will be available for grouping.
-#' *  default_choice `[character(1) | NULL]` Character specifying the default grouping variable to be used. If
-#' \code{NULL}, no variable is selected for grouping by default.
-#' * @param x_step_size_list `[list]` Named list specifying the tick interval (step size) on the x-Axis depending on
-#' the time unit. Composed of:
-#' *  days `[integer(1) | NULL]` Integer value specifying the tick interval in days when the x-axis is displayed in
-#' days.
-#' *  weeks `[integer(1) | NULL]` Integer value specifying the tick interval in weeks when the x-axis is displayed in
-#' weeks.
-#' *  months `[integer(1) | NULL]` Integer value specifying the tick interval in months when the x-axis is displayed in
-#' months.
+#'
+#' *  default_choice `[character(1) | NULL]`
+#'
+#' Character specifying the default grouping variable to be used. If  \code{NULL}, no variable is selected for grouping by default.
+#'
+#' * @param x_step_size_list `[list]`
+#'
+#' Named list specifying the tick interval (step size) on the x-Axis depending on
+#' the time unit.
+#'
+#' Composed of:
+#'
+#' *  days `[integer(1) | NULL]`
+#'
+#' Integer value specifying the tick interval in days when the x-axis is displayed in days.
+#'
+#' *  weeks `[integer(1) | NULL]`
+#'
+#' Integer value specifying the tick interval in weeks when the x-axis is displayed in weeks.
+#'
+#' *  months `[integer(1) | NULL]`
+#'
+#' Integer value specifying the tick interval in months when the x-axis is displayed in months.
 #'
 #' @returns A named list of all arguments (and their defaults if they were missing beforehand) that can be passed to
 #' mod_report_rates().
+#'
 #' @keywords internal
 validate_and_fill <- function(input_args) {
   if (is.null(input_args$x_step_size_list$days)) {
@@ -106,16 +178,27 @@ validate_and_fill <- function(input_args) {
 #' that was passed to the grouping_vars parameter of the mod_report_rates() function, in a reactive context. Info
 #' messages may be outputted in the console.
 #'
-#' @param dataset `[data.frame]` The demographics data set.
-#' @param subjid_var `[character(1)]` Character name of the unique subject identifier column in all datasets.
-#' @param grouping_choices `[character(1+) | NULL]` Character vector (of variable names out of dm), specifying which
-#' variables are available for grouping.
-#' @param default_choice `[character(1) | NULL]` Character specifying the default grouping variable to be used. The
+#' @param dataset `[data.frame]`
+#'
+#' The demographics data set.
+#'
+#' @param subjid_var `[character(1)]`
+#'
+#' Character name of the unique subject identifier column in all datasets.
+#'
+#' @param grouping_choices `[character(1+) | NULL]`
+#'
+#' Character vector (of variable names out of dm), specifying which variables are available for grouping.
+#'
+#' @param default_choice `[character(1) | NULL]`
+#'
+#' Character specifying the default grouping variable to be used. The
 #' difference to grouping$default_choices is, that the argument that is passed to the default_choice param of this
 #' function is a reactiveVal, which contains the default_choice in a reactive context (so either the value of
 #' grouping$default_choice when first starting the app (given there was one provided), or NULL after that).
 #' This ensures, that no unnecessary info messages will be outputted, because the default_choice is only used when first
 #' starting the app.
+#'
 #' @keywords internal
 validate_dm_dataset <- function(dataset, subjid_var, grouping_choices, default_choice) {
   checkmate::assert_data_frame(dataset, min.rows = 0, min.cols = 1)
@@ -162,18 +245,35 @@ validate_dm_dataset <- function(dataset, subjid_var, grouping_choices, default_c
 #' Internal helper function to perform checkmate validation checks on the disposition dataset out of the dataset_list()
 #' in a reactive context.
 #'
-#' @param dataset `[data.frame]` The disposition data set.
-#' @param disposition_events `[list]`  Named list specifying variables and values used to define entry and exit events
-#' in the disposition dataset. Composed of:
+#' @param dataset `[data.frame]`
+#'
+#' The disposition data set.
+#'
+#' @param disposition_events `[list]`
+#'
+#' Named list specifying variables and values used to define entry and exit events
+#' in the disposition dataset.
+#'
+#' Composed of:
+#'
 #' * event_var `[character(1)]`
+#'
 #' Name of the variable that contains the description of the event.
+#'
 #' * date_var `[character(1)]`
+#'
 #' Name of the variable containing the date of the event.
+#'
 #' * day_var `[character(1)]`
+#'
 #' Name of the variable containing the study day of the event.
+#'
 #' * entry_vals `[character(1+)]`
+#'
 #' Character vector of values defining which values out of event_var should be entry events.
+#'
 #' * exit_vals `[character(1+)]`
+#'
 #' Character vector of values defining which values out of event_var should be exit events.
 #'
 #' @keywords internal
@@ -200,12 +300,23 @@ validate_ds_dataset <- function(dataset, disposition_events) {
 #' Internal helper function to perform checkmate validation checks on the adverse event dataset out of the
 #' dataset_list() in a reactive context.
 #'
-#' @param dataset `[data.frame]` The adverse event data set
-#' @param adverse_events `[list]` Named list specifying the variables that define the date and study day of
-#' adverse event occurrence. Composed of:
+#' @param dataset `[data.frame]`
+#'
+#' The adverse event data set
+#'
+#' @param adverse_events `[list]`
+#'
+#' Named list specifying the variables that define the date and study day of
+#' adverse event occurrence.
+#'
+#' Composed of:
+#'
 #' * date_var `[character(1)]`
+#'
 #' Name of the variable containing the date of the event.
+#'
 #' * day_var `[character(1)]`
+#'
 #' Name of the variable containing the study day of the event.
 #'
 #' @keywords internal
@@ -227,15 +338,36 @@ validate_ae_dataset <- function(dataset, adverse_events) {
 #' If so, the UI shows a message "No data available", instead of the module proceeding with plot computation and showing
 #' an empty coordinate system.
 #'
-#' @param dataset_list `[list]` A list composed of:
-#' * dm `[data.frame]` The dm dataframe.
-#' * ds `[data.frame]` The ds dataframe.
-#' * ae `[data.frame]` The ae dataframe.
-#' @param selected_levels `[character(1+) | NULL]` Character vector of the selected levels in the selected_group or NULL
+#' @param dataset_list `[list]`
+#'
+#' A list composed of:
+#'
+#' * dm `[data.frame]`
+#'
+#' The dm dataframe.
+#'
+#' * ds `[data.frame]`
+#'
+#' The ds dataframe.
+#'
+#' * ae `[data.frame]`
+#'
+#' The ae dataframe.
+#'
+#' @param selected_levels `[character(1+) | NULL]`
+#'
+#' Character vector of the selected levels in the selected_group or NULL
 #' if no levels are selected.
-#' @param ungrouped_checkbox `[logical]` Specifying if the ungrouped data should be displayed when a grouping variable
+#'
+#' @param ungrouped_checkbox `[logical]`
+#'
+#' Specifying if the ungrouped data should be displayed when a grouping variable
 #' is selected.
-#' @param selected_group `[character(1)]` Character name of the selected grouping variable (column).
+#'
+#' @param selected_group `[character(1)]`
+#'
+#' Character name of the selected grouping variable (column).
+#'
 #' @keywords internal
 validate_df_rows <- function(dataset_list, selected_levels, ungrouped_checkbox, selected_group) {
   one_df_empty <- (nrow(dataset_list$dm) == 0 ||
@@ -257,10 +389,16 @@ validate_df_rows <- function(dataset_list, selected_levels, ungrouped_checkbox, 
 #' Internal helper function for checking if a variable is valid for grouping. The variable can't be null, has to
 #' appear in the column names of the dataset passed to the function and must be of type factor to be considered as valid
 #'
-#' @param grouping_var `[character(1) | NULL]` Character name of the variable that should be checked.
-#' @param group_dataset `[data.frame]` The data frame in which is looked for the grouping_var.
+#' @param grouping_var `[character(1) | NULL]`
+#'
+#' Character name of the variable that should be checked.
+#'
+#' @param group_dataset `[data.frame]`
+#'
+#' The data frame in which is looked for the grouping_var.
 #'
 #' @returns logical value. TRUE if the grouping_var is valid, otherwise FALSE.
+#'
 #' @keywords internal
 is_valid_grouping_var <- function(grouping_var, group_dataset) {
   if (!is.null(grouping_var) && grouping_var %in% names(group_dataset)) {
@@ -277,11 +415,18 @@ is_valid_grouping_var <- function(grouping_var, group_dataset) {
 #' Ensuring that when another demographics dataset gets selected, the grouping variable is reset to "-None-" if the
 #'  previous selected grouping variable isn't in the new dm dataset anymore or not of type factor anymore.
 #'  An informative message will we printed in the console if the grouping variable gets resetted.
-#' @param dm `[data.frame]` The demographics dataframe.
-#' @param selected_group `[character(1)]` Name of the current selected grouping variable
+#'
+#' @param dm `[data.frame]`
+#'
+#' The demographics dataframe.
+#'
+#' @param selected_group `[character(1)]`
+#'
+#' Name of the current selected grouping variable
 #'
 #' @returns Either the current selection of the grouping variable or REPORT_RATES$CHOICES$GROUP_NO_SELECTION if one of
 #' the tests are FALSE.
+#'
 #' @keywords internal
 validate_grouping_selection <- function(dm, selected_group) {
   if (is.null(selected_group)) return(REPORT_RATES$CHOICES$GROUP_NO_SELECTION)
@@ -314,10 +459,15 @@ validate_grouping_selection <- function(dm, selected_group) {
 #' errors.
 #'
 #' @param min_value `[numeric(1) | Date(1) | NULL]`
+#'
 #' Lower axis limit specified by the user.
+#'
 #' @param max_value `[numeric(1) | Date(1) | NULL]`
+#'
 #' Upper axis limit specified by the user.
+#'
 #' @param axis_name `[character(1)]`
+#'
 #' Name of the axis used in the validation message (e.g. "X" or "Y").
 #'
 #' @returns Either NULL if the limits are valid or incomplete, or a character
@@ -357,6 +507,7 @@ validate_axis_limits <- function(min_value, max_value, axis_name) {
 #' Missing values, NULL values and negative study days are preserved.
 #'
 #' @param day_labels `[numeric()]`
+#'
 #' Study day values displayed to the user.
 #'
 #' @returns A numeric vector containing the corresponding plot coordinates.
@@ -384,16 +535,27 @@ study_day_to_plot_coord <- function(day_labels) {
 #' \code{study_day_to_plot_coord()}.
 #'
 #' @param plt `[ggplot]`
+#'
 #' ggplot object to which the axis limits should be applied.
+#'
 #' @param x_min `[numeric(1) | Date(1) | NULL]`
+#'
 #' Lower x-axis limit specified by the user.
+#'
 #' @param x_max `[numeric(1) | Date(1) | NULL]`
+#'
 #' Upper x-axis limit specified by the user.
+#'
 #' @param y_min `[numeric(1) | NULL]`
+#'
 #' Lower y-axis limit specified by the user.
+#'
 #' @param y_max `[numeric(1) | NULL]`
+#'
 #' Upper y-axis limit specified by the user.
+#'
 #' @param time_selection `[character(1) | NULL]`
+#'
 #' Current time alignment selection. Used to determine whether x-axis limits
 #' should be interpreted as study dates or study days.
 #'

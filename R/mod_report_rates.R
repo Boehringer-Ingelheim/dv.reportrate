@@ -888,24 +888,22 @@ report_rates_server <- function(module_id,
 #'
 #' @param x_step_size_list `[list]`
 #'
-#' Named list specifying the tick interval (step size) on the x-Axis depending on the time unit.
+#' Controls the spacing of tick marks on the plot’s x-axis. This affects only the appearance of the axis
+#' it does not change the time intervals used to calculate rates, the bin size, or the visible x-axis range.
 #'
 #' Composed of:
 #'
 #' * days `[integer(1) | NULL]`
 #'
-#' Integer value specifying the tick interval in days when the x-axis is displayed in days. If \code{NULL} it defaults
-#' to a step size of 50L.
+#' Tick-mark interval, in study days, when **Time alignment** is *By study day*. Defaults to `50L`.
 #'
 #' * weeks `[integer(1) | NULL]`
 #'
-#' Integer value specifying the tick interval in weeks when the x-axis is displayed in weeks. If \code{NULL} it defaults
-#' to a step size of 2L.
+#' Tick-mark interval, in weeks, when **Time alignment** is *By study day* and **Bin size** is *Week*. Defaults to `2L`.
 #'
 #' * months `[integer(1) | NULL]`
 #'
-#' Integer value specifying the tick interval in months when the x-axis is displayed in months. If \code{NULL} it
-#' defaults to a step size of 1L.
+#' Tick-mark interval, in months, when **Time alignment** is *By study day* and **Bin size** is *Month*. Defaults to `1L`.
 #'
 #' @returns A list containing the following elements to be used by the \pkg{modulemanager}:
 #'
@@ -920,6 +918,8 @@ report_rates_server <- function(module_id,
 #' @keywords main
 #'
 #' @export
+# TODO: Consider renaming x_step_size_list to x_axis_tick_interval in a future release for clarity.
+# The current name can be confusing
 mod_report_rates <- function(module_id,
                              dm_dataset_name = "dm",
                              ds_dataset_name = "ds",
