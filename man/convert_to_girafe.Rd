@@ -3,7 +3,8 @@
 \name{convert_to_girafe}
 \alias{convert_to_girafe}
 \title{Internal helper function to convert the ggplot object into an interactive girafe object. Applies all interactive
-settings such as tooltip behaviour, hover effects, selection styling, zoom options, and toolbar configuration.}
+settings: tooltip behavior, hover effects, selection styling, and toolbar configuration, except of zoom options.
+The latter is addressed separately via a feature based on limiting the min/max values of the plot's axis}
 \usage{
 convert_to_girafe(ggplot_obj, selected_levels)
 }
@@ -19,6 +20,7 @@ based on the selected grouping variable and levels, metric, and time unit.
 }
 \description{
 Internal helper function to convert the ggplot object into an interactive girafe object. Applies all interactive
-settings such as tooltip behaviour, hover effects, selection styling, zoom options, and toolbar configuration.
+settings: tooltip behavior, hover effects, selection styling, and toolbar configuration, except of zoom options.
+The latter is addressed separately via a feature based on limiting the min/max values of the plot's axis
 }
 \keyword{internal}

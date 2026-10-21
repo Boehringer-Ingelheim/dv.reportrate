@@ -28,6 +28,9 @@ REPORT_RATES <- poc(
     Y_AXIS_MAX = "Y-axis maximum:",
     RESET_AXIS_LIMITS = "Reset zoom"
   ),
+  STYLE = poc(
+    HR = "border-top: 1px solid #aaa; margin: 15px 0;"
+  ),
   CHOICES = poc(
     METRIC_BUTTONS_OPT1 = "Cumulative rate per total exposure time",
     METRIC_BUTTONS_OPT2 = "Interval rate per active patient",
@@ -138,7 +141,8 @@ report_rates_ui <- function(module_id) {
         choiceValues = c(REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1, REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT2),
         selected = REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1
       ),
-      shiny::tags$hr(style = "border-top: 1px solid #aaa; margin: 15px 0;"),
+      shiny::tags$hr(style = REPORT_RATES$STYLE$HR),
+
       shiny::tags$h4(REPORT_RATES$HEADLINE$GROUP_SETTINGS),
       shiny::selectInput(
         inputId = ns(REPORT_RATES$ID$GROUP_VAR),
@@ -165,7 +169,7 @@ report_rates_ui <- function(module_id) {
           )
         )
       ),
-      shiny::tags$hr(style = "border-top: 1px solid #aaa; margin: 15px 0;"),
+      shiny::tags$hr(style = REPORT_RATES$STYLE$HR),
       shiny::tags$h4(REPORT_RATES$HEADLINE$TIME_SETTINGS),
 
 
@@ -204,7 +208,7 @@ report_rates_ui <- function(module_id) {
 
       ,
 
-      shiny::tags$hr(style = "border-top: 1px solid #aaa; margin: 15px 0;"),
+      shiny::tags$hr(style = REPORT_RATES$STYLE$HR),
       shiny::tags$h4(REPORT_RATES$HEADLINE$AXIS_LIMITS),
 
       shiny::conditionalPanel(
@@ -889,7 +893,7 @@ mod_report_rates <- function(module_id,
     },
     server = function(afmm) {
       dataset_list <- shiny::reactive({
-        afmm$filtered_dataset()[c(dm_dataset_name, ds_dataset_name, ae_dataset_name)]
+        afmm$filtered_dataset_list()[c(dm_dataset_name, ds_dataset_name, ae_dataset_name)]
       })
       report_rates_server(
         module_id = module_id,

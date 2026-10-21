@@ -5,8 +5,6 @@
 \title{Internal helper function for validating user-specified axis limits.}
 \usage{
 validate_axis_limits(min_value, max_value, axis_name)
-
-validate_axis_limits(min_value, max_value, axis_name)
 }
 \arguments{
 \item{min_value}{\verb{[numeric(1) | Date(1) | NULL]}
@@ -22,18 +20,8 @@ Name of the axis used in the validation message (e.g. "X" or "Y").}
 Either NULL if the limits are valid or incomplete, or a character
 string containing an error message suitable for use with
 \code{shiny::validate()}.
-
-Either NULL if the limits are valid or incomplete, or a character
-string containing an error message suitable for use with
-\code{shiny::validate()}.
 }
 \description{
-Checks whether both a minimum and maximum value were provided for an axis
-and verifies that the minimum is strictly smaller than the maximum.
-Supports both numeric values and Date objects. Missing values specified
-as NULL or NA are treated as "not provided" and do not trigger validation
-errors.
-
 Checks whether both a minimum and maximum value were provided for an axis
 and verifies that the minimum is strictly smaller than the maximum.
 Supports both numeric values and Date objects. Missing values specified

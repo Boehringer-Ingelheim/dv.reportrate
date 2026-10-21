@@ -12,15 +12,6 @@ apply_axis_limits(
   y_max = NULL,
   time_selection = NULL
 )
-
-apply_axis_limits(
-  plt,
-  x_min = NULL,
-  x_max = NULL,
-  y_min = NULL,
-  y_max = NULL,
-  time_selection = NULL
-)
 }
 \arguments{
 \item{plt}{\verb{[ggplot]}
@@ -45,26 +36,14 @@ should be interpreted as study dates or study days.}
 \value{
 A ggplot object with the requested axis limits applied via
 \code{ggplot2::coord_cartesian()}.
-
-A ggplot object with the requested axis limits applied via
-\code{ggplot2::coord_cartesian()}.
 }
 \description{
 Adds a \code{ggplot2::coord_cartesian()} layer to a plot using the axis
 limits specified by the user. Supports both one-sided and two-sided limits
 for the x- and y-axes. Missing values specified as NULL or NA are treated as
 unrestricted limits.
-
-Adds a \code{ggplot2::coord_cartesian()} layer to a plot using the axis
-limits specified by the user. Supports both one-sided and two-sided limits
-for the x- and y-axes. Missing values specified as NULL or NA are treated as
-unrestricted limits.
 }
 \details{
-When displaying study days, user-entered x-axis limits are converted from
-displayed study day labels to the corresponding plot coordinates via
-\code{study_day_to_plot_coord()}.
-
 When displaying study days, user-entered x-axis limits are converted from
 displayed study day labels to the corresponding plot coordinates via
 \code{study_day_to_plot_coord()}.

@@ -6,8 +6,6 @@
 coordinates.}
 \usage{
 study_day_to_plot_coord(day_labels)
-
-study_day_to_plot_coord(day_labels)
 }
 \arguments{
 \item{day_labels}{\verb{[numeric()]}
@@ -15,23 +13,14 @@ Study day values displayed to the user.}
 }
 \value{
 A numeric vector containing the corresponding plot coordinates.
-
-A numeric vector containing the corresponding plot coordinates.
 }
 \description{
 In the study-day view, the x-axis labels shown to the user start at Day 1,
 while the underlying plot coordinates start at 0. This helper converts
 user-specified study day limits into the corresponding plot coordinates so
 that axis zooming can be applied correctly.
-
-In the study-day view, the x-axis labels shown to the user start at Day 1,
-while the underlying plot coordinates start at 0. This helper converts
-user-specified study day limits into the corresponding plot coordinates so
-that axis zooming can be applied correctly.
 }
 \details{
-Missing values, NULL values and negative study days are preserved.
-
 Missing values, NULL values and negative study days are preserved.
 }
 \keyword{internal}
