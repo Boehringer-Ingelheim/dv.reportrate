@@ -1,0 +1,11 @@
+^\.Rproj\.user$
+^LICENSE$
+^README\.Rmd$
+^README\.html$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+.lintr
+^.*\.Rproj$
+.github
+.git-blame-ignore-revs

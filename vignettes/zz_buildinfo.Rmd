@@ -1,0 +1,25 @@
+---
+title: "Build Info"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Build Info}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r bla, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Build date: `r format(Sys.time())`
+
+```{r sessionInfo}
+sessionInfo()
+```
+
+```{r installedPackages}
+knitr::kable(as.data.frame(installed.packages(), row.names = FALSE)[c("Package", "Version")])
+```
