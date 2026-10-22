@@ -1,0 +1,25 @@
+template:
+  bootstrap: 5
+
+navbar:
+  type: inverse
+  structure:
+    left: [intro, reference, articles, tutorials, news, qc]
+  components:
+    qc:
+      text: Quality Control
+      href: articles/qc.html
+
+reference:
+  - title: Modules
+  - desc: Main functions to call the modules
+  - contents:
+    - has_keyword("main")
+  - title: Mock Applications
+  - contents:
+    - has_keyword("mock")
+  - title: For developers
+  - contents:
+    - has_keyword("developers")
+
+
