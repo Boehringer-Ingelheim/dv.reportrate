@@ -7,19 +7,29 @@
 create_point_layers(df_list, grouping_var, selected_levels)
 }
 \arguments{
-\item{df_list}{\verb{[list]} Named list returned by get_plot_datasets(). Composed of
+\item{df_list}{\verb{[list]}
+
+Named list returned by get_plot_datasets(). Composed of
 \itemize{
 \item ungrouped \verb{[data.frame | NULL]}
+
 The data frame containing the ungrouped data.
 \item grouped \verb{[data.frame | NULL]}
+
 The data frame containing the grouped data.
-\item axis_df \verb{[data.frame]} If not NULL the ungrouped data frame, else the grouped data frame.
+\item axis_df \verb{[data.frame]}
+
+If not NULL the ungrouped data frame, else the grouped data frame.
 }}
 
-\item{grouping_var}{\verb{[character(1)]} Character name of the grouping variable (column) in the dm data frame. The
-values of this column define the different groups in the plot.}
+\item{grouping_var}{\verb{[character(1)]}
 
-\item{selected_levels}{\verb{[character(0+)]} Character vector containing the currently selected grouping levels that
+Character name of the grouping variable (column) in the dm data frame.
+The values of this column define the different groups in the plot.}
+
+\item{selected_levels}{\verb{[character(0+)]}
+
+Character vector containing the currently selected grouping levels that
 should be displayed in the plot.}
 }
 \value{

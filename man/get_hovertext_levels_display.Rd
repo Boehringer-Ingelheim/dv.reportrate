@@ -7,9 +7,13 @@
 get_hovertext_levels_display(dataset, grouping_var)
 }
 \arguments{
-\item{dataset}{\verb{[data.frame]} Data frame returned by the get_time_for_plot() function.}
+\item{dataset}{\verb{[data.frame]}
 
-\item{grouping_var}{\verb{[character(1)]} Character name of the grouping variable (column) in the demographics data frame.
+Data frame returned by the get_time_for_plot() function.}
+
+\item{grouping_var}{\verb{[character(1)]}
+
+Character name of the grouping variable (column) in the demographics data frame.
 The values of this column define the different groups in the plot.}
 }
 \value{

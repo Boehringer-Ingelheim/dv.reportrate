@@ -7,9 +7,13 @@
 get_hovertext_ae_info(dataset, tt_dec_places)
 }
 \arguments{
-\item{dataset}{\verb{[data.frame]} Data frame returned by the get_time_for_plot() function.}
+\item{dataset}{\verb{[data.frame]}
 
-\item{tt_dec_places}{\verb{[integer(1)]} Number of decimal places to round the value shown in the hovertext.}
+Data frame returned by the get_time_for_plot() function.}
+
+\item{tt_dec_places}{\verb{[integer(1)]}
+
+Number of decimal places to round the value shown in the hovertext.}
 }
 \value{
 A processed data frame with the additional column "ht_ae_info". The values in this column are later a part

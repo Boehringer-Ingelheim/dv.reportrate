@@ -9,110 +9,101 @@
 #'
 #' @param input_args `[list]`
 #'
-#' A named list of the arguments, that were passed to mod_report_rates() function.
-#'
-#' Composed of:
+#' A named list of the arguments, that were passed to mod_report_rates() function. Composed of:
 #'
 #' * @param module_id `[character(1)]`
 #'
-#' A unique ID string to create a namespace.
+#'   A unique ID string to create a namespace.
 #'
 #' * @param dm_dataset_name `[character(1)]`
 #'
-#' Name of the Demographics dataset.
+#'   Name of the Demographics dataset.
 #'
 #' * @param ds_dataset_name `[character(1)]`
 #'
-#' Name of the Disposition dataset.
+#'   Name of the Disposition dataset.
 #'
 #' * @param ae_dataset_name `[character(1)]`
 #'
-#' Name of the Adverse Event dataset.
+#'   Name of the Adverse Event dataset.
 #'
 #' * @param subjid_var `[character(1)]`
 #'
-#' Character name of the unique subject identifier column in all datasets
-#' (default is USUBJID). Must be a single value.
+#'   Character name of the unique subject identifier column in all datasets
+#'   (default is USUBJID). Must be a single value.
 #'
 #' * @param tooltip_decimal_places `[integer(1)]`
 #'
-#' Number of decimal places to round the value shown in the hovertext.
+#'   Number of decimal places to round the value shown in the hovertext.
 #'
 #' * @param disposition_events `[list]`
 #'
-#' Named list specifying variables and values used to define entry and exit events
-#' in the disposition dataset.
+#'   Named list specifying variables and values used to define entry and exit events
+#'   in the disposition dataset. Composed of:
 #'
-#' Composed of:
+#'   *  event_var `[character(1)]`
 #'
-#' *  event_var `[character(1)]`
+#'      Name of the variable that contains the description of the event.
 #'
-#' Name of the variable that contains the description of the event.
+#'   *  date_var `[character(1)]`
 #'
-#' *  date_var `[character(1)]`
+#'      Name of the variable containing the date of the event.
 #'
-#' Name of the variable containing the date of the event.
+#'   *  day_var `[character(1)]`
 #'
-#' *  day_var `[character(1)]`
+#'      Name of the variable containing the study day of the event.
 #'
-#' Name of the variable containing the study day of the event.
+#'   *  entry_vals `[character(1+)]`
 #'
-#' *  entry_vals `[character(1+)]`
+#'      Character vector of values defining which values out of var should be entry events.
 #'
-#' Character vector of values defining which values out of var should be entry events.
+#'   *  exit_vals `[character(1+)]`
 #'
-#' *  exit_vals `[character(1+)]`
-#'
-#' Character vector of values defining which values out of var should be exit events.
+#'      Character vector of values defining which values out of var should be exit events.
 #'
 #' * @param adverse_events `[list]`
 #'
-#' Named list specifying the variables that define the date and study day of adverse
-#' event occurence.
+#'   Named list specifying the variables that define the date and study day of adverse
+#'   event occurence. Composed of:
 #'
-#' Composed of:
+#'   *  date_var `[character(1)]`
 #'
-#' *  date_var `[character(1)]`
+#'      Name of the variable containing the date of the event.
 #'
-#' Name of the variable containing the date of the event.
+#'   *  day_var `[character(1)]`
 #'
-#' *  day_var `[character(1)]`
-#'
-#' Name of the variable containing the study day of the event.
+#'      Name of the variable containing the study day of the event.
 #'
 #' * @param grouping_vars `[list]`
-#' Named list specifying grouping options for the plot.
 #'
-#' Composed of:
+#'   Named list specifying grouping options for the plot. Composed of:
 #'
-#' *  choices `[character(1+) | NULL]`
+#'   *  choices `[character(1+) | NULL]`
 #'
-#' Character vector of variable names out of the demographics dataset, specifying
-#' which variables are available for grouping. If provided, only these variables can be selected. If \code{NULL}, all
-#' categorical variables from the demographics dataset will be available for grouping.
+#'      Character vector of variable names out of the demographics dataset, specifying
+#'      which variables are available for grouping. If provided, only these variables can be selected. If \code{NULL}, all
+#'      categorical variables from the demographics dataset will be available for grouping.
 #'
-#' *  default_choice `[character(1) | NULL]`
+#'   *  default_choice `[character(1) | NULL]`
 #'
-#' Character specifying the default grouping variable to be used. If  \code{NULL}, no variable is selected for grouping by default.
+#'      Character specifying the default grouping variable to be used. If  \code{NULL}, no variable is selected for grouping by default.
 #'
 #' * @param x_step_size_list `[list]`
 #'
-#' Named list specifying the tick interval (step size) on the x-Axis depending on
-#' the time unit.
+#'   Named list specifying the tick interval (step size) on the x-Axis depending on
+#'   the time unit. Composed of:
 #'
-#' Composed of:
+#'   *  days `[integer(1) | NULL]`
 #'
-#' *  days `[integer(1) | NULL]`
+#'      Integer value specifying the tick interval in days when the x-axis is displayed in days.
 #'
-#' Integer value specifying the tick interval in days when the x-axis is displayed in days.
+#'   *  weeks `[integer(1) | NULL]`
 #'
-#' *  weeks `[integer(1) | NULL]`
+#'      Integer value specifying the tick interval in weeks when the x-axis is displayed in weeks.
 #'
-#' Integer value specifying the tick interval in weeks when the x-axis is displayed in weeks.
+#'   *  months `[integer(1) | NULL]`
 #'
-#' *  months `[integer(1) | NULL]`
-#'
-#' Integer value specifying the tick interval in months when the x-axis is displayed in months.
+#'      Integer value specifying the tick interval in months when the x-axis is displayed in months.
 #'
 #' @returns A named list of all arguments (and their defaults if they were missing beforehand) that can be passed to
 #' mod_report_rates().
@@ -252,29 +243,27 @@ validate_dm_dataset <- function(dataset, subjid_var, grouping_choices, default_c
 #' @param disposition_events `[list]`
 #'
 #' Named list specifying variables and values used to define entry and exit events
-#' in the disposition dataset.
-#'
-#' Composed of:
+#' in the disposition dataset. Composed of:
 #'
 #' * event_var `[character(1)]`
 #'
-#' Name of the variable that contains the description of the event.
+#'   Name of the variable that contains the description of the event.
 #'
 #' * date_var `[character(1)]`
 #'
-#' Name of the variable containing the date of the event.
+#'   Name of the variable containing the date of the event.
 #'
 #' * day_var `[character(1)]`
 #'
-#' Name of the variable containing the study day of the event.
+#'   Name of the variable containing the study day of the event.
 #'
 #' * entry_vals `[character(1+)]`
 #'
-#' Character vector of values defining which values out of event_var should be entry events.
+#'   Character vector of values defining which values out of event_var should be entry events.
 #'
 #' * exit_vals `[character(1+)]`
 #'
-#' Character vector of values defining which values out of event_var should be exit events.
+#'   Character vector of values defining which values out of event_var should be exit events.
 #'
 #' @keywords internal
 #'
@@ -307,17 +296,15 @@ validate_ds_dataset <- function(dataset, disposition_events) {
 #' @param adverse_events `[list]`
 #'
 #' Named list specifying the variables that define the date and study day of
-#' adverse event occurrence.
-#'
-#' Composed of:
+#' adverse event occurrence. Composed of:
 #'
 #' * date_var `[character(1)]`
 #'
-#' Name of the variable containing the date of the event.
+#'   Name of the variable containing the date of the event.
 #'
 #' * day_var `[character(1)]`
 #'
-#' Name of the variable containing the study day of the event.
+#'   Name of the variable containing the study day of the event.
 #'
 #' @keywords internal
 validate_ae_dataset <- function(dataset, adverse_events) {
@@ -344,15 +331,15 @@ validate_ae_dataset <- function(dataset, adverse_events) {
 #'
 #' * dm `[data.frame]`
 #'
-#' The dm dataframe.
+#'   The dm dataframe.
 #'
 #' * ds `[data.frame]`
 #'
-#' The ds dataframe.
+#'   The ds dataframe.
 #'
 #' * ae `[data.frame]`
 #'
-#' The ae dataframe.
+#'   The ae dataframe.
 #'
 #' @param selected_levels `[character(1+) | NULL]`
 #'

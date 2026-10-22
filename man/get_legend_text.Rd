@@ -8,10 +8,13 @@ label of the currently selected grouping variable if there is one. Else it just 
 get_legend_text(dataset, grouping_var)
 }
 \arguments{
-\item{dataset}{\verb{[data.frame]} The demographics dataframe which contains the possible variables for grouping and their
-labels.}
+\item{dataset}{\verb{[data.frame]}
 
-\item{grouping_var}{\verb{[character(1)]} Character name of the grouping variable (column) in the dm data frame}
+The demographics dataframe which contains the possible variables for grouping and their labels.}
+
+\item{grouping_var}{\verb{[character(1)]}
+
+Character name of the grouping variable (column) in the dm data frame}
 }
 \value{
 A string which is either the label of the grouping variable or the grouping variable itself.

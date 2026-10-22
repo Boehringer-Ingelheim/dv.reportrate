@@ -8,20 +8,29 @@ in a reactive context.}
 validate_ds_dataset(dataset, disposition_events)
 }
 \arguments{
-\item{dataset}{\verb{[data.frame]} The disposition data set.}
+\item{dataset}{\verb{[data.frame]}
 
-\item{disposition_events}{\verb{[list]}  Named list specifying variables and values used to define entry and exit events
+The disposition data set.}
+
+\item{disposition_events}{\verb{[list]}
+
+Named list specifying variables and values used to define entry and exit events
 in the disposition dataset. Composed of:
 \itemize{
 \item event_var \verb{[character(1)]}
+
 Name of the variable that contains the description of the event.
 \item date_var \verb{[character(1)]}
+
 Name of the variable containing the date of the event.
 \item day_var \verb{[character(1)]}
+
 Name of the variable containing the study day of the event.
 \item entry_vals \verb{[character(1+)]}
+
 Character vector of values defining which values out of event_var should be entry events.
 \item exit_vals \verb{[character(1+)]}
+
 Character vector of values defining which values out of event_var should be exit events.
 }}
 }

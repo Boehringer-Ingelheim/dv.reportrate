@@ -15,21 +15,27 @@ apply_axis_limits(
 }
 \arguments{
 \item{plt}{\verb{[ggplot]}
+
 ggplot object to which the axis limits should be applied.}
 
 \item{x_min}{\verb{[numeric(1) | Date(1) | NULL]}
+
 Lower x-axis limit specified by the user.}
 
 \item{x_max}{\verb{[numeric(1) | Date(1) | NULL]}
+
 Upper x-axis limit specified by the user.}
 
 \item{y_min}{\verb{[numeric(1) | NULL]}
+
 Lower y-axis limit specified by the user.}
 
 \item{y_max}{\verb{[numeric(1) | NULL]}
+
 Upper y-axis limit specified by the user.}
 
 \item{time_selection}{\verb{[character(1) | NULL]}
+
 Current time alignment selection. Used to determine whether x-axis limits
 should be interpreted as study dates or study days.}
 }

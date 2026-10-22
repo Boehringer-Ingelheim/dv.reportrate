@@ -8,9 +8,13 @@ the logic on the tick_text (and not tick_vals) because that's what displayed in 
 get_indices_for_tickvals(step_size, tick_text)
 }
 \arguments{
-\item{step_size}{\verb{[integer(1)]} Integer value specifying the tick interval on the x axis.}
+\item{step_size}{\verb{[integer(1)]}
 
-\item{tick_text}{\verb{[character(1+)]} A character vector setting the text displayed at the ticks positions.}
+Integer value specifying the tick interval on the x axis.}
+
+\item{tick_text}{\verb{[character(1+)]}
+
+A character vector setting the text displayed at the ticks positions.}
 }
 \value{
 A logical vector specifying the indices at which ticks should be shown in the plot on the x axis.

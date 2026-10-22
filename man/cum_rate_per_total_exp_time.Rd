@@ -7,14 +7,19 @@
 cum_rate_per_total_exp_time(time_type, group_dataset, grouping_var)
 }
 \arguments{
-\item{time_type}{\verb{[character(1)]}  Either "date" (calendar based) or "day" (subject based). Reflects the x-axis of
-the plots.}
+\item{time_type}{\verb{[character(1)]}
 
-\item{group_dataset}{\verb{[data.frame]} Containing the unique identifier column; date-column, day-column;
+Either "date" (calendar based) or "day" (subject based). Reflects the x-axis of the plots.}
+
+\item{group_dataset}{\verb{[data.frame]}
+
+Containing the unique identifier column; date-column, day-column;
 n-column (Adverse Events); m-column(study entries/exits); and the group-column if selected in the UI. This data frame
 was returned by merge_event_data_with_grouping().}
 
-\item{grouping_var}{\verb{[character(1)]} Character name of the grouping variable (column) in the "dm_dataset". The
+\item{grouping_var}{\verb{[character(1)]}
+
+Character name of the grouping variable (column) in the "dm_dataset". The
 values of this column define the different groups in the plot.}
 }
 \value{

@@ -10,7 +10,9 @@ lower in such cases.}
 get_opacity(amount_levels)
 }
 \arguments{
-\item{amount_levels}{\verb{[numeric(1)]} The amount of the current selected levels}
+\item{amount_levels}{\verb{[numeric(1)]}
+
+The amount of the current selected levels}
 }
 \value{
 A numeric for setting the opacity of the not selected lines in the plot based on the amount of selected

@@ -288,7 +288,8 @@ report_rates_ui <- function(module_id) {
           shiny::numericInput(
             inputId = ns(REPORT_RATES$ID$Y_AXIS_MIN),
             label = REPORT_RATES$LBL$Y_AXIS_MIN,
-            value = NULL
+            value = NULL,
+            step = 0.5
           )
         ),
         shiny::column(
@@ -296,7 +297,8 @@ report_rates_ui <- function(module_id) {
           shiny::numericInput(
             inputId = ns(REPORT_RATES$ID$Y_AXIS_MAX),
             label = REPORT_RATES$LBL$Y_AXIS_MAX,
-            value = NULL
+            value = NULL,
+              step = 0.5
           )
         )
       ),
@@ -836,74 +838,68 @@ report_rates_server <- function(module_id,
 #'
 #' * event_var `[character(1)]`
 #'
-#' Name of the variable that contains the description of the event. Defaults to "DSDECOD".
+#'   Name of the variable that contains the description of the event. Defaults to "DSDECOD".
 #'
 #' * date_var `[character(1)]`
 #'
-#' Name of the variable containing the date of the event. Defaults to "DSSTDTC".
+#'   Name of the variable containing the date of the event. Defaults to "DSSTDTC".
 #'
 #' * day_var `[character(1)]`
 #'
-#' Name of the variable containing the study day of the event. Defaults to "DSSTDY".
+#'   Name of the variable containing the study day of the event. Defaults to "DSSTDY".
 #'
 #' * entry_vals `[character(1+)]`
 #'
-#' Character vector of values defining which values out of var should be entry events. Defaults to c("RANDOMIZED").
+#'   Character vector of values defining which values out of var should be entry events. Defaults to c("RANDOMIZED").
 #'
 #' * exit_vals `[character(1+)]`
 #'
-#' Character vector of values defining which values out of var should be exit events.
-#' Defaults to c("COMPLETED", "WITHDRAWAL BY SUBJECT", "DEATH").
+#'   Character vector of values defining which values out of var should be exit events.
+#'   Defaults to c("COMPLETED", "WITHDRAWAL BY SUBJECT", "DEATH").
 #'
 #' @param adverse_events `[list]`
 #'
-#' Named list specifying the variables that define the date and study day of adverse event occurence.
-#'
-#' Composed of:
+#' Named list specifying the variables that define the date and study day of adverse event occurrence. Composed of:
 #'
 #' * date_var `[character(1)]`
 #'
-#' Name of the variable containing the date of the event. Defaults to "AESTDTC".
+#'   Name of the variable containing the date of the event. Defaults to "AESTDTC".
 #'
 #' * day_var `[character(1)]`
 #'
-#' Name of the variable containing the study day of the event. Defaults to "AESTDY".
+#'   Name of the variable containing the study day of the event. Defaults to "AESTDY".
 #'
 #' @param grouping_vars `[list]`
 #'
-#' Named list specifying grouping options for the plot.
-#'
-#' Composed of:
+#' Named list specifying grouping options for the plot. Composed of:
 #'
 #' * choices `[character(1+) | NULL]`
 #'
-#' Character vector of variable names out of the demographics dataset, specifying which variables are available for
-#' grouping. If provided, only these variables can be selected. Defaults to \code{NULL}, meaning all factor variables
-#' from the demographics dataset will be available for grouping.
+#'   Character vector of variable names out of the demographics dataset, specifying which variables are available for
+#'   grouping. If provided, only these variables can be selected. Defaults to \code{NULL}, meaning all factor variables
+#'   from the demographics dataset will be available for grouping.
 #'
 #' * default_choice `[character(1) | NULL]`
 #'
-#' Character specifying the default grouping variable to be used when starting the app. Defaults to \code{NULL}, meaning
-#' no variable is selected for grouping by default.
+#'   Character specifying the default grouping variable to be used when starting the app. Defaults to \code{NULL}, meaning
+#'   no variable is selected for grouping by default.
 #'
 #' @param x_step_size_list `[list]`
 #'
 #' Controls the spacing of tick marks on the plot’s x-axis. This affects only the appearance of the axis
-#' it does not change the time intervals used to calculate rates, the bin size, or the visible x-axis range.
-#'
-#' Composed of:
+#' it does not change the time intervals used to calculate rates, the bin size, or the visible x-axis range. Composed of:
 #'
 #' * days `[integer(1) | NULL]`
 #'
-#' Tick-mark interval, in study days, when **Time alignment** is *By study day*. Defaults to `50L`.
+#'   Tick-mark interval, in study days, when **Time alignment** is *By study day*. Defaults to `50L`.
 #'
 #' * weeks `[integer(1) | NULL]`
 #'
-#' Tick-mark interval, in weeks, when **Time alignment** is *By study day* and **Bin size** is *Week*. Defaults to `2L`.
+#'   Tick-mark interval, in weeks, when **Time alignment** is *By study day* and **Bin size** is *Week*. Defaults to `2L`.
 #'
 #' * months `[integer(1) | NULL]`
 #'
-#' Tick-mark interval, in months, when **Time alignment** is *By study day* and **Bin size** is *Month*. Defaults to `1L`.
+#'   Tick-mark interval, in months, when **Time alignment** is *By study day* and **Bin size** is *Month*. Defaults to `1L`.
 #'
 #' @returns A list containing the following elements to be used by the \pkg{modulemanager}:
 #'

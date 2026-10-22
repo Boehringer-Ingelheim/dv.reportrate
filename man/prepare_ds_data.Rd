@@ -15,19 +15,33 @@ prepare_ds_data(
 )
 }
 \arguments{
-\item{dataset}{\verb{[data.frame]} The disposition dataframe.}
+\item{dataset}{\verb{[data.frame]}
 
-\item{subjid_var}{\verb{[character(1)]} Character name of the unique subject identifier column in all datasets.}
+The disposition dataframe.}
 
-\item{event_var}{\verb{[character(1)]} Name of the variable that contains the description of the event.}
+\item{subjid_var}{\verb{[character(1)]}
 
-\item{entry_terms}{\verb{[character(1+)]} Defining which values out of event_var should be entry events.}
+Character name of the unique subject identifier column in all datasets.}
 
-\item{exit_terms}{\verb{[character(1+)]} Defining which values out of event_var should be exit events.}
+\item{event_var}{\verb{[character(1)]}
 
-\item{date_var}{\verb{[character(1)]} Name of the variable containing the date of the event.}
+Name of the variable that contains the description of the event.}
 
-\item{day_var}{\verb{[character(1)]} Name of the variable containing the study day of the event.}
+\item{entry_terms}{\verb{[character(1+)]}
+
+Defining which values out of event_var should be entry events.}
+
+\item{exit_terms}{\verb{[character(1+)]}
+
+Defining which values out of event_var should be exit events.}
+
+\item{date_var}{\verb{[character(1)]}
+
+Name of the variable containing the date of the event.}
+
+\item{day_var}{\verb{[character(1)]}
+
+Name of the variable containing the study day of the event.}
 }
 \value{
 A dataframe that contains an additional column "m" which indicates study entry (m = 1) or exit (m = -1).

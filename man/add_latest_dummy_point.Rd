@@ -8,15 +8,23 @@ interval (of each group).}
 add_latest_dummy_point(dataset, grouping_var, time_type, time_unit)
 }
 \arguments{
-\item{dataset}{\verb{[data.frame]} Data frame returned by fill_missing_intervals() function.}
+\item{dataset}{\verb{[data.frame]}
 
-\item{grouping_var}{\verb{[character(1)]} Character name of the grouping variable (column) in the "dm_dataset". The
+Data frame returned by fill_missing_intervals() function.}
+
+\item{grouping_var}{\verb{[character(1)]}
+
+Character name of the grouping variable (column) in the "dm_dataset". The
 values of this column define the different groups in the plot.}
 
-\item{time_type}{\verb{[character(1)]} Determining if the time on the x-axis should be study dates (calendar based)
+\item{time_type}{\verb{[character(1)]}
+
+Determining if the time on the x-axis should be study dates (calendar based)
 or study days (subject based). Either "date" or "day".}
 
-\item{time_unit}{\verb{[character(1)]} Determining the binsize. Either "week" or "month".}
+\item{time_unit}{\verb{[character(1)]}
+
+Determining the binsize. Either "week" or "month".}
 }
 \value{
 A data frame which contains an additional dummy row for each group after the last real interval.

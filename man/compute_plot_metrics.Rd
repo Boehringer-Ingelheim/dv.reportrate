@@ -14,20 +14,29 @@ compute_plot_metrics(
 )
 }
 \arguments{
-\item{dataset}{\verb{[data.frame]} Dataframe containing the unique identifier column; date-column, day-column;
+\item{dataset}{\verb{[data.frame]}
+
+Dataframe containing the unique identifier column; date-column, day-column;
 n-column (Adverse Events); m-column(study entries/exits); and the group-column if selected. This dataframe was
 returned by merge_event_data_with_grouping().}
 
-\item{grouping_var}{\verb{[character(1)]} Character name of the grouping variable (column) in the "dm_dataset". The
+\item{grouping_var}{\verb{[character(1)]}
+
+Character name of the grouping variable (column) in the "dm_dataset". The
 values of this column define the different groups in the plot.}
 
-\item{time_selection}{\verb{[character(1)]} Determining if the time on the x-axis should be study dates (calendar based)
+\item{time_selection}{\verb{[character(1)]}
+
+Determining if the time on the x-axis should be study dates (calendar based)
 or study days (subject based) Either TIMETYPE_BUTTONS_OPT1 or TIMETYPE_BUTTONS_OPT2.}
 
-\item{metric_selection}{\verb{[character(1)]} for determining the calculated rate on the y-axis. Either
-METRIC_BUTTONS_OPT1 or METRIC_BUTTONS_OPT2.}
+\item{metric_selection}{\verb{[character(1)]}
 
-\item{unit_selection}{\verb{[character(1)]} Determining the binsize when computing the reporting rate per active
+for determining the calculated rate on the y-axis. Either METRIC_BUTTONS_OPT1 or METRIC_BUTTONS_OPT2.}
+
+\item{unit_selection}{\verb{[character(1)]}
+
+Determining the binsize when computing the reporting rate per active
 patients. Either BINSIZE_BUTTONS_OPT1 or BINSIZE_BUTTONS_OPT2.}
 }
 \value{

@@ -2,7 +2,9 @@
 #'
 #' Launches an example app that shows a Reporting Rates module. The displayed
 #' data is from the \pkg{pharmaversesdtm} package.
+#'
 #' @keywords mock
+#'
 #' @export
 mock_report_rates_app <- function() {
 
@@ -55,7 +57,9 @@ mock_report_rates_app <- function() {
 #'
 #' Launches an example app that shows a Reporting Rates module integrated in the module manager surface. The displayed
 #' data is from the \pkg{pharmaversesdtm} package.
+#'
 #' @keywords mock
+#'
 #' @export
 mock_rr_app_with_mm <- function() {
 

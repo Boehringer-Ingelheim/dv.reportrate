@@ -10,10 +10,14 @@ becomes possible (from viridis to paletteMartin, or from paletteMartin to okabe-
 palette_refresh_check(current_palette, all_levels)
 }
 \arguments{
-\item{current_palette}{\verb{[named character(1+) | NULL]}  A named character vector of color values, where the names
+\item{current_palette}{\verb{[named character(1+) | NULL]}
+
+A named character vector of color values, where the names
 correspond to the levels of the grouping variable.}
 
-\item{all_levels}{\verb{[character(0+)]} Vector of \emph{all} the available levels that are in the current grouping variable
+\item{all_levels}{\verb{[character(0+)]}
+
+Vector of \emph{all} the available levels that are in the current grouping variable
 column in the current demographics dataset.}
 }
 \value{

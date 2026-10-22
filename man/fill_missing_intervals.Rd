@@ -8,15 +8,23 @@ selected as the metric.}
 fill_missing_intervals(dataset, grouping_var, time_type, time_unit)
 }
 \arguments{
-\item{dataset}{\verb{[data.frame]} Data frame returned by rates_per_active_patients() function.}
+\item{dataset}{\verb{[data.frame]}
 
-\item{grouping_var}{\verb{[character(1)]} Character name of the grouping variable (column) in the "dm_dataset". The
+Data frame returned by rates_per_active_patients() function.}
+
+\item{grouping_var}{\verb{[character(1)]}
+
+Character name of the grouping variable (column) in the "dm_dataset". The
 values of this column define the different groups in the plot.}
 
-\item{time_type}{\verb{[character(1)]} Determining if the time on the x-axis should be study dates (calendar based)
+\item{time_type}{\verb{[character(1)]}
+
+Determining if the time on the x-axis should be study dates (calendar based)
 or study days (subject based). Either "date" or "day".}
 
-\item{time_unit}{\verb{[character(1)]} Determining the binsize. Either "week" or "month".}
+\item{time_unit}{\verb{[character(1)]}
+
+Determining the binsize. Either "week" or "month".}
 }
 \value{
 A data frame which contains now one row per interval and group.

@@ -8,14 +8,20 @@ dataset_list() in a reactive context.}
 validate_ae_dataset(dataset, adverse_events)
 }
 \arguments{
-\item{dataset}{\verb{[data.frame]} The adverse event data set}
+\item{dataset}{\verb{[data.frame]}
 
-\item{adverse_events}{\verb{[list]} Named list specifying the variables that define the date and study day of
+The adverse event data set}
+
+\item{adverse_events}{\verb{[list]}
+
+Named list specifying the variables that define the date and study day of
 adverse event occurrence. Composed of:
 \itemize{
 \item date_var \verb{[character(1)]}
+
 Name of the variable containing the date of the event.
 \item day_var \verb{[character(1)]}
+
 Name of the variable containing the study day of the event.
 }}
 }

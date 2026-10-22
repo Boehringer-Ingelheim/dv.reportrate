@@ -15,15 +15,25 @@ merge_event_data_with_grouping(
 )
 }
 \arguments{
-\item{dm_dataset}{\verb{[data.frame]} The demographics dataframe.}
+\item{dm_dataset}{\verb{[data.frame]}
 
-\item{ds_prep_dataset}{\verb{[data.frame]} The disposition dataframe returned by the prepare_ds_data() function.}
+The demographics dataframe.}
 
-\item{ae_prep_dataset}{\verb{[data.frame]} The adverse event dataframe returned by the prepare_ae_data() function.}
+\item{ds_prep_dataset}{\verb{[data.frame]}
 
-\item{subjid_var}{\verb{[character(1)]} Character name of the unique subject identifier column in all dataframes.}
+The disposition dataframe returned by the prepare_ds_data() function.}
 
-\item{grouping_var}{\verb{[character(1)]} Character name of the grouping variable (column) in the "dm_dataset". The
+\item{ae_prep_dataset}{\verb{[data.frame]}
+
+The adverse event dataframe returned by the prepare_ae_data() function.}
+
+\item{subjid_var}{\verb{[character(1)]}
+
+Character name of the unique subject identifier column in all dataframes.}
+
+\item{grouping_var}{\verb{[character(1)]}
+
+Character name of the grouping variable (column) in the "dm_dataset". The
 values of this column define the different groups in the plot.}
 }
 \value{

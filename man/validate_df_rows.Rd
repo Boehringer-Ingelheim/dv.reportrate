@@ -15,20 +15,34 @@ validate_df_rows(
 )
 }
 \arguments{
-\item{dataset_list}{\verb{[list]} A list composed of:
+\item{dataset_list}{\verb{[list]}
+
+A list composed of:
 \itemize{
-\item dm \verb{[data.frame]} The dm dataframe.
-\item ds \verb{[data.frame]} The ds dataframe.
-\item ae \verb{[data.frame]} The ae dataframe.
+\item dm \verb{[data.frame]}
+
+The dm dataframe.
+\item ds \verb{[data.frame]}
+
+The ds dataframe.
+\item ae \verb{[data.frame]}
+
+The ae dataframe.
 }}
 
-\item{selected_levels}{\verb{[character(1+) | NULL]} Character vector of the selected levels in the selected_group or NULL
+\item{selected_levels}{\verb{[character(1+) | NULL]}
+
+Character vector of the selected levels in the selected_group or NULL
 if no levels are selected.}
 
-\item{ungrouped_checkbox}{\verb{[logical]} Specifying if the ungrouped data should be displayed when a grouping variable
+\item{ungrouped_checkbox}{\verb{[logical]}
+
+Specifying if the ungrouped data should be displayed when a grouping variable
 is selected.}
 
-\item{selected_group}{\verb{[character(1)]} Character name of the selected grouping variable (column).}
+\item{selected_group}{\verb{[character(1)]}
+
+Character name of the selected grouping variable (column).}
 }
 \description{
 Internal helper function that checks if at least one of the data frames "dm", "ds" or "ae" contains zero rows OR

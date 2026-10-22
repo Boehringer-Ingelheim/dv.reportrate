@@ -1,34 +1,79 @@
 #' Internal helper function for creating the ggplot2 base for the dynamic and interactive plot.
 #'
-#' @param dm `[data.frame]` The demographics data frame.
-#' @param ds `[data.frame]` The disposition data frame returned by the prepare_ds_data() function.
-#' @param ae `[data.frame]` The adverse event data frame returned by the prepare_ae_data() function.
-#' @param subjid_var `[character(1)]` Character name of the unique subject identifier column in all datasets.
-#' @param grouping_var `[character(1)]` Character name of the grouping variable (column) in the dm data frame. The
-#' values of this column define the different groups in the plot.
-#' @param selected_levels `[character(0+)]` Character vector containing the currently selected grouping levels that
+#' @param dm `[data.frame]`
+#'
+#' The demographics data frame.
+#'
+#' @param ds `[data.frame]`
+#'
+#' The disposition data frame returned by the prepare_ds_data() function.
+#'
+#' @param ae `[data.frame]`
+#'
+#' The adverse event data frame returned by the prepare_ae_data() function.
+#'
+#' @param subjid_var `[character(1)]`
+#'
+#' Character name of the unique subject identifier column in all datasets.
+#'
+#' @param grouping_var `[character(1)]`
+#'
+#' Character name of the grouping variable (column) in the dm data frame.
+#' The values of this column define the different groups in the plot.
+#'
+#' @param selected_levels `[character(0+)]`
+#'
+#' Character vector containing the currently selected grouping levels that
 #' should be displayed in the plot.
-#' @param metric_selection `[character(1)]` For determining the calculated rate on the y-axis. Either
+#'
+#' @param metric_selection `[character(1)]`
+#'
+#' For determining the calculated rate on the y-axis. Either
 #' METRIC_BUTTONS_OPT1 or METRIC_BUTTONS_OPT2.
-#' @param time_selection `[character(1)]` Determining if the time on the x-axis should be study dates (calendar based)
+#'
+#' @param time_selection `[character(1)]`
+#'
+#' Determining if the time on the x-axis should be study dates (calendar based)
 #' or study days (subject based). Either TIMETYPE_BUTTONS_OPT1 or TIMETYPE_BUTTONS_OPT2.
-#' @param unit_selection `[character(1)]` Determining the binsize when computing the reporting rate per active
+#'
+#' @param unit_selection `[character(1)]`
+#'
+#' Determining the binsize when computing the reporting rate per active
 #' patients. Either BINSIZE_BUTTONS_OPT1 or BINSIZE_BUTTONS_OPT2.
-#' @param tooltip_decimal_places `[integer(1)]` Number of decimal places to round the value shown in the hovertext.
-#' @param x_step_size_list `[list]` Named list specifying the tick interval (step size) on the x-Axis depending on the
+#'
+#' @param tooltip_decimal_places `[integer(1)]`
+#'
+#' Number of decimal places to round the value shown in the hovertext.
+#'
+#' @param x_step_size_list `[list]`
+#'
+#' Named list specifying the tick interval (step size) on the x-Axis depending on the
 #' time unit. Composed of:
+#'
 #' * days `[integer(1)]`
-#' Integer value specifying the tick interval in days when the x-axis is displayed in days.
+#'
+#'   Integer value specifying the tick interval in days when the x-axis is displayed in days.
+#'
 #' * weeks `[integer(1)]`
-#' Integer value specifying the tick interval in weeks when the x-axis is displayed in weeks.
+#'
+#'   Integer value specifying the tick interval in weeks when the x-axis is displayed in weeks.
+#'
 #' * months `[integer(1)]`
-#' Integer value specifying the tick interval in months when the x-axis is displayed in months.
-#' @param color_palette `[named character(1+)]` Named character vector of color values, where the names correspond to
+#'
+#'   Integer value specifying the tick interval in months when the x-axis is displayed in months.
+#'
+#' @param color_palette `[named character(1+)]`
+#'
+#' Named character vector of color values, where the names correspond to
 #' the levels of the grouping variable. Always contains the entry "ungrouped" which is fixed to the value "#000000".
-#' @param show_ungrouped `[logical]` Specifying if the ungrouped data should be displayed when a grouping variable is
-#' selected.
+#'
+#' @param show_ungrouped `[logical]`
+#'
+#' Specifying if the ungrouped data should be displayed when a grouping variable is selected.
+#'
 #' @returns A `[ggplot2::ggplot]` object. A static ggplot-based visualization showing calculated rates over time
 #' based on the selected grouping variable and levels, metric, and time unit.
+#'
 #' @keywords internal
 create_plot <- function(dm, ds, ae, subjid_var, grouping_var, selected_levels, metric_selection, time_selection,
                         unit_selection, tooltip_decimal_places, x_step_size_list, color_palette, show_ungrouped) {
@@ -94,11 +139,18 @@ create_plot <- function(dm, ds, ae, subjid_var, grouping_var, selected_levels, m
 #' settings: tooltip behavior, hover effects, selection styling, and toolbar configuration, except of zoom options.
 #' The latter is addressed separately via a feature based on limiting the min/max values of the plot's axis
 #'
-#' @param ggplot_obj `[ggplot2::ggplot]` The ggplot object generated by create_plot().
-#' @param selected_levels `[character(0+)]` Character vector containing the currently selected grouping levels that
+#' @param ggplot_obj `[ggplot2::ggplot]`
+#'
+#' The ggplot object generated by create_plot().
+#'
+#' @param selected_levels `[character(0+)]`
+#'
+#' Character vector containing the currently selected grouping levels that
 #' should be displayed in the plot.
+#'
 #' @returns A `[ggiraph::girafe]` object. An interactive ggplot-based visualization showing calculated rates over time
 #' based on the selected grouping variable and levels, metric, and time unit.
+#'
 #' @keywords internal
 convert_to_girafe <- function(ggplot_obj, selected_levels) {
    #specifying the options
@@ -130,8 +182,10 @@ convert_to_girafe <- function(ggplot_obj, selected_levels) {
 #' Axis. If the ungrouped dataset is available, it is used for the x Axis, because it contains the entire time span.
 #'
 #' @inheritParams create_plot
+#'
 #' @returns A list containing the ungrouped dataset or NULL; the grouped dataset or NULL and the dataset that should be
 #' used for axis calculation.
+#'
 #' @keywords internal
 get_plot_datasets <- function(dm, ae, ds, subjid_var, grouping_var, time_selection, metric_selection, unit_selection,
                               tooltip_decimal_places, show_ungrouped) {
@@ -181,15 +235,26 @@ get_plot_datasets <- function(dm, ae, ds, subjid_var, grouping_var, time_selecti
 
 #' Internal helper function for creating the line layers to be shown in the plot.
 #'
-#' @param df_list `[list]` Named list returned by get_plot_datasets(). Composed of
+#' @param df_list `[list]`
+#'
+#' Named list returned by get_plot_datasets(). Composed of
+#'
 #' * ungrouped `[data.frame | NULL]`
-#' The data frame containing the ungrouped data.
+#'
+#'   The data frame containing the ungrouped data.
+#'
 #' * grouped `[data.frame | NULL]`
-#' The data frame containing the grouped data.
-#' * axis_df `[data.frame]` If not NULL the ungrouped data frame, else the grouped data frame.
+#'
+#'   The data frame containing the grouped data.
+#'
+#' * axis_df `[data.frame]`
+#'
+#'   If not NULL the ungrouped data frame, else the grouped data frame.
+#'
 #' @inheritParams create_plot
 #'
 #' @returns A list containing the layers for the lines to be shown in the plot.
+#'
 #' @keywords internal
 create_line_layers <- function(df_list, grouping_var, selected_levels, metric_selection) {
    layers <- list()
@@ -227,6 +292,7 @@ create_line_layers <- function(df_list, grouping_var, selected_levels, metric_se
 #' @inheritParams create_line_layers
 #'
 #' @returns A list containing the layers for the points to be shown in the plot
+#'
 #' @keywords internal
 create_point_layers <- function(df_list, grouping_var, selected_levels) {
    layers <- list()
@@ -247,10 +313,13 @@ create_point_layers <- function(df_list, grouping_var, selected_levels) {
 
 #' Internal helper function for getting the right geom_..._interactive depending on the selected metric.
 #'
-#' @param metric_selection `[character(1)]` For determining the calculated rate on the y-axis. Either
+#' @param metric_selection `[character(1)]`
+#'
+#' For determining the calculated rate on the y-axis. Either
 #' METRIC_BUTTONS_OPT1 or METRIC_BUTTONS_OPT2
 #'
 #' @returns Either a ggiraph::geom_line_interactive or a ggiraph::geom_step_interactive function object.
+#'
 #' @keywords internal
 select_geom <- function(metric_selection) {
    if (metric_selection == REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1) {
@@ -264,23 +333,39 @@ select_geom <- function(metric_selection) {
 
 #' Internal helper function for getting the breaks and labels for the x axis
 #'
-#' @param time_selection  `[character(1)]` Determining if the time on the x-axis should be study dates (calendar based)
+#' @param time_selection  `[character(1)]`
+#'
+#' Determining if the time on the x-axis should be study dates (calendar based)
 #' or study days (subject based) Either TIMETYPE_BUTTONS_OPT1 or TIMETYPE_BUTTONS_OPT2.
-#' @param x_axis `[list]` A list returned by get_x_axis(). Composed of:
+#'
+#' @param x_axis `[list]`
+#'
+#' A list returned by get_x_axis(). Composed of:
+#'
 #' * breaks `[numeric(1+)]`
-#' A numeric vector setting the values at which ticks on this axis appear. Only contained in the list if the time
-#' selection was "By study day".
+#'
+#'   A numeric vector setting the values at which ticks on this axis appear. Only contained in the list if the time
+#'   selection was "By study day".
+#'
 #' * ticktext `[numeric(1+)]`
-#' A character vector setting the text displayed at the ticks position via "breaks". Only contained in the list if the
-#' time selection was "By study day".
-#' * breaks `[Date(1+)]` Vector of the dates where the ticks should be in the plot. Only contained in the list if the
-#' time selection was "By study date".
-#' * title `[character(1)]` Not used in this function.
+#'
+#'   A character vector setting the text displayed at the ticks position via "breaks". Only contained in the list if the
+#'   time selection was "By study day".
+#'
+#' * breaks `[Date(1+)]`
+#'
+#'   Vector of the dates where the ticks should be in the plot. Only contained in the list if the
+#'   time selection was "By study date".
+#'
+#' * title `[character(1)]`
+#'
+#'   Not used in this function.
 #'
 #' @returns a ggplot2 scale object used to configure the x-axis.
 #' * `[ggplot2::ScaleContinuousPosition]`when time selection is "By study day" (numeric axis).
 #' * `[ggplot2::ScaleDatePosition]` when time_selection is "By study date" (date axis).
 #' This object can then be added to a ggplot to define tick positions and labels for the x-axis.
+#'
 #' @keywords internal
 get_x_scale <- function(time_selection, x_axis) {
    if (time_selection == REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT2) {
@@ -298,11 +383,18 @@ get_x_scale <- function(time_selection, x_axis) {
 
 #' Internal helper function for getting the right geom_point_interactive depending on the grouping setting.
 #'
-#' @param dataset `[data.frame]` A data frame returned by prepare_plot_data() function.
-#' @param grouping_var `[character(1) | NULL]` Character name of the grouping variable (column) in the dm data frame.
+#' @param dataset `[data.frame]`
+#'
+#' A data frame returned by prepare_plot_data() function.
+#'
+#' @param grouping_var `[character(1) | NULL]`
+#'
+#' Character name of the grouping variable (column) in the dm data frame.
 #' The values of this column define the different groups in the plot.
+#'
 #' @returns A ggiraph::geom_point_interactive() layer object configured for either grouped or ungrouped data depending
 #' on grouping_var.
+#'
 #' @keywords internal
 get_geom_point <- function(dataset, grouping_var = NULL) {
    if (is.null(grouping_var)) { #ungrouped case
@@ -332,11 +424,14 @@ get_geom_point <- function(dataset, grouping_var = NULL) {
 #' used. Those palettes are colorblind-friendly. For > 15 levels  (including the ungrouped data as an own level) the
 #' "viridis" palette is used.
 #'
-#' @param all_levels `[character(0+)]` Vector of *all* the available levels that are in the current grouping variable
+#' @param all_levels `[character(0+)]`
+#'
+#' Vector of *all* the available levels that are in the current grouping variable
 #' column in the current demographics dataset. Which levels out of all available levels are selected in the UI dropdown
 #' doesn't matter.
 #'
 #' @returns A named character vector of color values, where the names correspond to the levels of the grouping variable.
+#'
 #' @keywords internal
 generate_palette <- function(all_levels) {
    all_levels <- sort(all_levels) # sort the palette so that the same set of levels always lead to the same palette.
@@ -364,12 +459,18 @@ generate_palette <- function(all_levels) {
 #' were not already part of the current_palette, or when a switch to a smaller, more color-blind-friendly palette
 #' becomes possible (from viridis to paletteMartin, or from paletteMartin to okabe-Ito).
 #'
-#' @param current_palette `[named character(1+) | NULL]`  A named character vector of color values, where the names
+#' @param current_palette `[named character(1+) | NULL]`
+#'
+#' A named character vector of color values, where the names
 #' correspond to the levels of the grouping variable.
-#' @param all_levels `[character(0+)]` Vector of *all* the available levels that are in the current grouping variable
+#'
+#' @param all_levels `[character(0+)]`
+#'
+#' Vector of *all* the available levels that are in the current grouping variable
 #' column in the current demographics dataset.
 #'
 #' @returns Logical, indicating if a new palette should be generated. If TRUE a new palette will be generated.
+#'
 #' @keywords internal
 palette_refresh_check <- function(current_palette, all_levels) {
    n_current <- if (is.null(current_palette)) 0 else length(current_palette)
@@ -391,10 +492,14 @@ palette_refresh_check <- function(current_palette, all_levels) {
 #' variables and hovertext.
 #'
 #' @inheritParams get_plot_datasets
-#' @param tt_dec_places `[integer(1)]` Number of decimal places to round the value shown in the hovertext.
+#'
+#' @param tt_dec_places `[integer(1)]`
+#'
+#' Number of decimal places to round the value shown in the hovertext.
 #'
 #' @returns A data frame containing processed data for plotting, including calculated metrics, time variables
 #'  and hover text.
+#'
 #' @keywords internal
 prepare_plot_data <- function(dm, ds, ae, subjid_var, grouping_var, time_selection, metric_selection, unit_selection,
                               tt_dec_places) {
@@ -428,14 +533,20 @@ prepare_plot_data <- function(dm, ds, ae, subjid_var, grouping_var, time_selecti
 #' without a visual gap. To show the correct plot, the labeling of the x-Axis needs to be adjusted also. This is done by
 #' the get_x_axis() and get_x_scale() functions.
 #'
-#' @param dataset `[data.frame]`  Data frame returned by the compute_plot_metrics() function.
-#' @param time_selection `[character(1)]` Determining if the time on the x-axis should be study dates (calendar based)
+#' @param dataset `[data.frame]`
+#'
+#' Data frame returned by the compute_plot_metrics() function.
+#'
+#' @param time_selection `[character(1)]`
+#'
+#' Determining if the time on the x-axis should be study dates (calendar based)
 #' or study days (subject based). Either TIMETYPE_BUTTONS_OPT1 or TIMETYPE_BUTTONS_OPT2.
 #'
 #' @returns A processed data frame with an additional column "time_for_plot" which fixes the problem that the study day
 #' -1 is followed by study day 1 directly (and there is no study day 0). If "By Study date" is selected, this
 #' column contains exactly the values out of the column "time". The "time_for_plot" column can now be passed to the
 #' x-Parameters of ggplot2:: functions.
+#'
 #' @keywords internal
 get_time_for_plot <- function(dataset, time_selection) {
    if (time_selection == REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT1) {
@@ -458,29 +569,55 @@ get_time_for_plot <- function(dataset, time_selection) {
 
 #' Internal helper function to get the desired labeling of the x-Axis of the plot.
 #'
-#' @param dataset `[data.frame]` Data frame returned by the prepare_plot_data() function
-#' @param metric_selection `[character(1)]` For determining the calculated rate on the y-axis. Either
+#' @param dataset `[data.frame]`
+#'
+#' Data frame returned by the prepare_plot_data() function
+#'
+#' @param metric_selection `[character(1)]`
+#'
+#' For determining the calculated rate on the y-axis. Either
 #' METRIC_BUTTONS_OPT1 or METRIC_BUTTONS_OPT2.
-#' @param time_selection `[character(1)]` Determining if the time on the x-axis should be study dates (calendar based)
+#'
+#' @param time_selection `[character(1)]`
+#'
+#' Determining if the time on the x-axis should be study dates (calendar based)
 #' or study days (subject based). Either TIMETYPE_BUTTONS_OPT1 or TIMETYPE_BUTTONS_OPT2.
-#' @param unit_selection `[character(1)]` Determining the binsize when computing the reporting rate per active
+#'
+#' @param unit_selection `[character(1)]`
+#'
+#' Determining the binsize when computing the reporting rate per active
 #' patients. Either BINSIZE_BUTTONS_OPT1 or BINSIZE_BUTTONS_OPT2.
-#' @param step_size_days `[integer(1)]` Integer value specifying the tick interval in days when the x-axis is
-#' displayed in days.
-#' @param step_size_weeks `[integer(1)]` Integer value specifying the tick interval in weeks when the x-axis is
-#' displayed in weeks.
-#' @param step_size_months `[integer(1)]` Integer value specifying the tick interval in months when the x-axis is
-#' displayed in months.
+#'
+#' @param step_size_days `[integer(1)]`
+#'
+#' Integer value specifying the tick interval in days when the x-axis is displayed in days.
+#'
+#' @param step_size_weeks `[integer(1)]`
+#'
+#' Integer value specifying the tick interval in weeks when the x-axis is displayed in weeks.
+#'
+#' @param step_size_months `[integer(1)]`
+#'
+#' Integer value specifying the tick interval in months when the x-axis is displayed in months.
+#'
 #' @returns A list which is passed later to a ggplot2 scale object. Composed of:
+#'
 #' * breaks `[numeric(1+)]`
-#' A numeric vector setting the values at which ticks on this axis appear. Only contained in the list if the time
-#' selection was "By study day".
+#'
+#'   A numeric vector setting the values at which ticks on this axis appear. Only contained in the list if the time
+#'   selection was "By study day".
+#'
 #' * ticktext `[numeric(1+)]`
-#' A character vector setting the text displayed at the ticks position via "breaks". Only contained in the list if the
-#' time selection was "By study day".
-#' * breaks `[Date(1+)]` Vector of the dates where the ticks should be in the plot. Only contained in the list if the
-#' time selection was "By study date".
-#' * title `[character(1)]` Title that is used on the x-axis.
+#'   A character vector setting the text displayed at the ticks position via "breaks". Only contained in the list if the
+#'   time selection was "By study day".
+#'
+#' * breaks `[Date(1+)]`
+#'   Vector of the dates where the ticks should be in the plot. Only contained in the list if the
+#'   time selection was "By study date".
+#'
+#' * title `[character(1)]`
+#'   Title that is used on the x-axis.
+#'
 #' @keywords internal
 get_x_axis <- function(dataset, metric_selection, time_selection, unit_selection, step_size_days,
                        step_size_weeks, step_size_months) {
@@ -522,6 +659,7 @@ get_x_axis <- function(dataset, metric_selection, time_selection, unit_selection
 #' @inheritParams get_x_axis
 #'
 #' @returns The label for the x Axis. Either "Date", "Days", "Weeks" or "Months".
+#'
 #' @keywords internal
 get_x_axis_label <- function(metric_selection, time_selection, unit_selection) {
    if (time_selection == REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT1) return("Date")
@@ -534,10 +672,16 @@ get_x_axis_label <- function(metric_selection, time_selection, unit_selection) {
 #' Internal helper function creating a logical vector for the indexing of the ticks on the x-Axis of the plot. Applying
 #' the logic on the tick_text (and not tick_vals) because that's what displayed in the plot in the end.
 #'
-#' @param step_size `[integer(1)]` Integer value specifying the tick interval on the x axis.
-#' @param tick_text `[character(1+)]` A character vector setting the text displayed at the ticks positions.
+#' @param step_size `[integer(1)]`
+#'
+#' Integer value specifying the tick interval on the x axis.
+#'
+#' @param tick_text `[character(1+)]`
+#'
+#' A character vector setting the text displayed at the ticks positions.
 #'
 #' @returns A logical vector specifying the indices at which ticks should be shown in the plot on the x axis.
+#'
 #' @keywords internal
 get_indices_for_tickvals <- function(step_size, tick_text) {
    indices <- which(tick_text %% step_size == 0 | tick_text == 1)
@@ -550,10 +694,13 @@ get_indices_for_tickvals <- function(step_size, tick_text) {
 #' ticks (either because a low step size or a big overall time range in the data) those texts can overlap if their size
 #' is to big.
 #'
-#' @param breaks `[numeric(1+)]` (if "By study day" is selected) or `[Date(1+)]` (if "By study date" is selected) vector
+#' @param breaks `[numeric(1+)]`
+#'
+#' (if "By study day" is selected) or `[Date(1+)]` (if "By study date" is selected) vector
 #' setting the values at which ticks on this axis appear.
 #'
 #' @returns `[numeric(1)]` That is passed to the axis.text.x parameter of the ggplot2::theme() function.
+#'
 #' @keywords internal
 get_x_axis_text_size <- function(breaks) {
    # logic may need to be changed if app creators should be able to specify tick intervals also for a x-axis using dates
@@ -572,10 +719,13 @@ get_x_axis_text_size <- function(breaks) {
 #' their lines overlap, the opacity of the "overlapped total line" is higher. Thats why the overall opacity needs to be
 #' lower in such cases.
 #'
-#' @param amount_levels `[numeric(1)]` The amount of the current selected levels
+#' @param amount_levels `[numeric(1)]`
+#'
+#' The amount of the current selected levels
 #'
 #' @returns A numeric for setting the opacity of the not selected lines in the plot based on the amount of selected
 #' levels. A higher amount leading to a reduced opacity.
+#'
 #' @keywords internal
 get_opacity <- function(amount_levels) {
    if (amount_levels == 0) return(1)
@@ -588,11 +738,16 @@ get_opacity <- function(amount_levels) {
 #' Internal helper function for getting a dynamic description for the levels in the legend of the plot. Returns the
 #' label of the currently selected grouping variable if there is one. Else it just returns the grouping variable string.
 #'
-#' @param dataset `[data.frame]` The demographics dataframe which contains the possible variables for grouping and their
-#' labels.
-#' @param grouping_var `[character(1)]` Character name of the grouping variable (column) in the dm data frame
+#' @param dataset `[data.frame]`
+#'
+#' The demographics dataframe which contains the possible variables for grouping and their labels.
+#'
+#' @param grouping_var `[character(1)]`
+#'
+#' Character name of the grouping variable (column) in the dm data frame
 #'
 #' @returns A string which is either the label of the grouping variable or the grouping variable itself.
+#'
 #' @keywords internal
 get_legend_text <- function(dataset, grouping_var) {
    lbl <- attr(dataset[[grouping_var]], "label")
@@ -603,12 +758,17 @@ get_legend_text <- function(dataset, grouping_var) {
 
 #' Internal helper function for getting column names with their labels for the UI grouping dropdown.
 #'
-#' @param dataset `[data.frame]` The demographics dataframe which contains the possible variables for grouping and their
-#' labels.
-#' @param columns `[character(0+)]` Character vector of the columnnames that should be returned with their label.
+#' @param dataset `[data.frame]`
+#'
+#' The demographics dataframe which contains the possible variables for grouping and their labels.
+#'
+#' @param columns `[character(0+)]`
+#'
+#' Character vector of the columnnames that should be returned with their label.
 #'
 #' @returns Named character vector where values are the original columnnames and the names are the string to display in
 #' the format "columnname (columnlabel)" or only "columnname" if no label exsits.
+#'
 #' @keywords internal
 get_columns_with_labels <- function(dataset, columns) {
    labels <- vapply(columns, function(v) {

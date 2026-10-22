@@ -13,18 +13,28 @@ get_hovertext_time_base(
 )
 }
 \arguments{
-\item{dataset}{\verb{[data.frame]} Data frame returned by the get_time_for_plot() function.}
+\item{dataset}{\verb{[data.frame]}
 
-\item{grouping_var}{\verb{[character(1)]} Character name of the grouping variable (column) in the demographics data frame.
+Data frame returned by the get_time_for_plot() function.}
+
+\item{grouping_var}{\verb{[character(1)]}
+
+Character name of the grouping variable (column) in the demographics data frame.
 The values of this column define the different groups in the plot.}
 
-\item{metric_selection}{\verb{[character(1)]} For determining the calculated rate on the y-axis. Either
+\item{metric_selection}{\verb{[character(1)]}
+
+For determining the calculated rate on the y-axis. Either
 METRIC_BUTTONS_OPT1 or METRIC_BUTTONS_OPT2.}
 
-\item{time_selection}{\verb{[character(1)]} Determining if the time on the x-axis should be study dates (calendar based)
+\item{time_selection}{\verb{[character(1)]}
+
+Determining if the time on the x-axis should be study dates (calendar based)
 or study days (subject based) Either TIMETYPE_BUTTONS_OPT1 or TIMETYPE_BUTTONS_OPT2.}
 
-\item{unit_selection}{\verb{[character(1)]} Determining the binsize when computing the reporting rate per active
+\item{unit_selection}{\verb{[character(1)]}
+
+Determining the binsize when computing the reporting rate per active
 patients. Either BINSIZE_BUTTONS_OPT1 or BINSIZE_BUTTONS_OPT2.}
 }
 \value{

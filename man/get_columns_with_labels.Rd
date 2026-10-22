@@ -7,10 +7,13 @@
 get_columns_with_labels(dataset, columns)
 }
 \arguments{
-\item{dataset}{\verb{[data.frame]} The demographics dataframe which contains the possible variables for grouping and their
-labels.}
+\item{dataset}{\verb{[data.frame]}
 
-\item{columns}{\verb{[character(0+)]} Character vector of the columnnames that should be returned with their label.}
+The demographics dataframe which contains the possible variables for grouping and their labels.}
+
+\item{columns}{\verb{[character(0+)]}
+
+Character vector of the columnnames that should be returned with their label.}
 }
 \value{
 Named character vector where values are the original columnnames and the names are the string to display in

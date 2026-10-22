@@ -8,8 +8,8 @@ time interval correctly in the first place, and exchange it with "END" instead.}
 remove_ht_from_dummy_rows(dataset, grouping_var)
 }
 \arguments{
-\item{dataset}{\verb{[data.frame]} Data frame that was passed to the get_hovertext_time function and processed by
-the function.}
+\item{dataset}{\verb{[data.frame]}
+Data frame that was passed to the get_hovertext_time function and processed by the function.}
 
 \item{grouping_var}{\verb{[character(1)]} Character name of the grouping variable (column) in the demographics data frame.
 The values of this column define the different groups in the plot.}

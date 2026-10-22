@@ -9,9 +9,13 @@ the get_x_axis() and get_x_scale() functions.}
 get_time_for_plot(dataset, time_selection)
 }
 \arguments{
-\item{dataset}{\verb{[data.frame]}  Data frame returned by the compute_plot_metrics() function.}
+\item{dataset}{\verb{[data.frame]}
 
-\item{time_selection}{\verb{[character(1)]} Determining if the time on the x-axis should be study dates (calendar based)
+Data frame returned by the compute_plot_metrics() function.}
+
+\item{time_selection}{\verb{[character(1)]}
+
+Determining if the time on the x-axis should be study dates (calendar based)
 or study days (subject based). Either TIMETYPE_BUTTONS_OPT1 or TIMETYPE_BUTTONS_OPT2.}
 }
 \value{

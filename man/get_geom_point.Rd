@@ -7,9 +7,13 @@
 get_geom_point(dataset, grouping_var = NULL)
 }
 \arguments{
-\item{dataset}{\verb{[data.frame]} A data frame returned by prepare_plot_data() function.}
+\item{dataset}{\verb{[data.frame]}
 
-\item{grouping_var}{\verb{[character(1) | NULL]} Character name of the grouping variable (column) in the dm data frame.
+A data frame returned by prepare_plot_data() function.}
+
+\item{grouping_var}{\verb{[character(1) | NULL]}
+
+Character name of the grouping variable (column) in the dm data frame.
 The values of this column define the different groups in the plot.}
 }
 \value{

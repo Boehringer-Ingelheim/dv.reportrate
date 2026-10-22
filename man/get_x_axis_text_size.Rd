@@ -9,7 +9,9 @@ is to big.}
 get_x_axis_text_size(breaks)
 }
 \arguments{
-\item{breaks}{\verb{[numeric(1+)]} (if "By study day" is selected) or \verb{[Date(1+)]} (if "By study date" is selected) vector
+\item{breaks}{\verb{[numeric(1+)]}
+
+(if "By study day" is selected) or \verb{[Date(1+)]} (if "By study date" is selected) vector
 setting the values at which ticks on this axis appear.}
 }
 \value{

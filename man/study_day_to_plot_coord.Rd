@@ -9,6 +9,7 @@ study_day_to_plot_coord(day_labels)
 }
 \arguments{
 \item{day_labels}{\verb{[numeric()]}
+
 Study day values displayed to the user.}
 }
 \value{

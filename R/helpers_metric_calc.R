@@ -1,17 +1,38 @@
 #' Internal helper function for preparing the ds dataframe by adding a column that indicates study entry or exit
 #'
-#' @param dataset `[data.frame]` The disposition dataframe.
-#' @param subjid_var `[character(1)]` Character name of the unique subject identifier column in all datasets.
-#' @param event_var `[character(1)]` Name of the variable that contains the description of the event.
-#' @param entry_terms `[character(1+)]` Defining which values out of event_var should be entry events.
-#' @param exit_terms `[character(1+)]` Defining which values out of event_var should be exit events.
-#' @param date_var `[character(1)]` Name of the variable containing the date of the event.
-#' @param day_var `[character(1)]` Name of the variable containing the study day of the event.
+#' @param dataset `[data.frame]`
+#'
+#' The disposition dataframe.
+#'
+#' @param subjid_var `[character(1)]`
+#'
+#' Character name of the unique subject identifier column in all datasets.
+#'
+#' @param event_var `[character(1)]`
+#'
+#' Name of the variable that contains the description of the event.
+#'
+#' @param entry_terms `[character(1+)]`
+#'
+#' Defining which values out of event_var should be entry events.
+#'
+#' @param exit_terms `[character(1+)]`
+#'
+#' Defining which values out of event_var should be exit events.
+#'
+#' @param date_var `[character(1)]`
+#'
+#' Name of the variable containing the date of the event.
+#'
+#' @param day_var `[character(1)]`
+#'
+#' Name of the variable containing the study day of the event.
 #'
 #' @returns A dataframe that contains an additional column "m" which indicates study entry (m = 1) or exit (m = -1).
 #' These markers are used in downstream calculations to derive the number of active subjects in the study at any time
 #' point, and the cumulative exposure time.
 #' The column "n" with the only value 0 indicates that these rows don't describe Adverse Events.
+#'
 #' @keywords internal
 prepare_ds_data <- function(dataset, subjid_var, event_var, entry_terms, exit_terms, date_var, day_var) {
   dataset <- dataset |>
@@ -35,14 +56,26 @@ prepare_ds_data <- function(dataset, subjid_var, event_var, entry_terms, exit_te
 #' Internal helper function for preparing the ae dataframe by adding a column that indicates the occurrence of
 #' adverse events.
 #'
-#' @param dataset `[data.frame]` The Adverse Event dataframe.
-#' @param subjid_var `[character(1)]` Character name of the unique subject identifier column in all datasets.
-#' @param date_var `[character(1)]` Name of the variable containing the date of the event.
-#' @param day_var `[character(1)]` Name of the variable containing the study day of the event.
+#' @param dataset `[data.frame]`
+#'
+#' The Adverse Event dataframe.
+#'
+#' @param subjid_var `[character(1)]`
+#'
+#' Character name of the unique subject identifier column in all datasets.
+#'
+#' @param date_var `[character(1)]`
+#'
+#' Name of the variable containing the date of the event.
+#'
+#' @param day_var `[character(1)]`
+#'
+#' Name of the variable containing the study day of the event.
 #'
 #' @returns  A dataframe that contains an additional column "n" with the value 1 in every row, which indicates the
 #' occurrence of an adverse event.
 #' The column "m" with the only value 0 indicates that these rows don't describe Entry or Exit Events.
+#'
 #' @keywords internal
 prepare_ae_data <- function(dataset, subjid_var, date_var, day_var) {
   dataset <- dataset |>
@@ -63,16 +96,31 @@ prepare_ae_data <- function(dataset, subjid_var, date_var, day_var) {
 #' unified event stream. If a valid grouping variable is provided, the function enriches the combined dataset with the
 #' corresponding group assignment from the demographics (DM) domain.
 #'
-#' @param dm_dataset `[data.frame]` The demographics dataframe.
-#' @param ds_prep_dataset `[data.frame]` The disposition dataframe returned by the prepare_ds_data() function.
-#' @param ae_prep_dataset  `[data.frame]` The adverse event dataframe returned by the prepare_ae_data() function.
-#' @param subjid_var `[character(1)]` Character name of the unique subject identifier column in all dataframes.
-#' @param grouping_var `[character(1)]` Character name of the grouping variable (column) in the "dm_dataset". The
+#' @param dm_dataset `[data.frame]`
+#'
+#' The demographics dataframe.
+#'
+#' @param ds_prep_dataset `[data.frame]`
+#'
+#' The disposition dataframe returned by the prepare_ds_data() function.
+#'
+#' @param ae_prep_dataset  `[data.frame]`
+#'
+#' The adverse event dataframe returned by the prepare_ae_data() function.
+#'
+#' @param subjid_var `[character(1)]`
+#'
+#' Character name of the unique subject identifier column in all dataframes.
+#'
+#' @param grouping_var `[character(1)]`
+#'
+#' Character name of the grouping variable (column) in the "dm_dataset". The
 #' values of this column define the different groups in the plot.
 #'
 #' @returns A dataframe containing all DS and AE events row‑bound into a unified event dataset. The result always
 #' includes the harmonised columns required for the downstream computation of both metrics. If a valid grouping_var is
 #' provided, an additional column with the group assignment is attached to each event record via a left join.
+#'
 #' @keywords internal
 merge_event_data_with_grouping <- function(dm_dataset, ds_prep_dataset, ae_prep_dataset, subjid_var, grouping_var) {
   combined <- rbind(ds_prep_dataset, ae_prep_dataset)
@@ -96,21 +144,35 @@ merge_event_data_with_grouping <- function(dm_dataset, ds_prep_dataset, ae_prep_
 #' Internal helper function that calls the right functions for metric calculation depending on the inputted parameters
 #' by the user. Either  rates_per_active_patient() with additional helper functions or cum_rate_per_total_exp_time().
 #'
-#' @param dataset `[data.frame]` Dataframe containing the unique identifier column; date-column, day-column;
+#' @param dataset `[data.frame]`
+#'
+#' Dataframe containing the unique identifier column; date-column, day-column;
 #' n-column (Adverse Events); m-column(study entries/exits); and the group-column if selected. This dataframe was
 #' returned by merge_event_data_with_grouping().
-#' @param grouping_var `[character(1)]` Character name of the grouping variable (column) in the "dm_dataset". The
+#'
+#' @param grouping_var `[character(1)]`
+#'
+#' Character name of the grouping variable (column) in the "dm_dataset". The
 #' values of this column define the different groups in the plot.
-#' @param time_selection `[character(1)]` Determining if the time on the x-axis should be study dates (calendar based)
+#'
+#' @param time_selection `[character(1)]`
+#'
+#' Determining if the time on the x-axis should be study dates (calendar based)
 #' or study days (subject based) Either TIMETYPE_BUTTONS_OPT1 or TIMETYPE_BUTTONS_OPT2.
-#' @param metric_selection `[character(1)]` for determining the calculated rate on the y-axis. Either
-#' METRIC_BUTTONS_OPT1 or METRIC_BUTTONS_OPT2.
-#' @param unit_selection  `[character(1)]` Determining the binsize when computing the reporting rate per active
+#'
+#' @param metric_selection `[character(1)]`
+#'
+#' for determining the calculated rate on the y-axis. Either METRIC_BUTTONS_OPT1 or METRIC_BUTTONS_OPT2.
+#'
+#' @param unit_selection  `[character(1)]`
+#'
+#' Determining the binsize when computing the reporting rate per active
 #' patients. Either BINSIZE_BUTTONS_OPT1 or BINSIZE_BUTTONS_OPT2.
 #'
 #' @returns A processed dataframe which contains the calculated column "ratio" which will be the y-Value used for the
 #' plot. Independently of the selected time alignment ("By study date" or "By study day"), the returned dataframe always
 #' includes a unified time column, which holds either dates or study days. This ensures a consistent downstream workflow
+#'
 #' @keywords internal
 compute_plot_metrics <- function(dataset, grouping_var, time_selection, metric_selection, unit_selection) {
   time_type <- if (time_selection == REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT1) "date" else "day"
@@ -145,19 +207,30 @@ compute_plot_metrics <- function(dataset, grouping_var, time_selection, metric_s
 
 #' Internal helper function for preprocessing the data if reporting rates per active patient is selected as the metric.
 #'
-#' @param time_type `[character(1)]`  Either "date" (calendar based) or "day" (subject based). Reflects the x-axis of
-#' the plots.
-#' @param group_dataset `[data.frame]` Containing the unique identifier column; date-column, day-column;
+#' @param time_type `[character(1)]`
+#'
+#' Either "date" (calendar based) or "day" (subject based). Reflects the x-axis of the plots.
+#'
+#' @param group_dataset `[data.frame]`
+#'
+#' Containing the unique identifier column; date-column, day-column;
 #' n-column (Adverse Events); m-column(study entries/exits); and the group-column if selected in the UI. This data frame
 #' was returned by merge_event_data_with_grouping().
-#' @param grouping_var `[character(1)]` Character name of the grouping variable (column) in the "dm_dataset". The
+#'
+#' @param grouping_var `[character(1)]`
+#'
+#' Character name of the grouping variable (column) in the "dm_dataset". The
 #' values of this column define the different groups in the plot.
-#' @param unit_selection `[character(1)]` Determining the binsize. Either BINSIZE_BUTTONS_OPT1 or BINSIZE_BUTTONS_OPT2.
+#'
+#' @param unit_selection `[character(1)]`
+#'
+#' Determining the binsize. Either BINSIZE_BUTTONS_OPT1 or BINSIZE_BUTTONS_OPT2.
 #'
 #' @returns A data frame that now contains the column "ratio", which is used as the y-Value in the plot. The rows of the
 #' data frame represent the intervals in the plot later. Independently of the selected time alignment ("By study date"
 #' or "By study day"), the returned dataframe always includes a unified time column, which holds either dates or study
 #' days. This ensures a consistent downstream workflow.
+#'
 #' @keywords internal
 rates_per_active_patient <- function(time_type, group_dataset, grouping_var, unit_selection) {
   if (time_type == "date") {
@@ -205,10 +278,12 @@ rates_per_active_patient <- function(time_type, group_dataset, grouping_var, uni
 #' @inheritParams rates_per_active_patient
 #'
 #' @importFrom rlang :=
+#'
 #' @returns A data frame that now contains the column "ratio", which is used as the y-Value in the plot. The rows of the
 #' data frame each represent a date / study day (for their respective group if selected) in the plot later.
 #' Independently of the selected time alignment ("By study date" or "By study day"), the returned dataframe always
 #' includes a unified time column, which holds either dates or study days. This ensures a consistent downstream workflow
+#'
 #' @keywords internal
 cum_rate_per_total_exp_time <- function(time_type, group_dataset, grouping_var) {
   group_dataset <- group_dataset |>
@@ -274,14 +349,26 @@ cum_rate_per_total_exp_time <- function(time_type, group_dataset, grouping_var) 
 #' interval would get used falsely for the current interval where the value is = 0 in reality. It also enables hovering
 #' for the missing intervals.
 #'
-#' @param dataset `[data.frame]` Data frame returned by rates_per_active_patients() function.
-#' @param grouping_var `[character(1)]` Character name of the grouping variable (column) in the "dm_dataset". The
+#' @param dataset `[data.frame]`
+#'
+#' Data frame returned by rates_per_active_patients() function.
+#'
+#' @param grouping_var `[character(1)]`
+#'
+#' Character name of the grouping variable (column) in the "dm_dataset". The
 #' values of this column define the different groups in the plot.
-#' @param time_type `[character(1)]` Determining if the time on the x-axis should be study dates (calendar based)
+#'
+#' @param time_type `[character(1)]`
+#'
+#' Determining if the time on the x-axis should be study dates (calendar based)
 #' or study days (subject based). Either "date" or "day".
-#' @param time_unit `[character(1)]` Determining the binsize. Either "week" or "month".
+#'
+#' @param time_unit `[character(1)]`
+#'
+#' Determining the binsize. Either "week" or "month".
 #'
 #' @returns A data frame which contains now one row per interval and group.
+#'
 #' @keywords internal
 fill_missing_intervals <- function(dataset, grouping_var, time_type, time_unit) {
    if (time_type == "day") {
@@ -333,11 +420,16 @@ fill_missing_intervals <- function(dataset, grouping_var, time_type, time_unit) 
 #' an interval is drawn from the starting point to the x coordinates of the starting point of the next interval and
 #' if there would be no next starting point, the interval is not drawn.
 #'
-#' @param dataset `[data.frame]` Data frame returned by fill_missing_intervals() function.
+#' @param dataset `[data.frame]`
+#'
+#' Data frame returned by fill_missing_intervals() function.
+#'
 #' @inheritParams fill_missing_intervals
 #'
 #' @importFrom rlang .data
+#'
 #' @returns A data frame which contains an additional dummy row for each group after the last real interval.
+#'
 #' @keywords internal
 add_latest_dummy_point <- function(dataset, grouping_var, time_type, time_unit) {
   if (is_valid_grouping_var(grouping_var, dataset)) {

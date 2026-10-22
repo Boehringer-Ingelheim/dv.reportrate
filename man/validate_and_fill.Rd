@@ -7,42 +7,90 @@
 validate_and_fill(input_args)
 }
 \arguments{
-\item{input_args}{\verb{[list]} A named list of the arguments, that were passed to mod_report_rates() function.
-Composed of:
+\item{input_args}{\verb{[list]}
+
+A named list of the arguments, that were passed to mod_report_rates() function. Composed of:
 \itemize{
-\item @param module_id \verb{[character(1)]} A unique ID string to create a namespace.
-\item @param dm_dataset_name \verb{[character(1)]} Name of the Demographics dataset.
-\item @param ds_dataset_name \verb{[character(1)]} Name of the Disposition dataset.
-\item @param ae_dataset_name \verb{[character(1)]} Name of the Adverse Event dataset.
-\item @param subjid_var \verb{[character(1)]} Character name of the unique subject identifier column in all datasets
+\item @param module_id \verb{[character(1)]}
+
+A unique ID string to create a namespace.
+\item @param dm_dataset_name \verb{[character(1)]}
+
+Name of the Demographics dataset.
+\item @param ds_dataset_name \verb{[character(1)]}
+
+Name of the Disposition dataset.
+\item @param ae_dataset_name \verb{[character(1)]}
+
+Name of the Adverse Event dataset.
+\item @param subjid_var \verb{[character(1)]}
+
+Character name of the unique subject identifier column in all datasets
 (default is USUBJID). Must be a single value.
-\item @param tooltip_decimal_places \verb{[integer(1)]} Number of decimal places to round the value shown in the hovertext.
-\item @param disposition_events \verb{[list]} Named list specifying variables and values used to define entry and exit events
-in the disposition dataset.
-Composed of:
-\item event_var \verb{[character(1)]} Name of the variable that contains the description of the event.
-\item date_var \verb{[character(1)]} Name of the variable containing the date of the event.
-\item day_var \verb{[character(1)]} Name of the variable containing the study day of the event.
-\item entry_vals \verb{[character(1+)]} Character vector of values defining which values out of var should be entry events.
-\item exit_vals \verb{[character(1+)]} Character vector of values defining which values out of var should be exit events.
-\item @param adverse_events \verb{[list]} Named list specifying the variables that define the date and study day of adverse
+\item @param tooltip_decimal_places \verb{[integer(1)]}
+
+Number of decimal places to round the value shown in the hovertext.
+\item @param disposition_events \verb{[list]}
+
+Named list specifying variables and values used to define entry and exit events
+in the disposition dataset. Composed of:
+\itemize{
+\item event_var \verb{[character(1)]}
+
+Name of the variable that contains the description of the event.
+\item date_var \verb{[character(1)]}
+
+Name of the variable containing the date of the event.
+\item day_var \verb{[character(1)]}
+
+Name of the variable containing the study day of the event.
+\item entry_vals \verb{[character(1+)]}
+
+Character vector of values defining which values out of var should be entry events.
+\item exit_vals \verb{[character(1+)]}
+
+Character vector of values defining which values out of var should be exit events.
+}
+\item @param adverse_events \verb{[list]}
+
+Named list specifying the variables that define the date and study day of adverse
 event occurence. Composed of:
-\item date_var \verb{[character(1)]} Name of the variable containing the date of the event.
-\item day_var \verb{[character(1)]} Name of the variable containing the study day of the event.
-\item @param grouping_vars \verb{[list]} Named list specifying grouping options for the plot. Composed of:
-\item choices \verb{[character(1+) | NULL]} Character vector of variable names out of the demographics dataset, specifying
+\itemize{
+\item date_var \verb{[character(1)]}
+
+Name of the variable containing the date of the event.
+\item day_var \verb{[character(1)]}
+
+Name of the variable containing the study day of the event.
+}
+\item @param grouping_vars \verb{[list]}
+
+Named list specifying grouping options for the plot. Composed of:
+\itemize{
+\item choices \verb{[character(1+) | NULL]}
+
+Character vector of variable names out of the demographics dataset, specifying
 which variables are available for grouping. If provided, only these variables can be selected. If \code{NULL}, all
 categorical variables from the demographics dataset will be available for grouping.
-\item default_choice \verb{[character(1) | NULL]} Character specifying the default grouping variable to be used. If
-\code{NULL}, no variable is selected for grouping by default.
-\item @param x_step_size_list \verb{[list]} Named list specifying the tick interval (step size) on the x-Axis depending on
+\item default_choice \verb{[character(1) | NULL]}
+
+Character specifying the default grouping variable to be used. If  \code{NULL}, no variable is selected for grouping by default.
+}
+\item @param x_step_size_list \verb{[list]}
+
+Named list specifying the tick interval (step size) on the x-Axis depending on
 the time unit. Composed of:
-\item days \verb{[integer(1) | NULL]} Integer value specifying the tick interval in days when the x-axis is displayed in
-days.
-\item weeks \verb{[integer(1) | NULL]} Integer value specifying the tick interval in weeks when the x-axis is displayed in
-weeks.
-\item months \verb{[integer(1) | NULL]} Integer value specifying the tick interval in months when the x-axis is displayed in
-months.
+\itemize{
+\item days \verb{[integer(1) | NULL]}
+
+Integer value specifying the tick interval in days when the x-axis is displayed in days.
+\item weeks \verb{[integer(1) | NULL]}
+
+Integer value specifying the tick interval in weeks when the x-axis is displayed in weeks.
+\item months \verb{[integer(1) | NULL]}
+
+Integer value specifying the tick interval in months when the x-axis is displayed in months.
+}
 }}
 }
 \value{

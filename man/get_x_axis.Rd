@@ -15,38 +15,52 @@ get_x_axis(
 )
 }
 \arguments{
-\item{dataset}{\verb{[data.frame]} Data frame returned by the prepare_plot_data() function}
+\item{dataset}{\verb{[data.frame]}
 
-\item{metric_selection}{\verb{[character(1)]} For determining the calculated rate on the y-axis. Either
+Data frame returned by the prepare_plot_data() function}
+
+\item{metric_selection}{\verb{[character(1)]}
+
+For determining the calculated rate on the y-axis. Either
 METRIC_BUTTONS_OPT1 or METRIC_BUTTONS_OPT2.}
 
-\item{time_selection}{\verb{[character(1)]} Determining if the time on the x-axis should be study dates (calendar based)
+\item{time_selection}{\verb{[character(1)]}
+
+Determining if the time on the x-axis should be study dates (calendar based)
 or study days (subject based). Either TIMETYPE_BUTTONS_OPT1 or TIMETYPE_BUTTONS_OPT2.}
 
-\item{unit_selection}{\verb{[character(1)]} Determining the binsize when computing the reporting rate per active
+\item{unit_selection}{\verb{[character(1)]}
+
+Determining the binsize when computing the reporting rate per active
 patients. Either BINSIZE_BUTTONS_OPT1 or BINSIZE_BUTTONS_OPT2.}
 
-\item{step_size_days}{\verb{[integer(1)]} Integer value specifying the tick interval in days when the x-axis is
-displayed in days.}
+\item{step_size_days}{\verb{[integer(1)]}
 
-\item{step_size_weeks}{\verb{[integer(1)]} Integer value specifying the tick interval in weeks when the x-axis is
-displayed in weeks.}
+Integer value specifying the tick interval in days when the x-axis is displayed in days.}
 
-\item{step_size_months}{\verb{[integer(1)]} Integer value specifying the tick interval in months when the x-axis is
-displayed in months.}
+\item{step_size_weeks}{\verb{[integer(1)]}
+
+Integer value specifying the tick interval in weeks when the x-axis is displayed in weeks.}
+
+\item{step_size_months}{\verb{[integer(1)]}
+
+Integer value specifying the tick interval in months when the x-axis is displayed in months.}
 }
 \value{
 A list which is passed later to a ggplot2 scale object. Composed of:
 \itemize{
 \item breaks \verb{[numeric(1+)]}
+
 A numeric vector setting the values at which ticks on this axis appear. Only contained in the list if the time
 selection was "By study day".
 \item ticktext \verb{[numeric(1+)]}
 A character vector setting the text displayed at the ticks position via "breaks". Only contained in the list if the
 time selection was "By study day".
-\item breaks \verb{[Date(1+)]} Vector of the dates where the ticks should be in the plot. Only contained in the list if the
+\item breaks \verb{[Date(1+)]}
+Vector of the dates where the ticks should be in the plot. Only contained in the list if the
 time selection was "By study date".
-\item title \verb{[character(1)]} Title that is used on the x-axis.
+\item title \verb{[character(1)]}
+Title that is used on the x-axis.
 }
 }
 \description{

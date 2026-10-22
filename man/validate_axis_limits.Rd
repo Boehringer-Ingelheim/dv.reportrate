@@ -8,12 +8,15 @@ validate_axis_limits(min_value, max_value, axis_name)
 }
 \arguments{
 \item{min_value}{\verb{[numeric(1) | Date(1) | NULL]}
+
 Lower axis limit specified by the user.}
 
 \item{max_value}{\verb{[numeric(1) | Date(1) | NULL]}
+
 Upper axis limit specified by the user.}
 
 \item{axis_name}{\verb{[character(1)]}
+
 Name of the axis used in the validation message (e.g. "X" or "Y").}
 }
 \value{

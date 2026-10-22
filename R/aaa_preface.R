@@ -4,6 +4,7 @@
 #' Build a collection of named constants
 #'
 #' @param ... Named parameters to be collected as constants
+#'
 #' @details
 #' Shiny uses strings as IDs to link UI and server elements. E.g:
 #'   foo_UI(id = ns("foo")) ...
@@ -34,6 +35,7 @@
 #' It is tagged as an S3 object to override its extraction operators.
 #'
 #' The use of checkmate is unnecessary, but it's a Good Library(TM) and your module should rely on it anyways
+#'
 #' @keywords internal
 pack_of_constants <- function(...) {
   result <- list(...)
@@ -49,6 +51,7 @@ pack_of_constants <- function(...) {
 #'
 #' This function differs from the base list extraction method in that it avoids partial matching of keys and throws
 #' an error if the looked-for constant is not contained within the pack.
+#'
 #' @keywords internal
 `$.pack_of_constants` <- function(pack, name) {
   checkmate::assert_true(name %in% names(pack), .var.name = paste0(deparse(substitute(pack)), "$", name))

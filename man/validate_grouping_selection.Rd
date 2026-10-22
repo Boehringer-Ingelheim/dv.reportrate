@@ -7,9 +7,13 @@
 validate_grouping_selection(dm, selected_group)
 }
 \arguments{
-\item{dm}{\verb{[data.frame]} The demographics dataframe.}
+\item{dm}{\verb{[data.frame]}
 
-\item{selected_group}{\verb{[character(1)]} Name of the current selected grouping variable}
+The demographics dataframe.}
+
+\item{selected_group}{\verb{[character(1)]}
+
+Name of the current selected grouping variable}
 }
 \value{
 Either the current selection of the grouping variable or REPORT_RATES$CHOICES$GROUP_NO_SELECTION if one of

@@ -11,7 +11,9 @@ used. Those palettes are colorblind-friendly. For > 15 levels  (including the un
 generate_palette(all_levels)
 }
 \arguments{
-\item{all_levels}{\verb{[character(0+)]} Vector of \emph{all} the available levels that are in the current grouping variable
+\item{all_levels}{\verb{[character(0+)]}
+
+Vector of \emph{all} the available levels that are in the current grouping variable
 column in the current demographics dataset. Which levels out of all available levels are selected in the UI dropdown
 doesn't matter.}
 }

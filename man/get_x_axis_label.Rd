@@ -7,13 +7,19 @@
 get_x_axis_label(metric_selection, time_selection, unit_selection)
 }
 \arguments{
-\item{metric_selection}{\verb{[character(1)]} For determining the calculated rate on the y-axis. Either
+\item{metric_selection}{\verb{[character(1)]}
+
+For determining the calculated rate on the y-axis. Either
 METRIC_BUTTONS_OPT1 or METRIC_BUTTONS_OPT2.}
 
-\item{time_selection}{\verb{[character(1)]} Determining if the time on the x-axis should be study dates (calendar based)
+\item{time_selection}{\verb{[character(1)]}
+
+Determining if the time on the x-axis should be study dates (calendar based)
 or study days (subject based). Either TIMETYPE_BUTTONS_OPT1 or TIMETYPE_BUTTONS_OPT2.}
 
-\item{unit_selection}{\verb{[character(1)]} Determining the binsize when computing the reporting rate per active
+\item{unit_selection}{\verb{[character(1)]}
+
+Determining the binsize when computing the reporting rate per active
 patients. Either BINSIZE_BUTTONS_OPT1 or BINSIZE_BUTTONS_OPT2.}
 }
 \value{

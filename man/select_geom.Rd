@@ -7,7 +7,9 @@
 select_geom(metric_selection)
 }
 \arguments{
-\item{metric_selection}{\verb{[character(1)]} For determining the calculated rate on the y-axis. Either
+\item{metric_selection}{\verb{[character(1)]}
+
+For determining the calculated rate on the y-axis. Either
 METRIC_BUTTONS_OPT1 or METRIC_BUTTONS_OPT2}
 }
 \value{

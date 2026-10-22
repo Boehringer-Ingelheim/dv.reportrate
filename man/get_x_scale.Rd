@@ -7,20 +7,30 @@
 get_x_scale(time_selection, x_axis)
 }
 \arguments{
-\item{time_selection}{\verb{[character(1)]} Determining if the time on the x-axis should be study dates (calendar based)
+\item{time_selection}{\verb{[character(1)]}
+
+Determining if the time on the x-axis should be study dates (calendar based)
 or study days (subject based) Either TIMETYPE_BUTTONS_OPT1 or TIMETYPE_BUTTONS_OPT2.}
 
-\item{x_axis}{\verb{[list]} A list returned by get_x_axis(). Composed of:
+\item{x_axis}{\verb{[list]}
+
+A list returned by get_x_axis(). Composed of:
 \itemize{
 \item breaks \verb{[numeric(1+)]}
+
 A numeric vector setting the values at which ticks on this axis appear. Only contained in the list if the time
 selection was "By study day".
 \item ticktext \verb{[numeric(1+)]}
+
 A character vector setting the text displayed at the ticks position via "breaks". Only contained in the list if the
 time selection was "By study day".
-\item breaks \verb{[Date(1+)]} Vector of the dates where the ticks should be in the plot. Only contained in the list if the
+\item breaks \verb{[Date(1+)]}
+
+Vector of the dates where the ticks should be in the plot. Only contained in the list if the
 time selection was "By study date".
-\item title \verb{[character(1)]} Not used in this function.
+\item title \verb{[character(1)]}
+
+Not used in this function.
 }}
 }
 \value{

@@ -9,14 +9,21 @@ messages may be outputted in the console.}
 validate_dm_dataset(dataset, subjid_var, grouping_choices, default_choice)
 }
 \arguments{
-\item{dataset}{\verb{[data.frame]} The demographics data set.}
+\item{dataset}{\verb{[data.frame]}
 
-\item{subjid_var}{\verb{[character(1)]} Character name of the unique subject identifier column in all datasets.}
+The demographics data set.}
 
-\item{grouping_choices}{\verb{[character(1+) | NULL]} Character vector (of variable names out of dm), specifying which
-variables are available for grouping.}
+\item{subjid_var}{\verb{[character(1)]}
 
-\item{default_choice}{\verb{[character(1) | NULL]} Character specifying the default grouping variable to be used. The
+Character name of the unique subject identifier column in all datasets.}
+
+\item{grouping_choices}{\verb{[character(1+) | NULL]}
+
+Character vector (of variable names out of dm), specifying which variables are available for grouping.}
+
+\item{default_choice}{\verb{[character(1) | NULL]}
+
+Character specifying the default grouping variable to be used. The
 difference to grouping$default_choices is, that the argument that is passed to the default_choice param of this
 function is a reactiveVal, which contains the default_choice in a reactive context (so either the value of
 grouping$default_choice when first starting the app (given there was one provided), or NULL after that).

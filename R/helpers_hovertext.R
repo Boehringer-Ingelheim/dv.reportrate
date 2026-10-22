@@ -1,17 +1,35 @@
 #' Internal helper function to create the dynamic hovertext that is displayed when hovering over the interactive plot.
 #'
-#' @param dataset `[data.frame]` Data frame returned by the get_time_for_plot() function.
-#' @param grouping_var `[character(1)]` Character name of the grouping variable (column) in the demographics data frame.
+#' @param dataset `[data.frame]`
+#'
+#' Data frame returned by the get_time_for_plot() function.
+#'
+#' @param grouping_var `[character(1)]`
+#'
+#' Character name of the grouping variable (column) in the demographics data frame.
 #' The values of this column define the different groups in the plot.
-#' @param metric_selection `[character(1)]` For determining the calculated rate on the y-axis. Either
+#'
+#' @param metric_selection `[character(1)]`
+#'
+#' For determining the calculated rate on the y-axis. Either
 #' METRIC_BUTTONS_OPT1 or METRIC_BUTTONS_OPT2.
-#' @param time_selection `[character(1)]` Determining if the time on the x-axis should be study dates (calendar based)
+#'
+#' @param time_selection `[character(1)]`
+#'
+#' Determining if the time on the x-axis should be study dates (calendar based)
 #' or study days (subject based) Either TIMETYPE_BUTTONS_OPT1 or TIMETYPE_BUTTONS_OPT2.
-#' @param unit_selection `[character(1)]` Determining the binsize when computing the reporting rate per active
+#'
+#' @param unit_selection `[character(1)]`
+#'
+#' Determining the binsize when computing the reporting rate per active
 #' patients. Either BINSIZE_BUTTONS_OPT1 or BINSIZE_BUTTONS_OPT2.
-#' @param tt_dec_places `[integer(1)]` Number of decimal places to round the value shown in the hovertext.
+#'
+#' @param tt_dec_places `[integer(1)]`
+#'
+#' Number of decimal places to round the value shown in the hovertext.
 #'
 #' @returns A processed data frame which now contains an additional column "hovertext".
+#'
 #' @keywords internal
 get_hovertext <- function(dataset, grouping_var, metric_selection, time_selection, unit_selection, tt_dec_places) {
    dataset <- get_hovertext_time_base(dataset, grouping_var, metric_selection, time_selection, unit_selection)
@@ -36,6 +54,7 @@ get_hovertext <- function(dataset, grouping_var, metric_selection, time_selectio
 #'
 #' @returns A processed data frame with the additional columns "interval_end", "ht_time_base" and also "interval_start"
 #' if the time_selection was "by study date". The values in these columns are later a part of the generated hovertext.
+#'
 #' @keywords internal
 get_hovertext_time_base <- function(dataset, grouping_var, metric_selection, time_selection, unit_selection) {
 
@@ -83,12 +102,14 @@ get_hovertext_time_base <- function(dataset, grouping_var, metric_selection, tim
 #' Internal helper function for removing the ht_time_base from the dummy rows that were only created to show the last
 #' time interval correctly in the first place, and exchange it with "END" instead.
 #'
-#' @param dataset `[data.frame]` Data frame that was passed to the get_hovertext_time function and processed by
-#' the function.
+#' @param dataset `[data.frame]`
+#' Data frame that was passed to the get_hovertext_time function and processed by the function.
+#'
 #' @param grouping_var `[character(1)]` Character name of the grouping variable (column) in the demographics data frame.
-#'  The values of this column define the different groups in the plot.
+#' The values of this column define the different groups in the plot.
 #'
 #' @returns A processed data frame without the ht_time_base and instead "END" in the dummy rows.
+#'
 #' @keywords internal
 remove_ht_from_dummy_rows <- function(dataset, grouping_var) {
    dataset <- dataset |> dplyr::arrange(.data[["time"]])
@@ -107,12 +128,18 @@ remove_ht_from_dummy_rows <- function(dataset, grouping_var) {
 
 #' Internal helper function for getting the part of the hovertext that contains the levels information.
 #'
-#' @param dataset `[data.frame]` Data frame returned by the get_time_for_plot() function.
-#' @param grouping_var `[character(1)]` Character name of the grouping variable (column) in the demographics data frame.
-#'  The values of this column define the different groups in the plot.
+#' @param dataset `[data.frame]`
+#'
+#' Data frame returned by the get_time_for_plot() function.
+#'
+#' @param grouping_var `[character(1)]`
+#'
+#' Character name of the grouping variable (column) in the demographics data frame.
+#' The values of this column define the different groups in the plot.
 #'
 #' @returns A processed data frame with the additional column "ht_levels_display". The values in this column are later
 #' a part of the generated hovertext.
+#'
 #' @keywords internal
 get_hovertext_levels_display <- function(dataset, grouping_var) {
    valid_grouping <- is_valid_grouping_var(grouping_var, dataset)
@@ -127,11 +154,17 @@ get_hovertext_levels_display <- function(dataset, grouping_var) {
 
 #' Internal helper function for getting the part of the hovertext which shows the ratio and the number of AEs.
 #'
-#' @param dataset `[data.frame]` Data frame returned by the get_time_for_plot() function.
-#' @param tt_dec_places `[integer(1)]` Number of decimal places to round the value shown in the hovertext.
+#' @param dataset `[data.frame]`
+#'
+#' Data frame returned by the get_time_for_plot() function.
+#'
+#' @param tt_dec_places `[integer(1)]`
+#'
+#' Number of decimal places to round the value shown in the hovertext.
 #'
 #' @returns A processed data frame with the additional column "ht_ae_info". The values in this column are later a part
 #' of the generated hovertext.
+#'
 #' @keywords internal
 get_hovertext_ae_info <- function(dataset, tt_dec_places) {
    dataset <- dataset |> dplyr::mutate(ht_ae_info = paste0("Rate: ", round(.data[["ratio"]], tt_dec_places),

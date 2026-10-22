@@ -20,27 +20,45 @@ prepare_plot_data(
 )
 }
 \arguments{
-\item{dm}{\verb{[data.frame]} The demographics data frame.}
+\item{dm}{\verb{[data.frame]}
 
-\item{ds}{\verb{[data.frame]} The disposition data frame returned by the prepare_ds_data() function.}
+The demographics data frame.}
 
-\item{ae}{\verb{[data.frame]} The adverse event data frame returned by the prepare_ae_data() function.}
+\item{ds}{\verb{[data.frame]}
 
-\item{subjid_var}{\verb{[character(1)]} Character name of the unique subject identifier column in all datasets.}
+The disposition data frame returned by the prepare_ds_data() function.}
 
-\item{grouping_var}{\verb{[character(1)]} Character name of the grouping variable (column) in the dm data frame. The
-values of this column define the different groups in the plot.}
+\item{ae}{\verb{[data.frame]}
 
-\item{time_selection}{\verb{[character(1)]} Determining if the time on the x-axis should be study dates (calendar based)
+The adverse event data frame returned by the prepare_ae_data() function.}
+
+\item{subjid_var}{\verb{[character(1)]}
+
+Character name of the unique subject identifier column in all datasets.}
+
+\item{grouping_var}{\verb{[character(1)]}
+
+Character name of the grouping variable (column) in the dm data frame.
+The values of this column define the different groups in the plot.}
+
+\item{time_selection}{\verb{[character(1)]}
+
+Determining if the time on the x-axis should be study dates (calendar based)
 or study days (subject based). Either TIMETYPE_BUTTONS_OPT1 or TIMETYPE_BUTTONS_OPT2.}
 
-\item{metric_selection}{\verb{[character(1)]} For determining the calculated rate on the y-axis. Either
+\item{metric_selection}{\verb{[character(1)]}
+
+For determining the calculated rate on the y-axis. Either
 METRIC_BUTTONS_OPT1 or METRIC_BUTTONS_OPT2.}
 
-\item{unit_selection}{\verb{[character(1)]} Determining the binsize when computing the reporting rate per active
+\item{unit_selection}{\verb{[character(1)]}
+
+Determining the binsize when computing the reporting rate per active
 patients. Either BINSIZE_BUTTONS_OPT1 or BINSIZE_BUTTONS_OPT2.}
 
-\item{tt_dec_places}{\verb{[integer(1)]} Number of decimal places to round the value shown in the hovertext.}
+\item{tt_dec_places}{\verb{[integer(1)]}
+
+Number of decimal places to round the value shown in the hovertext.}
 }
 \value{
 A data frame containing processed data for plotting, including calculated metrics, time variables

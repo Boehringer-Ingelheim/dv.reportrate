@@ -8,13 +8,21 @@ adverse events.}
 prepare_ae_data(dataset, subjid_var, date_var, day_var)
 }
 \arguments{
-\item{dataset}{\verb{[data.frame]} The Adverse Event dataframe.}
+\item{dataset}{\verb{[data.frame]}
 
-\item{subjid_var}{\verb{[character(1)]} Character name of the unique subject identifier column in all datasets.}
+The Adverse Event dataframe.}
 
-\item{date_var}{\verb{[character(1)]} Name of the variable containing the date of the event.}
+\item{subjid_var}{\verb{[character(1)]}
 
-\item{day_var}{\verb{[character(1)]} Name of the variable containing the study day of the event.}
+Character name of the unique subject identifier column in all datasets.}
+
+\item{date_var}{\verb{[character(1)]}
+
+Name of the variable containing the date of the event.}
+
+\item{day_var}{\verb{[character(1)]}
+
+Name of the variable containing the study day of the event.}
 }
 \value{
 A dataframe that contains an additional column "n" with the value 1 in every row, which indicates the
