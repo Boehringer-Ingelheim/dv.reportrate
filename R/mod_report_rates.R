@@ -944,8 +944,16 @@ mod_report_rates <- function(module_id,
       report_rates_ui(module_id = module_id)
     },
     server = function(afmm) {
+      # TODO: Applying mapping of datset names provided by app creator to
+      # hard coded names used in the module server, to be aligned with
+      # other dv modules - added to further development card.
       dataset_list <- shiny::reactive({
-        afmm$filtered_dataset_list()[c(dm_dataset_name, ds_dataset_name, ae_dataset_name)]
+        filtered_datasets <- afmm$filtered_dataset_list()
+        list(
+          dm = filtered_datasets[[dm_dataset_name]],
+          ds = filtered_datasets[[ds_dataset_name]],
+          ae = filtered_datasets[[ae_dataset_name]]
+        )
       })
       report_rates_server(
         module_id = module_id,
