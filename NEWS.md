@@ -1,3 +1,7 @@
-# dv.reportrate 0.0.0-9000
+# dv.explorer.parameter 0.0.0-9002
+
+* Added mapping of input dataset names to internally used fixed dataset names
+
+# dv.reportrate 0.0.0-9001
 
 * Initial Version 
