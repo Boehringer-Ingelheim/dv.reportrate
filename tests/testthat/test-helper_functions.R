@@ -15,6 +15,9 @@ test_that("validate_and_fill() fills in the default values for the step sizes (d
                      dataset_list = shiny::reactive({
                        list("dm" = dm_test, "ae" = ae_test, "ds" = ds_test)
                      }),
+                     dm_dataset_name = "dm",
+                     ds_dataset_name = "ds",
+                     ae_dataset_name = "ae",
                      subjid_var = "USBUJID",
                      tooltip_decimal_places = 4L,
                      disposition_events = list(event_var = "DSDECOD",
@@ -421,11 +424,17 @@ dataset_list <- list(
                   ae = data.frame(USUBJID = c("01"))
                )
 
+dm_dataset_name <- "dm"
+ds_dataset_name <- "ds"
+ae_dataset_name <- "ae"
 
 test_that("validate_df_rows() raises silent validation error when no levels are selected and the ungrouped_checkbox is
           FALSE while there is a variable selected for grouping.", {
     expect_error(
        validate_df_rows(dataset_list = dataset_list,
+                        dm_dataset_name = dm_dataset_name,
+                        ds_dataset_name = ds_dataset_name,
+                        ae_dataset_name = ae_dataset_name,
                         selected_levels = character(0),
                         ungrouped_checkbox = FALSE,
                         selected_group = "SEX"),
@@ -434,6 +443,9 @@ test_that("validate_df_rows() raises silent validation error when no levels are 
 
    expect_no_error(
       validate_df_rows(dataset_list = dataset_list,
+                       dm_dataset_name = dm_dataset_name,
+                       ds_dataset_name = ds_dataset_name,
+                       ae_dataset_name = ae_dataset_name,
                        selected_levels = c("F"),
                        ungrouped_checkbox = FALSE,
                        selected_group = "SEX")
@@ -441,6 +453,9 @@ test_that("validate_df_rows() raises silent validation error when no levels are 
 
     expect_no_error(
        validate_df_rows(dataset_list = dataset_list,
+                        dm_dataset_name = dm_dataset_name,
+                        ds_dataset_name = ds_dataset_name,
+                        ae_dataset_name = ae_dataset_name,
                         selected_levels = character(0),
                         ungrouped_checkbox = TRUE,
                         selected_group = "SEX")
@@ -448,6 +463,9 @@ test_that("validate_df_rows() raises silent validation error when no levels are 
 
     expect_no_error(
        validate_df_rows(dataset_list = dataset_list,
+                        dm_dataset_name = dm_dataset_name,
+                        ds_dataset_name = ds_dataset_name,
+                        ae_dataset_name = ae_dataset_name,
                         selected_levels = c("F", "M"),
                         ungrouped_checkbox = TRUE,
                         selected_group = "SEX")
@@ -455,6 +473,9 @@ test_that("validate_df_rows() raises silent validation error when no levels are 
 
     expect_no_error(
        validate_df_rows(dataset_list = dataset_list,
+                        dm_dataset_name = dm_dataset_name,
+                        ds_dataset_name = ds_dataset_name,
+                        ae_dataset_name = ae_dataset_name,
                         selected_levels = character(0),
                         ungrouped_checkbox = FALSE,
                         selected_group = REPORT_RATES$CHOICES$GROUP_NO_SELECTION)
@@ -464,9 +485,12 @@ test_that("validate_df_rows() raises silent validation error when no levels are 
 test_that("validate_df_rows() raises silent validation error when one of the datasets dm, ds or ae has 0 rows.", {
    # testing for dm
    dataset_list_zero_dm <- dataset_list
-   dataset_list_zero_dm$dm <- data.frame(USUBJID = character())
+   dataset_list_zero_dm[[dm_dataset_name]] <- data.frame(USUBJID = character())
    expect_error(
        validate_df_rows(dataset_list = dataset_list_zero_dm,
+                        dm_dataset_name = dm_dataset_name,
+                        ds_dataset_name = ds_dataset_name,
+                        ae_dataset_name = ae_dataset_name,
                         selected_levels = c("F", "M"),
                         ungrouped_checkbox = TRUE,
                         selected_group = "SEX"),
@@ -474,6 +498,9 @@ test_that("validate_df_rows() raises silent validation error when one of the dat
     )
    expect_error(
       validate_df_rows(dataset_list = dataset_list_zero_dm,
+                       dm_dataset_name = dm_dataset_name,
+                       ds_dataset_name = ds_dataset_name,
+                       ae_dataset_name = ae_dataset_name,
                        selected_levels = character(0),
                        ungrouped_checkbox = FALSE,
                        selected_group = REPORT_RATES$CHOICES$GROUP_NO_SELECTION),
@@ -481,9 +508,12 @@ test_that("validate_df_rows() raises silent validation error when one of the dat
    )
    # testing for ds
    dataset_list_zero_ds <- dataset_list
-   dataset_list_zero_ds$ds <- data.frame(USUBJID = character())
+   dataset_list_zero_ds[[ds_dataset_name]] <- data.frame(USUBJID = character())
    expect_error(
       validate_df_rows(dataset_list = dataset_list_zero_ds,
+                       dm_dataset_name = dm_dataset_name,
+                       ds_dataset_name = ds_dataset_name,
+                       ae_dataset_name = ae_dataset_name,
                        selected_levels = c("F", "M"),
                        ungrouped_checkbox = TRUE,
                        selected_group = "SEX"),
@@ -491,6 +521,9 @@ test_that("validate_df_rows() raises silent validation error when one of the dat
    )
    expect_error(
       validate_df_rows(dataset_list = dataset_list_zero_ds,
+                       dm_dataset_name = dm_dataset_name,
+                       ds_dataset_name = ds_dataset_name,
+                       ae_dataset_name = ae_dataset_name,
                        selected_levels = character(0),
                        ungrouped_checkbox = FALSE,
                        selected_group = REPORT_RATES$CHOICES$GROUP_NO_SELECTION),
@@ -498,9 +531,12 @@ test_that("validate_df_rows() raises silent validation error when one of the dat
    )
    # testing for ae
    dataset_list_zero_ae <- dataset_list
-   dataset_list_zero_ae$ae <- data.frame(USUBJID = character())
+   dataset_list_zero_ae[[ae_dataset_name]] <- data.frame(USUBJID = character())
    expect_error(
       validate_df_rows(dataset_list = dataset_list_zero_ae,
+                       dm_dataset_name = dm_dataset_name,
+                       ds_dataset_name = ds_dataset_name,
+                       ae_dataset_name = ae_dataset_name,
                        selected_levels = c("F", "M"),
                        ungrouped_checkbox = TRUE,
                        selected_group = "SEX"),
@@ -508,6 +544,9 @@ test_that("validate_df_rows() raises silent validation error when one of the dat
    )
    expect_error(
       validate_df_rows(dataset_list = dataset_list_zero_ae,
+                       dm_dataset_name = dm_dataset_name,
+                       ds_dataset_name = ds_dataset_name,
+                       ae_dataset_name = ae_dataset_name,
                        selected_levels = character(0),
                        ungrouped_checkbox = FALSE,
                        selected_group = REPORT_RATES$CHOICES$GROUP_NO_SELECTION),
@@ -517,6 +556,9 @@ test_that("validate_df_rows() raises silent validation error when one of the dat
    # when every dataset has at least 1 row, no error should be raised:
    expect_no_error(
       validate_df_rows(dataset_list = dataset_list,
+                       dm_dataset_name = dm_dataset_name,
+                       ds_dataset_name = ds_dataset_name,
+                       ae_dataset_name = ae_dataset_name,
                        selected_levels = character(0),
                        ungrouped_checkbox = FALSE,
                        selected_group = REPORT_RATES$CHOICES$GROUP_NO_SELECTION)

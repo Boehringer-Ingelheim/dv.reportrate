@@ -298,7 +298,7 @@ report_rates_ui <- function(module_id) {
             inputId = ns(REPORT_RATES$ID$Y_AXIS_MAX),
             label = REPORT_RATES$LBL$Y_AXIS_MAX,
             value = NULL,
-              step = 0.5
+            step = 0.5
           )
         )
       ),
@@ -340,6 +340,9 @@ report_rates_ui <- function(module_id) {
 #' @export
 report_rates_server <- function(module_id,
                                 dataset_list,
+                                dm_dataset_name,
+                                ds_dataset_name,
+                                ae_dataset_name,
                                 subjid_var = REPORT_RATES$DEFAULTS$SUBJID,
                                 tooltip_decimal_places = REPORT_RATES$DEFAULTS$TT_DECIMAL_PLACES,
                                 disposition_events,
@@ -352,6 +355,9 @@ report_rates_server <- function(module_id,
 
   input_args <- list(module_id = module_id,
                      dataset_list = dataset_list,
+                     dm_dataset_name = dm_dataset_name,
+                     ds_dataset_name = ds_dataset_name,
+                     ae_dataset_name = ae_dataset_name,
                      subjid_var = subjid_var,
                      tooltip_decimal_places = tooltip_decimal_places,
                      disposition_events = disposition_events,
@@ -457,24 +463,24 @@ report_rates_server <- function(module_id,
     v_dataset_list <- shiny::reactive({
       shiny::req(dataset_list())
       checkmate::assert_list(dataset_list(), types = "data.frame", names = "named", len = 3)
-      validate_dm_dataset(dataset = dataset_list()$dm,
+      validate_dm_dataset(dataset = dataset_list()[[dm_dataset_name]],
                           subjid_var = subjid_var,
                           grouping_choices = grouping$choices,
                           default_choice = shiny::isolate(group_default_choice()))
-      validate_ds_dataset(dataset = dataset_list()$ds, disposition_events = disposition_events)
-      validate_ae_dataset(dataset = dataset_list()$ae, adverse_events = adverse_events)
+      validate_ds_dataset(dataset = dataset_list()[[ds_dataset_name]], disposition_events = disposition_events)
+      validate_ae_dataset(dataset = dataset_list()[[ae_dataset_name]], adverse_events = adverse_events)
       dataset_list()
     })
 
 
     dm <- shiny::reactive({
       shiny::req(v_dataset_list())
-      v_dataset_list()$dm
+      v_dataset_list()[[dm_dataset_name]]
     })
 
     ae_prepared <- shiny::reactive({
       shiny::req(v_dataset_list())
-      ae <- v_dataset_list()$ae
+      ae <- v_dataset_list()[[ae_dataset_name]]
       prepare_ae_data(dataset = ae,
                       subjid_var = subjid_var,
                       date_var = ae_date_col,
@@ -483,7 +489,7 @@ report_rates_server <- function(module_id,
 
     ds_prepared <- shiny::reactive({
       shiny::req(v_dataset_list())
-      ds <- v_dataset_list()$ds
+      ds <- v_dataset_list()[[ds_dataset_name]]
       prepare_ds_data(dataset = ds,
                       subjid_var = subjid_var,
                       event_var = dispo_event_col,
@@ -661,6 +667,9 @@ report_rates_server <- function(module_id,
       #show message "No data available" if one of the df's has 0 rows
       # or when no levels are selected and the checkbox for the ungrouped data is FALSE
       validate_df_rows(dataset_list = v_dataset_list(),
+                       dm_dataset_name = dm_dataset_name,
+                       ds_dataset_name = ds_dataset_name,
+                       ae_dataset_name = ae_dataset_name,
                        selected_levels = sel_levels(),
                        ungrouped_checkbox = ungrouped_checkbox(),
                        selected_group = selected_grouping_var())
@@ -812,15 +821,15 @@ report_rates_server <- function(module_id,
 #'
 #' @param dm_dataset_name `[character(1)]`
 #'
-#' Name of the Demographics dataset. Defaults to "dm".
+#' Name of the demographics dataset in the module manager.
 #'
 #' @param ds_dataset_name `[character(1)]`
 #'
-#' Name of the Disposition dataset. Defaults to "ds".
+#' Name of the disposition dataset in the module manager.
 #'
 #' @param ae_dataset_name `[character(1)]`
 #'
-#' Name of the Adverse Event dataset. Defaults to "ae".
+#' Name of the adverse-event dataset in the module manager.
 #'
 #' @param subjid_var `[character(1)]`
 #'
@@ -917,9 +926,9 @@ report_rates_server <- function(module_id,
 # TODO: Consider renaming x_step_size_list to x_axis_tick_interval in a future release for clarity.
 # The current name can be confusing
 mod_report_rates <- function(module_id,
-                             dm_dataset_name = "dm",
-                             ds_dataset_name = "ds",
-                             ae_dataset_name = "ae",
+                             dm_dataset_name,
+                             ds_dataset_name,
+                             ae_dataset_name,
                              subjid_var = REPORT_RATES$DEFAULTS$SUBJID,
                              tooltip_decimal_places = REPORT_RATES$DEFAULTS$TT_DECIMAL_PLACES,
                              disposition_events = list(event_var = REPORT_RATES$DEFAULTS$DISPO_VAR,
@@ -944,20 +953,21 @@ mod_report_rates <- function(module_id,
       report_rates_ui(module_id = module_id)
     },
     server = function(afmm) {
-      # TODO: Applying mapping of datset names provided by app creator to
-      # hard coded names used in the module server, to be aligned with
-      # other dv modules - added to further development card.
+
       dataset_list <- shiny::reactive({
-        filtered_datasets <- afmm$filtered_dataset_list()
-        list(
-          dm = filtered_datasets[[dm_dataset_name]],
-          ds = filtered_datasets[[ds_dataset_name]],
-          ae = filtered_datasets[[ae_dataset_name]]
-        )
+        afmm$filtered_dataset_list()[c(
+          dm_dataset_name,
+          ds_dataset_name,
+          ae_dataset_name
+        )]
       })
+
       report_rates_server(
         module_id = module_id,
         dataset_list = dataset_list,
+        dm_dataset_name = dm_dataset_name,
+        ds_dataset_name = ds_dataset_name,
+        ae_dataset_name = ae_dataset_name,
         subjid_var = subjid_var,
         tooltip_decimal_places = tooltip_decimal_places,
         disposition_events = disposition_events,

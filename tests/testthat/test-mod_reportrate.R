@@ -4,9 +4,11 @@ test_that("report_rates_ui() fails when argument type mismatches", {
   expect_error(report_rates_ui(4))
 })
 
-server_func <- function(id, dataset_list, subjid_var, tooltip_decimal_places, disposition_events, adverse_events,
+server_func <- function(id, dataset_list, dm_dataset_name, ds_dataset_name, ae_dataset_name,
+                        subjid_var, tooltip_decimal_places, disposition_events, adverse_events,
                         grouping, x_step_size_list) {
-  report_rates_server(module_id = id, dataset_list = dataset_list, subjid_var = subjid_var,
+  report_rates_server(module_id = id, dataset_list = dataset_list, dm_dataset_name = dm_dataset_name,
+                      ds_dataset_name = ds_dataset_name, ae_dataset_name = ae_dataset_name,subjid_var = subjid_var,
                       tooltip_decimal_places = tooltip_decimal_places, disposition_events = disposition_events,
                       adverse_events = adverse_events, grouping_vars = grouping, x_step_size_list = x_step_size_list)
 }
@@ -249,7 +251,8 @@ test_that("report_rates_server() fails when argument type mismatches", {
   ## test module_id parameter
   purrr::walk(test_id, ~ expect_error(
     shiny::testServer(server_func, args = list(
-      id = .x, dataset_list = datalist_valid, subjid_var = subjid_valid,
+      id = .x, dataset_list = datalist_valid,
+      dm_dataset_name = "dm", ds_dataset_name = "ds", ae_dataset_name = "ae", subjid_var = subjid_valid,
       tooltip_decimal_places = tt_decimal_places_valid, disposition_events = dispo_events_valid,
       adverse_events = adverse_events_valid, grouping = grouping_valid, x_step_size_list = step_size_valid
     ), {
@@ -260,7 +263,8 @@ test_that("report_rates_server() fails when argument type mismatches", {
   ## test dataset_list parameter
   purrr::walk(test_datalist, ~ expect_error(
     shiny::testServer(server_func, args = list(
-      id = id_valid, dataset_list = .x, subjid_var = subjid_valid,
+      id = id_valid, dataset_list = .x,
+      dm_dataset_name = "dm", ds_dataset_name = "ds", ae_dataset_name = "ae", subjid_var = subjid_valid,
       tooltip_decimal_places = tt_decimal_places_valid, disposition_events = dispo_events_valid,
       adverse_events = adverse_events_valid, grouping = grouping_valid, x_step_size_list = step_size_valid
     ), {
@@ -272,7 +276,8 @@ test_that("report_rates_server() fails when argument type mismatches", {
   ## test subjid_var parameter
   purrr::walk(test_subjid, ~ expect_error(
     shiny::testServer(server_func, args = list(
-      id = id_valid, dataset_list = datalist_valid, subjid_var = .x,
+      id = id_valid, dataset_list = datalist_valid,
+      dm_dataset_name = "dm", ds_dataset_name = "ds", ae_dataset_name = "ae", subjid_var = .x,
       tooltip_decimal_places = tt_decimal_places_valid, disposition_events = dispo_events_valid,
       adverse_events = adverse_events_valid, grouping = grouping_valid, x_step_size_list = step_size_valid
     ), {
@@ -284,7 +289,8 @@ test_that("report_rates_server() fails when argument type mismatches", {
   ## test tooltip_decimal_places parameter
   purrr::walk(test_tt_decimal_places, ~ expect_error(
     shiny::testServer(server_func, args = list(
-      id = id_valid, dataset_list = datalist_valid, subjid_var = subjid_valid,
+      id = id_valid, dataset_list = datalist_valid,
+      dm_dataset_name = "dm", ds_dataset_name = "ds", ae_dataset_name = "ae", subjid_var = subjid_valid,
       tooltip_decimal_places = .x, disposition_events = dispo_events_valid,
       adverse_events = adverse_events_valid, grouping = grouping_valid, x_step_size_list = step_size_valid
     ), {
@@ -295,7 +301,8 @@ test_that("report_rates_server() fails when argument type mismatches", {
   ## test disposition_events parameter
   purrr::walk(test_dispo_events, ~ expect_error(
     shiny::testServer(server_func, args = list(
-      id = id_valid, dataset_list = datalist_valid, subjid_var = subjid_valid,
+      id = id_valid, dataset_list = datalist_valid,
+      dm_dataset_name = "dm", ds_dataset_name = "ds", ae_dataset_name = "ae", subjid_var = subjid_valid,
       tooltip_decimal_places = tt_decimal_places_valid, disposition_events = .x,
       adverse_events = adverse_events_valid, grouping = grouping_valid, x_step_size_list = step_size_valid
     ), {
@@ -307,7 +314,8 @@ test_that("report_rates_server() fails when argument type mismatches", {
   ## test adverse events parameter
   purrr::walk(test_adverse_events, ~ expect_error(
     shiny::testServer(server_func, args = list(
-      id = id_valid, dataset_list = datalist_valid, subjid_var = subjid_valid,
+      id = id_valid, dataset_list = datalist_valid,
+      dm_dataset_name = "dm", ds_dataset_name = "ds", ae_dataset_name = "ae", subjid_var = subjid_valid,
       tooltip_decimal_places = tt_decimal_places_valid, disposition_events = dispo_events_valid,
       adverse_events = .x, grouping = grouping_valid, x_step_size_list = step_size_valid
     ), {
@@ -319,7 +327,8 @@ test_that("report_rates_server() fails when argument type mismatches", {
   ## test grouping parameter
   purrr::walk(test_grouping, ~ expect_error(
     shiny::testServer(server_func, args = list(
-      id = id_valid, dataset_list = datalist_valid, subjid_var = subjid_valid,
+      id = id_valid, dataset_list = datalist_valid,
+      dm_dataset_name = "dm", ds_dataset_name = "ds", ae_dataset_name = "ae", subjid_var = subjid_valid,
       tooltip_decimal_places = tt_decimal_places_valid, disposition_events = dispo_events_valid,
       adverse_events = adverse_events_valid, grouping = .x, x_step_size_list = step_size_valid
     ), {
@@ -331,7 +340,8 @@ test_that("report_rates_server() fails when argument type mismatches", {
   ## test x_step_size_list parameter
   purrr::walk(test_step_size, ~ expect_error(
     shiny::testServer(server_func, args = list(
-      id = id_valid, dataset_list = datalist_valid, subjid_var = subjid_valid,
+      id = id_valid, dataset_list = datalist_valid,
+      dm_dataset_name = "dm", ds_dataset_name = "ds", ae_dataset_name = "ae", subjid_var = subjid_valid,
       tooltip_decimal_places = tt_decimal_places_valid, disposition_events = dispo_events_valid,
       adverse_events = adverse_events_valid, grouping = grouping_valid, x_step_size_list = .x
     ), {
@@ -363,7 +373,8 @@ test_that("report_rates_server() fails when argument type mismatches", {
   purrr::walk(test_valid_grouping, ~ suppressMessages(
     expect_success(
       shiny::testServer(server_func, args = list(
-        id = id_valid, dataset_list = datalist_valid, subjid_var = subjid_valid,
+        id = id_valid, dataset_list = datalist_valid,
+        dm_dataset_name = "dm", ds_dataset_name = "ds", ae_dataset_name = "ae",  subjid_var = subjid_valid,
         tooltip_decimal_places = tt_decimal_places_valid, disposition_events = dispo_events_valid,
         adverse_events = adverse_events_valid, grouping = .x, x_step_size_list = step_size_valid
       ), {
@@ -376,7 +387,8 @@ test_that("report_rates_server() fails when argument type mismatches", {
 
   purrr::walk(test_valid_step_size, ~ expect_success(
     shiny::testServer(server_func, args = list(
-      id = id_valid, dataset_list = datalist_valid, subjid_var = subjid_valid,
+      id = id_valid, dataset_list = datalist_valid,
+      dm_dataset_name = "dm", ds_dataset_name = "ds", ae_dataset_name = "ae",  subjid_var = subjid_valid,
       tooltip_decimal_places = tt_decimal_places_valid, disposition_events = dispo_events_valid,
       adverse_events = adverse_events_valid, grouping = grouping_valid, x_step_size_list = .x
     ), {
@@ -446,13 +458,44 @@ test_that("report_rates_server() fails when mandatory parameters aren't passed."
   ## Verify that the omission of optional parameters of report_rates_server() still launches the server as intended
   expect_success(
     shiny::testServer(server_func_m_params, args = list(
-      id = id_valid, dataset_list = datalist_valid, disposition_events = dispo_events_valid,
+      id = id_valid, dataset_list = datalist_valid, dm_dataset_name = "dm", ds_dataset_name = "ds",
+      ae_dataset_name = "ae", disposition_events = dispo_events_valid,
       adverse_events = adverse_events_valid
     ), {
       v_dataset_list()
       session$flushReact()
       expect_true(TRUE)
     })
+  )
+
+  ## testing the omission of the report_rates_server() parameter dm_dataset_name
+  expect_error(
+    shiny::testServer(server_func_m_params, args = list(
+        id = id_valid,
+        dataset_list = datalist_valid, ds_dataset_name = "ds", ae_dataset_name = "ae",
+        disposition_events = dispo_events_valid, adverse_events = adverse_events_valid
+      )
+    )
+  )
+
+  ## testing the omission of the report_rates_server() parameter ds_dataset_name
+  expect_error(
+    shiny::testServer(server_func_m_params, args = list(
+        id = id_valid,
+        dataset_list = datalist_valid, dm_dataset_name = "dm", ae_dataset_name = "ae",
+        disposition_events = dispo_events_valid, adverse_events = adverse_events_valid
+      )
+    )
+  )
+
+  ## testing the omission of the report_rates_server() parameter ae_dataset_name
+  expect_error(
+    shiny::testServer(server_func_m_params, args = list(
+        id = id_valid,
+        dataset_list = datalist_valid, dm_dataset_name = "dm", ds_dataset_name = "ds",
+        disposition_events = dispo_events_valid, adverse_events = adverse_events_valid
+      )
+    )
   )
 })
 
@@ -481,6 +524,9 @@ test_that("If one of the dm-, ds- or ae- dataframe has zero rows or no levels ar
   shiny::testServer(server_func, args = list(
     id = "test",
     dataset_list = datalist,
+    dm_dataset_name = "dm",
+    ds_dataset_name = "ds",
+    ae_dataset_name = "ae",
     subjid_var = "USUBJID",
     tooltip_decimal_places = 4L,
     disposition_events = dispo_events_valid,
@@ -522,6 +568,9 @@ test_that("If one of the dm-, ds- or ae- dataframe has zero rows or no levels ar
   shiny::testServer(server_func, args = list(
     id = "test",
     dataset_list = datalist,
+    dm_dataset_name = "dm",
+    ds_dataset_name = "ds",
+    ae_dataset_name = "ae",
     subjid_var = "USUBJID",
     tooltip_decimal_places = 4L,
     disposition_events = dispo_events_valid,
@@ -552,6 +601,9 @@ test_that("If one of the dm-, ds- or ae- dataframe has zero rows or no levels ar
   shiny::testServer(server_func, args = list(
     id = "test",
     dataset_list = datalist,
+    dm_dataset_name = "dm",
+    ds_dataset_name = "ds",
+    ae_dataset_name = "ae",
     subjid_var = "USUBJID",
     tooltip_decimal_places = 4L,
     disposition_events = dispo_events_valid,
@@ -581,6 +633,9 @@ test_that("If one of the dm-, ds- or ae- dataframe has zero rows or no levels ar
   shiny::testServer(server_func, args = list(
     id = "test",
     dataset_list = datalist,
+    dm_dataset_name = "dm",
+    ds_dataset_name = "ds",
+    ae_dataset_name = "ae",
     subjid_var = "USUBJID",
     tooltip_decimal_places = 4L,
     disposition_events = dispo_events_valid,
