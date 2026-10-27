@@ -24,6 +24,9 @@ test_server <- function(input, output, session) {
 
    dv.reportrate::report_rates_server(module_id = "reportrate",
                                       dataset_list = shiny::reactive(data),
+                                      dm_dataset_name = "dm",
+                                      ds_dataset_name = "ds",
+                                      ae_dataset_name = "ae",
                                       subjid_var = "USUBJID",
                                       tooltip_decimal_places = 4L,
                                       disposition_events = list(event_var = "DSDECOD",
