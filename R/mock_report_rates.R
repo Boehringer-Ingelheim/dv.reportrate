@@ -107,7 +107,7 @@ mock_rr_app_with_mm <- function() {
                                         day_var = "AESTDY"
                                       ),
                                       grouping_vars = list(choices = c("ARM", "ACTARM", "SEX", "SITEID"),
-                                                           default_choice = "SEX"),
+                                                           default_choice = "ARM"),
                                       x_step_size_list = list(days = 50L, weeks = 2L, months = 1L))
 
   # Launching the DaVinci app
