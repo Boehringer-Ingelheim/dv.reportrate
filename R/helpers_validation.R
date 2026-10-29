@@ -123,6 +123,10 @@ validate_and_fill <- function(input_args) {
   checkmate::assert(
     checkmate::check_string(input_args$module_id, min.chars = 1),
 
+    checkmate::check_string(input_args$dm_dataset_name, min.chars = 1),
+    checkmate::check_string(input_args$ds_dataset_name, min.chars = 1),
+    checkmate::check_string(input_args$ae_dataset_name, min.chars = 1),
+
     checkmate::check_multi_class(input_args$dataset_list, c("reactive", "shinymeta_reactive")),
 
     checkmate::check_string(input_args$subjid_var, min.chars = 1),
@@ -356,10 +360,11 @@ validate_ae_dataset <- function(dataset, adverse_events) {
 #' Character name of the selected grouping variable (column).
 #'
 #' @keywords internal
-validate_df_rows <- function(dataset_list, selected_levels, ungrouped_checkbox, selected_group) {
-  one_df_empty <- (nrow(dataset_list$dm) == 0 ||
-                     nrow(dataset_list$ds) == 0 ||
-                     nrow(dataset_list$ae) == 0)
+validate_df_rows <- function(dataset_list, dm_dataset_name, ds_dataset_name, ae_dataset_name,
+                             selected_levels, ungrouped_checkbox, selected_group) {
+  one_df_empty <- (nrow(dataset_list[[dm_dataset_name]]) == 0 ||
+                     nrow(dataset_list[[ds_dataset_name]]) == 0 ||
+                     nrow(dataset_list[[ae_dataset_name]]) == 0)
 
   no_levels <- (selected_group != REPORT_RATES$CHOICES$GROUP_NO_SELECTION &&
                   (length(selected_levels) == 0 || is.null(selected_levels)) &&
@@ -560,34 +565,51 @@ apply_axis_limits <- function(plt,
     !is.null(x) && length(x) == 1 && !is.na(x)
   }
 
-  # ---- X limits ----
+
+  # X limits
   x_limits <- NULL
+
   if (!is.null(time_selection)) {
+
     if (identical(time_selection, REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT2)) {
-      # By study day: convert displayed labels to plot coordinates
+
+      # By study day (numeric axis)
       x_min_c <- study_day_to_plot_coord(x_min)
       x_max_c <- study_day_to_plot_coord(x_max)
+
+      x_has_min <- is_valid_scalar(x_min_c)
+      x_has_max <- is_valid_scalar(x_max_c)
+
+      if (x_has_min && x_has_max) {
+        x_limits <- c(x_min_c, x_max_c)
+      } else if (x_has_min) {
+        x_limits <- c(x_min_c, NA)
+      } else if (x_has_max) {
+        x_limits <- c(NA, x_max_c)
+      }
+
     } else {
-      # By study date: already Date objects
+
+      # By study date (Date axis)
       x_min_c <- x_min
       x_max_c <- x_max
-    }
 
-    x_has_min <- is_valid_scalar(x_min_c)
-    x_has_max <- is_valid_scalar(x_max_c)
+      x_has_min <- is_valid_scalar(x_min_c)
+      x_has_max <- is_valid_scalar(x_max_c)
 
-    if (x_has_min && x_has_max) {
-      x_limits <- c(x_min_c, x_max_c)
-    } else if (x_has_min) {
-      # One-sided: ggplot2 accepts NA for the other end
-      x_limits <- c(x_min_c, NA)
-    } else if (x_has_max) {
-      x_limits <- c(NA, x_max_c)
+      date_na <- as.Date(NA)
+
+      if (x_has_min && x_has_max) {
+        x_limits <- c(x_min_c, x_max_c)
+      } else if (x_has_min) {
+        x_limits <- c(x_min_c, date_na)
+      } else if (x_has_max) {
+        x_limits <- c(date_na, x_max_c)
+      }
     }
-    # else: no X limits
   }
 
-  # ---- Y limits ----
+  # Y limits
   y_has_min <- is_valid_scalar(y_min)
   y_has_max <- is_valid_scalar(y_max)
 
@@ -599,6 +621,5 @@ apply_axis_limits <- function(plt,
   } else if (y_has_max) {
     y_limits <- c(NA, y_max)
   }
-
   plt + ggplot2::coord_cartesian(xlim = x_limits, ylim = y_limits)
 }
