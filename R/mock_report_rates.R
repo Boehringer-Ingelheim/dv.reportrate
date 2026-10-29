@@ -8,6 +8,8 @@
 #' @export
 mock_report_rates_app <- function() {
 
+  if (!requireNamespace("pharmaversesdtm")) stop("Install pharmaversesdtm")
+
   # loading dummy data and preparation
   dm <- pharmaversesdtm::dm |> dplyr::mutate(SEX = as.factor(.data[["SEX"]]), # converting grouping vars to factors
                                              ARM = as.factor(.data[["ARM"]]),
@@ -62,6 +64,9 @@ mock_report_rates_app <- function() {
 #'
 #' @export
 mock_rr_app_with_mm <- function() {
+
+  if (!requireNamespace("dv.manager")) stop("Install dv.manager")
+  if (!requireNamespace("pharmaversesdtm")) stop("Install pharmaversesdtm")
 
   # loading dummy data and preparation
   dm <- pharmaversesdtm::dm

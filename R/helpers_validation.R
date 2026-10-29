@@ -565,34 +565,51 @@ apply_axis_limits <- function(plt,
     !is.null(x) && length(x) == 1 && !is.na(x)
   }
 
-  # ---- X limits ----
+
+  # X limits
   x_limits <- NULL
+
   if (!is.null(time_selection)) {
+
     if (identical(time_selection, REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT2)) {
-      # By study day: convert displayed labels to plot coordinates
+
+      # By study day (numeric axis)
       x_min_c <- study_day_to_plot_coord(x_min)
       x_max_c <- study_day_to_plot_coord(x_max)
+
+      x_has_min <- is_valid_scalar(x_min_c)
+      x_has_max <- is_valid_scalar(x_max_c)
+
+      if (x_has_min && x_has_max) {
+        x_limits <- c(x_min_c, x_max_c)
+      } else if (x_has_min) {
+        x_limits <- c(x_min_c, NA)
+      } else if (x_has_max) {
+        x_limits <- c(NA, x_max_c)
+      }
+
     } else {
-      # By study date: already Date objects
+
+      # By study date (Date axis)
       x_min_c <- x_min
       x_max_c <- x_max
-    }
 
-    x_has_min <- is_valid_scalar(x_min_c)
-    x_has_max <- is_valid_scalar(x_max_c)
+      x_has_min <- is_valid_scalar(x_min_c)
+      x_has_max <- is_valid_scalar(x_max_c)
 
-    if (x_has_min && x_has_max) {
-      x_limits <- c(x_min_c, x_max_c)
-    } else if (x_has_min) {
-      # One-sided: ggplot2 accepts NA for the other end
-      x_limits <- c(x_min_c, NA)
-    } else if (x_has_max) {
-      x_limits <- c(NA, x_max_c)
+      date_na <- as.Date(NA)
+
+      if (x_has_min && x_has_max) {
+        x_limits <- c(x_min_c, x_max_c)
+      } else if (x_has_min) {
+        x_limits <- c(x_min_c, date_na)
+      } else if (x_has_max) {
+        x_limits <- c(date_na, x_max_c)
+      }
     }
-    # else: no X limits
   }
 
-  # ---- Y limits ----
+  # Y limits
   y_has_min <- is_valid_scalar(y_min)
   y_has_max <- is_valid_scalar(y_max)
 
@@ -604,6 +621,5 @@ apply_axis_limits <- function(plt,
   } else if (y_has_max) {
     y_limits <- c(NA, y_max)
   }
-
   plt + ggplot2::coord_cartesian(xlim = x_limits, ylim = y_limits)
 }

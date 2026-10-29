@@ -64,6 +64,19 @@ deselected. Users can click a group-specific trace to highlight this
 group by dimming all other traces. Optionally, ungrouped data can be
 added. The module uses a colour-blind-friendly palette, if possible.
 
+### Plot zoom
+
+Users can manually adjust the visible x- and y-axis ranges using the **Plot zoom**
+controls. The x-axis limits adapt to the selected time alignment: calendar dates 
+are used for *By study date*, while study days are used for *By study day*. Limits
+are optional and can be set for either or both ends of an axis.
+
+The axis scaling is reset to automatic when the user clicks **Reset zoom**,
+selects a different metric type, or changes the time alignment.
+
+Zooming changes only the visible plot area; it does not alter the underlying 
+calculations, plotted data, or hovertext.
+
 ## Installation
 
 ``` r
@@ -126,7 +139,7 @@ dv.manager::run_app(
     module_list = list(
       "Reporting Rates" = reporting_rates
     ),
-    filter_data = "dm",
+    filter_dataset_name = "dm",
     filter_key = "USUBJID"
 )
 ```
