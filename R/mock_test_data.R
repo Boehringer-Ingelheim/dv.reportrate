@@ -75,8 +75,6 @@ test_data <- function() {
 
 
 
-
-
   ##########################
   # Adverse Events dataset #
   ##########################
@@ -177,24 +175,27 @@ test_data <- function() {
   ae_test <- ae_test |> dplyr::mutate(AESTDTC = as.Date(.data[["AESTDTC"]]))
 
 
+
   ##################################
   # Prepared Adverse Event dataset #
   ##################################
   ae_prepared_test <- prepare_ae_data(dataset = ae_test,
-                                                      subjid_var = "USUBJID",
-                                                      date_var = "AESTDTC",
-                                                      day_var = "AESTDY")
+                                      subjid_var = "USUBJID",
+                                      date_var = "AESTDTC",
+                                      day_var = "AESTDY")
+
+
 
   ######################################
   # Prepared Disposition Event dataset #
   ######################################
   ds_prepared_test <- prepare_ds_data(dataset = ds_test,
-                                                      subjid_var = "USUBJID",
-                                                      event_var = "DSDECOD",
-                                                      entry_terms =  c("RANDOMIZED"),
-                                                      exit_terms =  c("COMPLETED", "WITHDRAWAL BY SUBJECT", "DEATH"),
-                                                      date_var = "DSSTDTC",
-                                                      day_var = "DSSTDY")
+                                      subjid_var = "USUBJID",
+                                      event_var = "DSDECOD",
+                                      entry_terms =  c("RANDOMIZED"),
+                                      exit_terms =  c("COMPLETED", "WITHDRAWAL BY SUBJECT", "DEATH"),
+                                      date_var = "DSSTDTC",
+                                      day_var = "DSSTDY")
 
   list(dm = dm_test, ae = ae_test, ds = ds_test,
        ae_prepared = ae_prepared_test, ds_prepared = ds_prepared_test)

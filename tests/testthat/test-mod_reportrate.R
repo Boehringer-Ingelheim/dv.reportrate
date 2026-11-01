@@ -1,4 +1,3 @@
-
 test_that("report_rates_ui() fails when argument type mismatches", {
   expect_error(report_rates_ui(""))
   expect_error(report_rates_ui(4))
@@ -404,9 +403,9 @@ test_that("report_rates_server() fails when argument type mismatches", {
 
 # Prepare flexible server function where parameters can be omitted
 server_func_m_params <- function(id, ...) {
-   args <- list(...)
-   args$module_id <- id
-   do.call(report_rates_server, args)
+  args <- list(...)
+  args$module_id <- id
+  do.call(report_rates_server, args)
 }
 
 
@@ -471,31 +470,28 @@ test_that("report_rates_server() fails when mandatory parameters aren't passed."
   ## testing the omission of the report_rates_server() parameter dm_dataset_name
   expect_error(
     shiny::testServer(server_func_m_params, args = list(
-        id = id_valid,
-        dataset_list = datalist_valid, ds_dataset_name = "ds", ae_dataset_name = "ae",
-        disposition_events = dispo_events_valid, adverse_events = adverse_events_valid
-      )
-    )
+      id = id_valid,
+      dataset_list = datalist_valid, ds_dataset_name = "ds", ae_dataset_name = "ae",
+      disposition_events = dispo_events_valid, adverse_events = adverse_events_valid
+    ))
   )
 
   ## testing the omission of the report_rates_server() parameter ds_dataset_name
   expect_error(
     shiny::testServer(server_func_m_params, args = list(
-        id = id_valid,
-        dataset_list = datalist_valid, dm_dataset_name = "dm", ae_dataset_name = "ae",
-        disposition_events = dispo_events_valid, adverse_events = adverse_events_valid
-      )
-    )
+      id = id_valid,
+      dataset_list = datalist_valid, dm_dataset_name = "dm", ae_dataset_name = "ae",
+      disposition_events = dispo_events_valid, adverse_events = adverse_events_valid
+    ))
   )
 
   ## testing the omission of the report_rates_server() parameter ae_dataset_name
   expect_error(
     shiny::testServer(server_func_m_params, args = list(
-        id = id_valid,
-        dataset_list = datalist_valid, dm_dataset_name = "dm", ds_dataset_name = "ds",
-        disposition_events = dispo_events_valid, adverse_events = adverse_events_valid
-      )
-    )
+      id = id_valid,
+      dataset_list = datalist_valid, dm_dataset_name = "dm", ds_dataset_name = "ds",
+      disposition_events = dispo_events_valid, adverse_events = adverse_events_valid
+    ))
   )
 })
 
@@ -561,6 +557,14 @@ test_that("If one of the dm-, ds- or ae- dataframe has zero rows or no levels ar
   }
   )
 
+
+
+
+
+
+
+
+
   # testing the case for empty dm dataframe
   datalist <- shiny::reactive({
     list("dm" = dm_test[0, , drop = FALSE], "ae" = ae_test, "ds" = ds_test)
@@ -578,21 +582,20 @@ test_that("If one of the dm-, ds- or ae- dataframe has zero rows or no levels ar
     grouping = list(choices = c("ARM", "SEX", "SITEID")),
     x_step_size_list = list(days = 50L, weeks = 2L, months = 1L)
   ), {
-    # setting the inputs
-    session$setInputs(!!REPORT_RATES$ID$METRIC_BUTTONS := REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1)
-    session$setInputs(!!REPORT_RATES$ID$TIMETYPE_BUTTONS := REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT1)
-    session$setInputs(!!REPORT_RATES$ID$GROUP_VAR := "SEX")
-    session$flushReact()
-    # setting the ungrouped checkbox TRUE so that it is tested that the error is really caused by the empty dm
-    session$setInputs(!!REPORT_RATES$ID$UNGROUPED_CHECKBOX := TRUE)
-    session$flushReact()
+  # setting the inputs
+  session$setInputs(!!REPORT_RATES$ID$METRIC_BUTTONS := REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1)
+  session$setInputs(!!REPORT_RATES$ID$TIMETYPE_BUTTONS := REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT1)
+  session$setInputs(!!REPORT_RATES$ID$GROUP_VAR := "SEX")
+  session$flushReact()
+  # setting the ungrouped checkbox TRUE so that it is tested that the error is really caused by the empty dm
+  session$setInputs(!!REPORT_RATES$ID$UNGROUPED_CHECKBOX := TRUE)
+  session$flushReact()
 
-    expect_error(
-      {output[[REPORT_RATES$ID$PLOT]]},
-      regexp = "No data available.", class = "shiny.silent.error"
-    )
-  }
+  expect_error(
+    {output[[REPORT_RATES$ID$PLOT]]},
+    regexp = "No data available.", class = "shiny.silent.error"
   )
+})
 
   # testing the case for empty ds dataframe
   datalist <- shiny::reactive({
@@ -663,40 +666,40 @@ test_that("If one of the dm-, ds- or ae- dataframe has zero rows or no levels ar
 # App tests
 test_that("The default values are correct at app launch", {
 
-   app_dir <- test_path("apps/reportrates_app")
-   app_defaults <- shinytest2::AppDriver$new(
-      app_dir = app_dir,
-      name = "reportrates_app",
-      options = list(shiny.trace = TRUE, chromote.headless = TRUE)
-   )
-   app_defaults$wait_for_idle()
+  app_dir <- test_path("apps/reportrates_app")
+  app_defaults <- shinytest2::AppDriver$new(
+    app_dir = app_dir,
+    name = "reportrates_app",
+    options = list(shiny.trace = TRUE, chromote.headless = TRUE)
+  )
+  app_defaults$wait_for_idle()
 
-   # Get values and test
-   actual_metric <- app_defaults$get_value(input = "reportrate-metric_id")
-   expected_metric <- "Cumulative rate per total exposure time"
-   expect_identical(actual_metric, expected_metric)
+  # Get values and test
+  actual_metric <- app_defaults$get_value(input = "reportrate-metric_id")
+  expected_metric <- "Cumulative rate per total exposure time"
+  expect_identical(actual_metric, expected_metric)
 
-   actual_grouping <- app_defaults$get_value(input = "reportrate-grouping-group_var")
-   expected_grouping <- REPORT_RATES$CHOICES$GROUP_NO_SELECTION
-   expect_identical(actual_grouping, expected_grouping)
+  actual_grouping <- app_defaults$get_value(input = "reportrate-grouping-group_var")
+  expected_grouping <- REPORT_RATES$CHOICES$GROUP_NO_SELECTION
+  expect_identical(actual_grouping, expected_grouping)
 
-   actual_levels <- app_defaults$get_value(input = "reportrate-selected_levels")
-   expected_levels <- NULL
-   expect_identical(actual_levels, expected_levels)
+  actual_levels <- app_defaults$get_value(input = "reportrate-selected_levels")
+  expected_levels <- NULL
+  expect_identical(actual_levels, expected_levels)
 
-   actual_checkbox <- app_defaults$get_value(input = "reportrate-ungrouped")
-   expected_checkbox <- FALSE
-   expect_identical(actual_checkbox, expected_checkbox)
+  actual_checkbox <- app_defaults$get_value(input = "reportrate-ungrouped")
+  expected_checkbox <- FALSE
+  expect_identical(actual_checkbox, expected_checkbox)
 
-   actual_timetype <- app_defaults$get_value(input = "reportrate-type_id")
-   expected_timetype <- "By study date"
-   expect_identical(actual_timetype, expected_timetype)
+  actual_timetype <- app_defaults$get_value(input = "reportrate-type_id")
+  expected_timetype <- "By study date"
+  expect_identical(actual_timetype, expected_timetype)
 
-   actual_unit <- app_defaults$get_value(input = "reportrate-unit_id")
-   expected_unit <- "Week"
-   expect_identical(actual_unit, expected_unit)
+  actual_unit <- app_defaults$get_value(input = "reportrate-unit_id")
+  expected_unit <- "Week"
+  expect_identical(actual_unit, expected_unit)
 
-   app_defaults$stop()
+  app_defaults$stop()
 })
 
 
@@ -705,40 +708,40 @@ test_that("The default values are correct at app launch with an argument passed 
                     grouping$default_choice parameter of the server function" |>
                   vdoc[["add_spec"]](specs$app_creator_settings$grouping), {
 
-   app_dir <- test_path("apps/default_choice_app")
-   app <- shinytest2::AppDriver$new(
-      app_dir = app_dir,
-      name = "default_choice_app",
-      options = list(shiny.trace = TRUE, chromote.headless = TRUE)
-   )
-   app$wait_for_idle()
+  app_dir <- test_path("apps/default_choice_app")
+  app <- shinytest2::AppDriver$new(
+    app_dir = app_dir,
+    name = "default_choice_app",
+    options = list(shiny.trace = TRUE, chromote.headless = TRUE)
+  )
+  app$wait_for_idle()
 
-   # Get values and test
-   actual_metric <- app$get_value(input = "reportrate-metric_id")
-   expected_metric <- "Cumulative rate per total exposure time"
-   expect_identical(actual_metric, expected_metric)
+  # Get values and test
+  actual_metric <- app$get_value(input = "reportrate-metric_id")
+  expected_metric <- "Cumulative rate per total exposure time"
+  expect_identical(actual_metric, expected_metric)
 
-   actual_grouping <- app$get_value(input = "reportrate-grouping-group_var")
-   expected_grouping <- "SEX" # because of the parameter grouping$default_choice in reportrates_app/app.R
-   expect_identical(actual_grouping, expected_grouping)
+  actual_grouping <- app$get_value(input = "reportrate-grouping-group_var")
+  expected_grouping <- "SEX" # because of the parameter grouping$default_choice in reportrates_app/app.R
+  expect_identical(actual_grouping, expected_grouping)
 
-   actual_levels <- app$get_value(input = "reportrate-selected_levels")
-   expected_levels <- c("M", "F")
-   expect_setequal(actual_levels, expected_levels)
+  actual_levels <- app$get_value(input = "reportrate-selected_levels")
+  expected_levels <- c("M", "F")
+  expect_setequal(actual_levels, expected_levels)
 
-   actual_checkbox <- app$get_value(input = "reportrate-ungrouped")
-   expected_checkbox <- FALSE
-   expect_identical(actual_checkbox, expected_checkbox)
+  actual_checkbox <- app$get_value(input = "reportrate-ungrouped")
+  expected_checkbox <- FALSE
+  expect_identical(actual_checkbox, expected_checkbox)
 
-   actual_timetype <- app$get_value(input = "reportrate-type_id")
-   expected_timetype <- "By study date"
-   expect_identical(actual_timetype, expected_timetype)
+  actual_timetype <- app$get_value(input = "reportrate-type_id")
+  expected_timetype <- "By study date"
+  expect_identical(actual_timetype, expected_timetype)
 
-   actual_unit <- app$get_value(input = "reportrate-unit_id")
-   expected_unit <- "Week"
-   expect_identical(actual_unit, expected_unit)
+  actual_unit <- app$get_value(input = "reportrate-unit_id")
+  expected_unit <- "Week"
+  expect_identical(actual_unit, expected_unit)
 
-   app$stop()
+  app$stop()
 })
 
 
@@ -781,60 +784,60 @@ test_that("All available levels are selected by default after changing the group
 test_that("The 'show ungrouped' checkbox is set to FALSE when changing the grouping variable to no
                     grouping" |>
                   vdoc[["add_spec"]](specs$plot_creation$grouping_and_levels$ungrouped), {
-   app_dir <- test_path("apps/reportrates_app")
-   app <- shinytest2::AppDriver$new(
-      app_dir = app_dir,
-      name = "reportrates_app",
-      options = list(shiny.trace = TRUE, chromote.headless = TRUE)
-   )
-   app$wait_for_idle()
+  app_dir <- test_path("apps/reportrates_app")
+  app <- shinytest2::AppDriver$new(
+    app_dir = app_dir,
+    name = "reportrates_app",
+    options = list(shiny.trace = TRUE, chromote.headless = TRUE)
+  )
+  app$wait_for_idle()
 
-   # Get values and test
-   app$set_inputs(`reportrate-grouping-group_var` = "ARM")
-   app$wait_for_idle()
-   app$set_inputs(`reportrate-ungrouped` = TRUE)
-   app$set_inputs(`reportrate-grouping-group_var` = REPORT_RATES$CHOICES$GROUP_NO_SELECTION)
-   app$wait_for_idle()
-   actual_value <- app$get_value(input = "reportrate-ungrouped")
-   expected_value <- FALSE
-   expect_setequal(actual_value, expected_value)
+  # Get values and test
+  app$set_inputs(`reportrate-grouping-group_var` = "ARM")
+  app$wait_for_idle()
+  app$set_inputs(`reportrate-ungrouped` = TRUE)
+  app$set_inputs(`reportrate-grouping-group_var` = REPORT_RATES$CHOICES$GROUP_NO_SELECTION)
+  app$wait_for_idle()
+  actual_value <- app$get_value(input = "reportrate-ungrouped")
+  expected_value <- FALSE
+  expect_setequal(actual_value, expected_value)
 
-   app$stop()
+  app$stop()
 })
 
 
 
 test_that("The default choice for grouping is only used once when starting the app" |>
                   vdoc[["add_spec"]](specs$app_creator_settings$grouping), {
-   app_dir <- test_path("apps/default_choice_app")
-   app <- shinytest2::AppDriver$new(
-      app_dir = app_dir,
-      name = "default_choice_app",
-      options = list(shiny.trace = TRUE, chromote.headless = TRUE)
-   )
-   app$wait_for_idle()
+  app_dir <- test_path("apps/default_choice_app")
+  app <- shinytest2::AppDriver$new(
+    app_dir = app_dir,
+    name = "default_choice_app",
+    options = list(shiny.trace = TRUE, chromote.headless = TRUE)
+  )
+  app$wait_for_idle()
 
-   # Get values and test
-   actual_grouping <- app$get_value(input = "reportrate-grouping-group_var")
-   expected_grouping <- "SEX" # was passed as argument to the grouping$default_choice param in default_choice_app/app.R
-   expect_identical(actual_grouping, expected_grouping)
+  # Get values and test
+  actual_grouping <- app$get_value(input = "reportrate-grouping-group_var")
+  expected_grouping <- "SEX" # was passed as argument to the grouping$default_choice param in default_choice_app/app.R
+  expect_identical(actual_grouping, expected_grouping)
 
-   # should be reset to NULL after it was used (so that the default gets only used once right after starting the app)
-   group_default_choice <- app$get_value(export = "reportrate-group_default_choice") # reactiveVal that stores the
-                                                                                    # default choice inside the
-                                                                                    # module server
-   expect_null(group_default_choice)
+  # should be reset to NULL after it was used (so that the default gets only used once right after starting the app)
+  group_default_choice <- app$get_value(export = "reportrate-group_default_choice") # reactiveVal that stores the
+  # default choice inside the
+  # module server
+  expect_null(group_default_choice)
 
-   # When switching the dataset, the default choice shouldn't be used again
-   app$set_inputs(`reportrate-grouping-group_var` = REPORT_RATES$CHOICES$GROUP_NO_SELECTION)
-   app$set_inputs(selector = "dummy_2")
-   app$wait_for_value(input = "selector", ignore = list("dummy"))
-   app$wait_for_idle()
-   actual_grouping <- app$get_value(input = "reportrate-grouping-group_var")
-   expected_grouping <- REPORT_RATES$CHOICES$GROUP_NO_SELECTION
-   expect_identical(actual_grouping, expected_grouping)
+  # When switching the dataset, the default choice shouldn't be used again
+  app$set_inputs(`reportrate-grouping-group_var` = REPORT_RATES$CHOICES$GROUP_NO_SELECTION)
+  app$set_inputs(selector = "dummy_2")
+  app$wait_for_value(input = "selector", ignore = list("dummy"))
+  app$wait_for_idle()
+  actual_grouping <- app$get_value(input = "reportrate-grouping-group_var")
+  expected_grouping <- REPORT_RATES$CHOICES$GROUP_NO_SELECTION
+  expect_identical(actual_grouping, expected_grouping)
 
-   app$stop()
+  app$stop()
 })
 
 
@@ -842,86 +845,86 @@ test_that("The default choice for grouping is only used once when starting the a
 test_that("The selected grouping variable and the levels are correct also when the dataset selection in the
                     module manager changes" |>
                   vdoc[["add_spec"]](specs$framework_specs$filter_and_datasets), {
-   app_dir <- test_path("apps/mm_app")
-   app <- shinytest2::AppDriver$new(
-      app_dir = app_dir,
-      name = "mm_app",
-      options = list(shiny.trace = TRUE, chromote.headless = TRUE)
-   )
-   app$wait_for_idle()
-   app$set_inputs(`reportrate-grouping-group_var` = "ARM")
-   app$set_inputs(`reportrate-selected_levels` = c("Drug 1", "Drug 2")) # deselect placebo
-   vals <- app$get_values()
+  app_dir <- test_path("apps/mm_app")
+  app <- shinytest2::AppDriver$new(
+    app_dir = app_dir,
+    name = "mm_app",
+    options = list(shiny.trace = TRUE, chromote.headless = TRUE)
+  )
+  app$wait_for_idle()
+  app$set_inputs(`reportrate-grouping-group_var` = "ARM")
+  app$set_inputs(`reportrate-selected_levels` = c("Drug 1", "Drug 2")) # deselect placebo
+  vals <- app$get_values()
 
 
-   app$set_inputs(selector = "dummy_2")
-   app$wait_for_idle()
-   selected_df <- app$get_value(input = "selector")
-   expect_equal(selected_df, "dummy_2") # verifying that the switch in the dataset selection worked
+  app$set_inputs(selector = "dummy_2")
+  app$wait_for_idle()
+  selected_df <- app$get_value(input = "selector")
+  expect_equal(selected_df, "dummy_2") # verifying that the switch in the dataset selection worked
 
-   # ARM as the selected grouping variable is present in both datasets "dummy" and "dummy_2".
-   #     --> should be kept as the selected grouping variable
-   app$wait_for_idle()
-   actual_group <- app$get_value(input = "reportrate-grouping-group_var")
-   expected_group <- "ARM"
-   expect_identical(actual_group, expected_group)
+  # ARM as the selected grouping variable is present in both datasets "dummy" and "dummy_2".
+  #     --> should be kept as the selected grouping variable
+  app$wait_for_idle()
+  actual_group <- app$get_value(input = "reportrate-grouping-group_var")
+  expected_group <- "ARM"
+  expect_identical(actual_group, expected_group)
 
-   # Drug 1 and Drug 2 as the selected levels are present in both datasets --> should be kept as the selected levels
-   actual_levels <- app$get_value(input = "reportrate-selected_levels")
-   expected_levels <- c("Drug 1", "Drug 2")
-   expect_setequal(actual_levels, expected_levels)
+  # Drug 1 and Drug 2 as the selected levels are present in both datasets --> should be kept as the selected levels
+  actual_levels <- app$get_value(input = "reportrate-selected_levels")
+  expected_levels <- c("Drug 1", "Drug 2")
+  expect_setequal(actual_levels, expected_levels)
 
-   # Column ARM is not in the dm dataset of dummy_3 --> grouping variable selection should be reset to no selection
-   app$set_inputs(selector = "dummy_3")
-   app$wait_for_idle()
-   selected_df <- app$get_value(input = "selector")
-   expect_equal(selected_df, "dummy_3") # verifying that the switch in the dataset selection worked
+  # Column ARM is not in the dm dataset of dummy_3 --> grouping variable selection should be reset to no selection
+  app$set_inputs(selector = "dummy_3")
+  app$wait_for_idle()
+  selected_df <- app$get_value(input = "selector")
+  expect_equal(selected_df, "dummy_3") # verifying that the switch in the dataset selection worked
 
-   app$wait_for_value(input = "reportrate-grouping-group_var", ignore = list("ARM")) # waiting until it's loaded
-   actual_group <- app$get_value(input = "reportrate-grouping-group_var")
-   expected_group <- REPORT_RATES$CHOICES$GROUP_NO_SELECTION
-   expect_identical(actual_group, expected_group)
+  app$wait_for_value(input = "reportrate-grouping-group_var", ignore = list("ARM")) # waiting until it's loaded
+  actual_group <- app$get_value(input = "reportrate-grouping-group_var")
+  expected_group <- REPORT_RATES$CHOICES$GROUP_NO_SELECTION
+  expect_identical(actual_group, expected_group)
 
-   # grouping variable was set to -None- so the selected levels should be NULL
-   actual_levels <- app$get_value(input = "reportrate-selected_levels")
-   expected_levels <- NULL
-   expect_identical(actual_levels, expected_levels)
+  # grouping variable was set to -None- so the selected levels should be NULL
+  actual_levels <- app$get_value(input = "reportrate-selected_levels")
+  expected_levels <- NULL
+  expect_identical(actual_levels, expected_levels)
 
-   # in "dummy_3" SEX has the levels "M" and "F". In "dummy_2" SEX has only the level "F". So when switching the dataset
-   # "M" should be deselected automatically
-   app$set_inputs(`reportrate-grouping-group_var` = "SEX")
-   app$wait_for_idle()
-   actual_levels <- app$get_value(input = "reportrate-selected_levels")
-   expected_levels <- c("M", "F")
-   expect_setequal(actual_levels, expected_levels)
-   app$set_inputs(selector = "dummy_2")
+  # in "dummy_3" SEX has the levels "M" and "F". In "dummy_2" SEX has only the level "F". So when switching the dataset
+  # "M" should be deselected automatically
+  app$set_inputs(`reportrate-grouping-group_var` = "SEX")
+  app$wait_for_idle()
+  actual_levels <- app$get_value(input = "reportrate-selected_levels")
+  expected_levels <- c("M", "F")
+  expect_setequal(actual_levels, expected_levels)
+  app$set_inputs(selector = "dummy_2")
 
-   app$wait_for_value(input = "reportrate-selected_levels",
-                      ignore = list(c("F", "M"), c("M", "F"))) # waiting until it's loaded
-   actual_levels <- app$get_value(input = "reportrate-selected_levels")
-   expected_levels <- c("F")
-   expect_identical(actual_levels, expected_levels)
+  app$wait_for_value(input = "reportrate-selected_levels",
+                     ignore = list(c("F", "M"), c("M", "F"))) # waiting until it's loaded
+  actual_levels <- app$get_value(input = "reportrate-selected_levels")
+  expected_levels <- c("F")
+  expect_identical(actual_levels, expected_levels)
 
-   # When switching back to "dummy", selected grouping variable and levels should still be the same
-   app$set_inputs(selector = "dummy")
-   app$wait_for_idle(duration = 1000)
+  # When switching back to "dummy", selected grouping variable and levels should still be the same
+  app$set_inputs(selector = "dummy")
+  app$wait_for_idle(duration = 1000)
 
-   actual_group <- app$get_value(input = "reportrate-grouping-group_var")
-   expected_group <- "SEX"
-   actual_levels <- app$get_value(input = "reportrate-selected_levels")
-   expected_levels <- c("F")
-   expect_identical(actual_group, expected_group)
-   expect_identical(actual_levels, expected_levels)
+  actual_group <- app$get_value(input = "reportrate-grouping-group_var")
+  expected_group <- "SEX"
+  actual_levels <- app$get_value(input = "reportrate-selected_levels")
+  expected_levels <- c("F")
+  expect_identical(actual_group, expected_group)
+  expect_identical(actual_levels, expected_levels)
 
-   # SITEID is not a factor in "dummy_2" so switching the dataset selection should reset the grouping sel to -None-
-   app$set_inputs(`reportrate-grouping-group_var` = "SITEID")
-   app$wait_for_idle(duration = 1000)
-   app$set_inputs(selector = "dummy_2")
+  # SITEID is not a factor in "dummy_2" so switching the dataset selection should reset the grouping sel to -None-
+  app$set_inputs(`reportrate-grouping-group_var` = "SITEID")
+  app$wait_for_idle(duration = 1000)
+  app$set_inputs(selector = "dummy_2")
 
-   app$wait_for_value(input = "reportrate-grouping-group_var", ignore = list("SITEID")) # waiting until it's loaded
-   actual_group <- app$get_value(input = "reportrate-grouping-group_var")
-   expected_group <- REPORT_RATES$CHOICES$GROUP_NO_SELECTION
-   expect_identical(actual_group, expected_group)
+  app$wait_for_value(input = "reportrate-grouping-group_var", ignore = list("SITEID")) # waiting until it's loaded
+  actual_group <- app$get_value(input = "reportrate-grouping-group_var")
+  expected_group <- REPORT_RATES$CHOICES$GROUP_NO_SELECTION
+  expect_identical(actual_group, expected_group)
 
-   app$stop()
+  app$stop()
 })

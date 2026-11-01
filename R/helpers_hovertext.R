@@ -32,18 +32,18 @@
 #'
 #' @keywords internal
 get_hovertext <- function(dataset, grouping_var, metric_selection, time_selection, unit_selection, tt_dec_places) {
-   dataset <- get_hovertext_time_base(dataset, grouping_var, metric_selection, time_selection, unit_selection)
-   dataset <- get_hovertext_levels_display(dataset, grouping_var)
-   dataset <- get_hovertext_ae_info(dataset, tt_dec_places)
+  dataset <- get_hovertext_time_base(dataset, grouping_var, metric_selection, time_selection, unit_selection)
+  dataset <- get_hovertext_levels_display(dataset, grouping_var)
+  dataset <- get_hovertext_ae_info(dataset, tt_dec_places)
 
-   dataset <- dataset |>
-      dplyr::mutate(hovertext = paste0(.data[["ht_lvls_display"]], "<br><br>",
-                                       .data[["ht_time_base"]], "<br><br>",
-                                       .data[["ht_ae_info"]])) |>
-      dplyr::select(-dplyr::all_of(c("ht_lvls_display", "ht_time_base", "ht_ae_info"))) |>
-      dplyr::select(-dplyr::any_of(c("interval_start", "interval_end")))
+  dataset <- dataset |>
+    dplyr::mutate(hovertext = paste0(.data[["ht_lvls_display"]], "<br><br>",
+                                     .data[["ht_time_base"]], "<br><br>",
+                                     .data[["ht_ae_info"]])) |>
+    dplyr::select(-dplyr::all_of(c("ht_lvls_display", "ht_time_base", "ht_ae_info"))) |>
+    dplyr::select(-dplyr::any_of(c("interval_start", "interval_end")))
 
-   return(dataset)
+  return(dataset)
 }
 
 
@@ -58,43 +58,43 @@ get_hovertext <- function(dataset, grouping_var, metric_selection, time_selectio
 #' @keywords internal
 get_hovertext_time_base <- function(dataset, grouping_var, metric_selection, time_selection, unit_selection) {
 
-   # for the metric cumulative rate
-   if (metric_selection == REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1) {
-      description <- ifelse((time_selection == REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT1), "Date: ", "Day: ")
-      dataset <- dataset |> dplyr::mutate(ht_time_base = paste0(description, dataset$time))
-      return(dataset)
-   }
+  # for the metric cumulative rate
+  if (metric_selection == REPORT_RATES$CHOICES$METRIC_BUTTONS_OPT1) {
+    description <- ifelse((time_selection == REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT1), "Date: ", "Day: ")
+    dataset <- dataset |> dplyr::mutate(ht_time_base = paste0(description, dataset$time))
+    return(dataset)
+  }
 
-   # for the metric report rates per active patients
-   if (unit_selection == REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT1) {
-      time_unit <- "week"
-      time_mult <- 7
-   } else {
-      time_unit <- "month"
-      time_mult <- 30
-   }
+  # for the metric report rates per active patients
+  if (unit_selection == REPORT_RATES$CHOICES$BINSIZE_BUTTONS_OPT1) {
+    time_unit <- "week"
+    time_mult <- 7
+  } else {
+    time_unit <- "month"
+    time_mult <- 30
+  }
 
-   if (time_selection == REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT1) { # if by study date
-      dataset <- dataset |>
-         dplyr::mutate(
-            interval_end = .data[["time"]] + lubridate::period(1, time_unit) - 1,
-            ht_time_base = paste0("Interval: ", .data[["time"]], " --- ", as.Date(.data[["interval_end"]]))
-         )
-   } else {
-      dataset <- dataset |>
-         dplyr::mutate(
-            interval_start = ifelse((.data[["time_for_plot"]] < 0),
-                                    .data[["time_for_plot"]] * time_mult,
-                                    (.data[["time_for_plot"]] * time_mult) + 1),
-            interval_end = ifelse((.data[["time_for_plot"]] < 0),
-                                  ((.data[["time_for_plot"]] + 1) * time_mult) - 1,
-                                  (.data[["time_for_plot"]] + 1) * time_mult),
-            ht_time_base = paste0("Interval: Study Days ", .data[["interval_start"]], "  ---  ", .data[["interval_end"]])
-         )
-   }
-   dataset <- remove_ht_from_dummy_rows(dataset, grouping_var)
+  if (time_selection == REPORT_RATES$CHOICES$TIMETYPE_BUTTONS_OPT1) { # if by study date
+    dataset <- dataset |>
+      dplyr::mutate(
+        interval_end = .data[["time"]] + lubridate::period(1, time_unit) - 1,
+        ht_time_base = paste0("Interval: ", .data[["time"]], " --- ", as.Date(.data[["interval_end"]]))
+      )
+  } else {
+    dataset <- dataset |>
+      dplyr::mutate(
+        interval_start = ifelse((.data[["time_for_plot"]] < 0),
+                                .data[["time_for_plot"]] * time_mult,
+                                (.data[["time_for_plot"]] * time_mult) + 1),
+        interval_end = ifelse((.data[["time_for_plot"]] < 0),
+                              ((.data[["time_for_plot"]] + 1) * time_mult) - 1,
+                              (.data[["time_for_plot"]] + 1) * time_mult),
+        ht_time_base = paste0("Interval: Study Days ", .data[["interval_start"]], "  ---  ", .data[["interval_end"]])
+      )
+  }
+  dataset <- remove_ht_from_dummy_rows(dataset, grouping_var)
 
-   return(dataset)
+  return(dataset)
 }
 
 
@@ -112,16 +112,16 @@ get_hovertext_time_base <- function(dataset, grouping_var, metric_selection, tim
 #'
 #' @keywords internal
 remove_ht_from_dummy_rows <- function(dataset, grouping_var) {
-   dataset <- dataset |> dplyr::arrange(.data[["time"]])
-   if (is_valid_grouping_var(grouping_var, dataset)) {
-      dataset <- dataset |> dplyr::group_by(.data[[grouping_var]])
-   }
+  dataset <- dataset |> dplyr::arrange(.data[["time"]])
+  if (is_valid_grouping_var(grouping_var, dataset)) {
+    dataset <- dataset |> dplyr::group_by(.data[[grouping_var]])
+  }
 
-   dataset <- dataset |>
-      dplyr::mutate(ht_time_base = ifelse(dplyr::row_number() == dplyr::n(), "END", .data[["ht_time_base"]])) |>
-      dplyr::ungroup()
+  dataset <- dataset |>
+    dplyr::mutate(ht_time_base = ifelse(dplyr::row_number() == dplyr::n(), "END", .data[["ht_time_base"]])) |>
+    dplyr::ungroup()
 
-   return(dataset)
+  return(dataset)
 }
 
 
@@ -142,12 +142,12 @@ remove_ht_from_dummy_rows <- function(dataset, grouping_var) {
 #'
 #' @keywords internal
 get_hovertext_levels_display <- function(dataset, grouping_var) {
-   valid_grouping <- is_valid_grouping_var(grouping_var, dataset)
-   dataset <- dataset |>
-      dplyr::mutate(
-         ht_lvls_display = if (valid_grouping) paste0(grouping_var, ": ", .data[[grouping_var]]) else "Ungrouped"
-      )
-   return(dataset)
+  valid_grouping <- is_valid_grouping_var(grouping_var, dataset)
+  dataset <- dataset |>
+    dplyr::mutate(
+      ht_lvls_display = if (valid_grouping) paste0(grouping_var, ": ", .data[[grouping_var]]) else "Ungrouped"
+    )
+  return(dataset)
 }
 
 
@@ -167,7 +167,7 @@ get_hovertext_levels_display <- function(dataset, grouping_var) {
 #'
 #' @keywords internal
 get_hovertext_ae_info <- function(dataset, tt_dec_places) {
-   dataset <- dataset |> dplyr::mutate(ht_ae_info = paste0("Rate: ", round(.data[["ratio"]], tt_dec_places),
-                                                           "<br>Number of AEs: ", .data[["n_cumsum"]]))
-   return(dataset)
+  dataset <- dataset |> dplyr::mutate(ht_ae_info = paste0("Rate: ", round(.data[["ratio"]], tt_dec_places),
+                                                          "<br>Number of AEs: ", .data[["n_cumsum"]]))
+  return(dataset)
 }

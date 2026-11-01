@@ -168,7 +168,6 @@ validate_and_fill <- function(input_args) {
 
 
 
-
 #' Internal helper function to perform checks on the demographics dataset out of the dataset_list() and on the argument
 #' that was passed to the grouping_vars parameter of the mod_report_rates() function, in a reactive context. Info
 #' messages may be outputted in the console.

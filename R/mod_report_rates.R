@@ -322,7 +322,6 @@ report_rates_ui <- function(module_id) {
 
 
 
-
 #' Create server for \pkg{dv.reportrate} module
 #'
 #' @param module_id `[character(1)]`
@@ -704,8 +703,6 @@ report_rates_server <- function(module_id,
       )
 
 
-
-
       plt <- create_plot(dm = dm(),
                          ae = ae_prepared(),
                          ds = ds_prepared(),
@@ -745,10 +742,6 @@ report_rates_server <- function(module_id,
         y_max = input[[REPORT_RATES$ID$Y_AXIS_MAX]],
         time_selection = input[[REPORT_RATES$ID$TIMETYPE_BUTTONS]]
       )
-
-
-
-
 
 
       plt <- convert_to_girafe(plt, sel_levels())
@@ -980,4 +973,4 @@ mod_report_rates <- function(module_id,
     meta = list(dataset_info = list(all = c(dm_dataset_name, ds_dataset_name, ae_dataset_name)))
   )
   return(mod)
- }
+}

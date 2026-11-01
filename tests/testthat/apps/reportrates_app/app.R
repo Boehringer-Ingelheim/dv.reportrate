@@ -10,39 +10,39 @@ ds_test <- data$ds
 
 
 test_ui <- function(request) {
-   shiny::fluidPage(
-      shiny::bookmarkButton(),
-      dv.reportrate::report_rates_ui("reportrate")
-   )
+  shiny::fluidPage(
+    shiny::bookmarkButton(),
+    dv.reportrate::report_rates_ui("reportrate")
+  )
 }
 
 test_server <- function(input, output, session) {
-   dm <- dm_test
-   ds <- ds_test
-   ae <- ae_test
-   data <- list("dm" = dm, "ds" = ds, "ae" = ae)
+  dm <- dm_test
+  ds <- ds_test
+  ae <- ae_test
+  data <- list("dm" = dm, "ds" = ds, "ae" = ae)
 
-   dv.reportrate::report_rates_server(module_id = "reportrate",
-                                      dataset_list = shiny::reactive(data),
-                                      dm_dataset_name = "dm",
-                                      ds_dataset_name = "ds",
-                                      ae_dataset_name = "ae",
-                                      subjid_var = "USUBJID",
-                                      tooltip_decimal_places = 4L,
-                                      disposition_events = list(event_var = "DSDECOD",
-                                                                date_var = "DSSTDTC",
-                                                                day_var = "DSSTDY",
-                                                                entry_vals = c("RANDOMIZED"),
-                                                                exit_vals = c("COMPLETED",
-                                                                              "WITHDRAWAL BY SUBJECT",
-                                                                              "DEATH")
-                                      ),
-                                      adverse_events = list(date_var = "AESTDTC",
-                                                            day_var = "AESTDY"
-                                      ),
-                                      grouping_vars = list(choices = NULL, default_choice = NULL),
-                                      x_step_size_list = list(days = 50L, weeks = 2L, months = 1L)
-   )
+  dv.reportrate::report_rates_server(module_id = "reportrate",
+                                     dataset_list = shiny::reactive(data),
+                                     dm_dataset_name = "dm",
+                                     ds_dataset_name = "ds",
+                                     ae_dataset_name = "ae",
+                                     subjid_var = "USUBJID",
+                                     tooltip_decimal_places = 4L,
+                                     disposition_events = list(event_var = "DSDECOD",
+                                                               date_var = "DSSTDTC",
+                                                               day_var = "DSSTDY",
+                                                               entry_vals = c("RANDOMIZED"),
+                                                               exit_vals = c("COMPLETED",
+                                                                             "WITHDRAWAL BY SUBJECT",
+                                                                             "DEATH")
+                                     ),
+                                     adverse_events = list(date_var = "AESTDTC",
+                                                           day_var = "AESTDY"
+                                     ),
+                                     grouping_vars = list(choices = NULL, default_choice = NULL),
+                                     x_step_size_list = list(days = 50L, weeks = 2L, months = 1L)
+  )
 
 }
 
