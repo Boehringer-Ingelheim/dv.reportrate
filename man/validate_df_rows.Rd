@@ -9,6 +9,9 @@ an empty coordinate system.}
 \usage{
 validate_df_rows(
   dataset_list,
+  dm_dataset_name,
+  ds_dataset_name,
+  ae_dataset_name,
   selected_levels,
   ungrouped_checkbox,
   selected_group

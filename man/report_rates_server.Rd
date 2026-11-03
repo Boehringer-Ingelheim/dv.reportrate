@@ -7,6 +7,9 @@
 report_rates_server(
   module_id,
   dataset_list,
+  dm_dataset_name,
+  ds_dataset_name,
+  ae_dataset_name,
   subjid_var = REPORT_RATES$DEFAULTS$SUBJID,
   tooltip_decimal_places = REPORT_RATES$DEFAULTS$TT_DECIMAL_PLACES,
   disposition_events,
@@ -24,6 +27,18 @@ A unique ID string to create a namespace. Must match the ID provided to \code{re
 \item{dataset_list}{\verb{[shiny::reactive(list(data.frame))]}
 
 A reactive list of named datasets. Usually obtained from module manager.}
+
+\item{dm_dataset_name}{\verb{[character(1)]}
+
+Name of the demographics dataset in the module manager.}
+
+\item{ds_dataset_name}{\verb{[character(1)]}
+
+Name of the disposition dataset in the module manager.}
+
+\item{ae_dataset_name}{\verb{[character(1)]}
+
+Name of the adverse-event dataset in the module manager.}
 
 \item{subjid_var}{\verb{[character(1)]}
 

@@ -314,7 +314,7 @@ cum_rate_per_total_exp_time <- function(time_type, group_dataset, grouping_var) 
   if (is_valid_grouping_var(grouping_var, group_dataset)) {
     group_levels <- unique(df_tmp[[grouping_var]])
     full_dates <- full_dates |>
-       tidyr::crossing(!!rlang::sym(grouping_var) := group_levels) # create all combinations of date and group values
+      tidyr::crossing(!!rlang::sym(grouping_var) := group_levels) # create all combinations of date and group values
 
     result_df <- full_dates |>
       dplyr::left_join(df_tmp, by = c(time_type, grouping_var)) |>
@@ -371,7 +371,7 @@ cum_rate_per_total_exp_time <- function(time_type, group_dataset, grouping_var) 
 #'
 #' @keywords internal
 fill_missing_intervals <- function(dataset, grouping_var, time_type, time_unit) {
-   if (time_type == "day") {
+  if (time_type == "day") {
     all_intervals <- seq(
       from = min(dataset$time),
       to = max(dataset$time),
@@ -396,7 +396,7 @@ fill_missing_intervals <- function(dataset, grouping_var, time_type, time_unit) 
       dplyr::mutate(ratio = 0.0)
 
     filled_dataset <- dplyr::bind_rows(dataset, missing_rows) |>
-                      dplyr::arrange(!!rlang::sym(grouping_var), .data[["time"]])
+      dplyr::arrange(!!rlang::sym(grouping_var), .data[["time"]])
   } else {
     complete_template <- tibble::tibble(time = all_intervals)
 

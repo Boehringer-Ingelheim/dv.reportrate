@@ -6,9 +6,9 @@
 \usage{
 mod_report_rates(
   module_id,
-  dm_dataset_name = "dm",
-  ds_dataset_name = "ds",
-  ae_dataset_name = "ae",
+  dm_dataset_name,
+  ds_dataset_name,
+  ae_dataset_name,
   subjid_var = REPORT_RATES$DEFAULTS$SUBJID,
   tooltip_decimal_places = REPORT_RATES$DEFAULTS$TT_DECIMAL_PLACES,
   disposition_events = list(event_var = REPORT_RATES$DEFAULTS$DISPO_VAR, date_var =
@@ -29,15 +29,15 @@ A unique module ID to create a namespace.}
 
 \item{dm_dataset_name}{\verb{[character(1)]}
 
-Name of the Demographics dataset. Defaults to "dm".}
+Name of the demographics dataset in the module manager.}
 
 \item{ds_dataset_name}{\verb{[character(1)]}
 
-Name of the Disposition dataset. Defaults to "ds".}
+Name of the disposition dataset in the module manager.}
 
 \item{ae_dataset_name}{\verb{[character(1)]}
 
-Name of the Adverse Event dataset. Defaults to "ae".}
+Name of the adverse-event dataset in the module manager.}
 
 \item{subjid_var}{\verb{[character(1)]}
 
