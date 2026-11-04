@@ -1,7 +1,7 @@
 Package: dv.reportrate
 Type: Package
 Title: Reporting Rates Module
-Version: 0.0.0-9001
+Version: 0.0.0-9002
 Authors@R:
     c(person("Boehringer-Ingelheim Pharma GmbH & Co.KG", role = c("cph", "fnd")),
       person(given = "Tom",
@@ -13,13 +13,14 @@ Authors@R:
              email =  "methodios.typou.ext@boehringer-ingelheim.com")
   )
 Description: DaVinci's dv.reportrate package provides a module for computing and visualising adverse‑event‑derived
-   reporting rates over time. It supports SDTM‑conformant datasets (DM, DS, AE) as well as similarly structured
-   study‑specific data. The module offers cumulative and interval‑based metrics, flexible time alignment options
-   (by study date or study day), and categorical grouping with user‑selectable levels. The module includes hover‑enabled
-   interactive plots and uses colour‑blind‑friendly palettes where possible.
+    reporting rates over time. It supports SDTM‑conformant datasets (DM, DS, AE) as well as similarly structured
+    study‑specific data. The module offers cumulative and interval‑based metrics, flexible time alignment options
+    (by study date or study day), and categorical grouping with user‑selectable levels. The module includes hover‑enabled
+    interactive plots and uses colour‑blind‑friendly palettes where possible.
 License: Apache License (>= 2)
 Encoding: UTF-8
 LazyData: true
+URL: https://github.com/Boehringer-Ingelheim/dv.reportrate, https://boehringer-ingelheim.github.io/dv.reportrate
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Suggests:

@@ -764,6 +764,8 @@ report_rates_server <- function(module_id,
         input[[REPORT_RATES$ID$Y_AXIS_MAX]]
       )
 
+    # Disable suspension for the plot output
+    shiny::outputOptions(output, REPORT_RATES$ID$PLOT, suspendWhenHidden = FALSE)
 
     # export for app tests
     shiny::exportTestValues(
