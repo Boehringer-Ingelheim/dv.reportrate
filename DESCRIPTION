@@ -22,7 +22,6 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/Boehringer-Ingelheim/dv.reportrate, https://boehringer-ingelheim.github.io/dv.reportrate
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
 Suggests:
     pharmaversesdtm,
     purrr,
@@ -50,3 +49,4 @@ Imports:
 Depends: R (>= 4.1.0)
 VignetteBuilder: knitr
 Remotes: Boehringer-Ingelheim/dv.manager
+Config/roxygen2/version: 8.0.0
