@@ -13,7 +13,42 @@ on:
   push:
   workflow_dispatch:
 
+# TEMPORARY: mirrors dv.templates shared_ci.yml on branch 414400-centralized_image
+# to test the centralized CI image. Do not merge.
 jobs:
-  run-shared-ci:
-    name: Shared
-    uses: boehringer-ingelheim/dv.templates/.github/workflows/shared_ci.yml@main
+  ci-image:
+    name: CI image
+    uses: boehringer-ingelheim/dv.templates/.github/workflows/ci_image.yml@414400-centralized_image
+
+  check:
+    name: Check 📦
+    uses: boehringer-ingelheim/dv.templates/.github/workflows/check.yml@414400-centralized_image
+    needs: ci-image
+    with:
+      ci_image: ${{ needs.ci-image.outputs.image }}
+
+  test:
+    name: Test and QC 🧪
+    uses: boehringer-ingelheim/dv.templates/.github/workflows/test.yml@414400-centralized_image
+    needs: ci-image
+    with:
+      ci_image: ${{ needs.ci-image.outputs.image }}
+
+  lintr:
+    name: Lintr 🔍
+    uses: boehringer-ingelheim/dv.templates/.github/workflows/lintr.yml@414400-centralized_image
+    needs: ci-image
+    with:
+      ci_image: ${{ needs.ci-image.outputs.image }}
+      lintr_error_on_lint: true
+
+  pkgdown:
+    name: Pkgdown 📖
+    uses: boehringer-ingelheim/dv.templates/.github/workflows/pkgdown.yml@414400-centralized_image
+    needs: [ci-image, test]
+    with:
+      ci_image: ${{ needs.ci-image.outputs.image }}
+
+  release:
+    name: Release 📈
+    uses: boehringer-ingelheim/dv.templates/.github/workflows/release.yml@414400-centralized_image
