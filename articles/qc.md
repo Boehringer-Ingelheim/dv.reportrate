@@ -2,7 +2,7 @@
 
 ### ✅ dv.reportrate 0.0.1
 
-Date: 2026-Nov-05 14:53:43
+Date: 2026-Nov-17 14:44:45
 
 This document provides the Quality Control (QC) report for the R package
 to confirm that it fulfills the criteria required for a “released”
@@ -59,8 +59,8 @@ test execution.
     #>  collate  en_US.UTF-8
     #>  ctype    en_US.UTF-8
     #>  tz       Etc/UTC
-    #>  date     2026-11-05
-    #>  pandoc   3.6.3 @ /usr/bin/ (via rmarkdown)
+    #>  date     2026-11-17
+    #>  pandoc   3.6.4 @ /usr/bin/ (via rmarkdown)
     #>  quarto   1.8.26 @ /usr/local/bin/quarto
     #> 
     #> ─ Packages ───────────────────────────────────────────────────────────────────
@@ -104,7 +104,7 @@ test execution.
     #>  xfun          0.57    2026-03-20 [2] RSPM
     #>  yaml          2.3.12  2025-12-10 [2] RSPM
     #> 
-    #>  [1] /tmp/RtmplXdEX9/temp_libpath213951809a
+    #>  [1] /tmp/RtmpJdaTbb/temp_libpath21217db85e7
     #>  [2] /usr/local/lib/R/site-library
     #>  [3] /usr/local/lib/R/library
     #> 
